@@ -98,11 +98,9 @@
     <div style="margin-top:36px">
       <p class="slabel">Maç Tahminleri</p>
       <h3 class="hc-t">Grup Aşaması Maçları</h3>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:18px">
-        <div class="rank-panel" style="padding:18px"><p class="slabel">11 Haziran 2026 · 22:00</p><h3 class="hc-t">Grup A</h3><div class="rrow" style="padding:12px 0"><span class="rname">🇲🇽 Meksika</span><span class="rval">vs</span><span class="rname" style="text-align:right">🇿🇦 Güney Afrika</span></div><div style="display:flex;gap:10px;margin-top:12px"><input type="number" min="0" placeholder="Meksika gol" style="width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)"><input type="number" min="0" placeholder="G. Afrika gol" style="width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)"></div><button class="btn btn-o" style="margin-top:14px">Tahmini Kaydet</button></div>
-        <div class="rank-panel" style="padding:18px"><p class="slabel">11 Haziran 2026 · 04:00</p><h3 class="hc-t">Grup A</h3><div class="rrow" style="padding:12px 0"><span class="rname">🇰🇷 Güney Kore</span><span class="rval">vs</span><span class="rname" style="text-align:right">🇹🇷 Türkiye</span></div><div style="display:flex;gap:10px;margin-top:12px"><input type="number" min="0" placeholder="G. Kore gol" style="width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)"><input type="number" min="0" placeholder="Türkiye gol" style="width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)"></div><button class="btn btn-o" style="margin-top:14px">Tahmini Kaydet</button></div>
-      </div>
-      <div class="rank-cta"><button class="btn btn-p" id="showAllMatches">Tüm Maçları Göster</button></div>
+      <div id="matchPredictionMessage" class="hc-d" style="margin-top:14px" hidden></div>
+      <div id="matchesList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:18px"></div>
+      <div class="rank-cta"><button class="btn btn-p" id="showAllMatches" hidden>Tüm Maçları Göster</button></div>
     </div>
   </div>
 </section>
@@ -115,6 +113,7 @@
 <script src="js/app.js"></script>
 </body>
 </html>
+
 
 
 

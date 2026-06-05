@@ -207,6 +207,164 @@ async function saveTournamentPredictions(){
   setTournamentPredictionLocked(true);
   showTournamentPredictionMessage('Turnuva tahminlerin kaydedildi. Bu tahminler artık değiştirilemez.');
 }
+function showMatchPredictionMessage(message){
+  const box=document.getElementById('matchPredictionMessage');
+  if(!box) return;
+  box.textContent=message;
+  box.hidden=!message;
+}
+
+function lockMatchCard(card,homeScore,awayScore,message='Tahmin kaydedildi, değiştirilemez.'){
+  const homeInput=card.querySelector('[data-role="home-score"]');
+  const awayInput=card.querySelector('[data-role="away-score"]');
+  const saveButton=card.querySelector('[data-role="save-match"]');
+  const messageBox=card.querySelector('[data-role="match-message"]');
+  if(homeInput){homeInput.value=homeScore;homeInput.disabled=true;}
+  if(awayInput){awayInput.value=awayScore;awayInput.disabled=true;}
+  if(saveButton){saveButton.disabled=true;saveButton.hidden=true;}
+  if(messageBox){messageBox.textContent=message;messageBox.hidden=false;}
+}
+
+function createMatchCard(match,index,prediction){
+  const card=document.createElement('div');
+  card.className='rank-panel'+(index>=12?' extra-match':'');
+  card.style.padding='18px';
+  if(index>=12) card.hidden=true;
+  card.dataset.matchId=match.id;
+
+  const meta=document.createElement('p');
+  meta.className='slabel';
+  meta.textContent='Maç '+match.match_no+' · '+(match.match_date || '-')+' · '+(match.match_time || '-');
+  card.appendChild(meta);
+
+  const group=document.createElement('h3');
+  group.className='hc-t';
+  group.textContent=match.group_name || '-';
+  card.appendChild(group);
+
+  const teams=document.createElement('div');
+  teams.className='rrow';
+  teams.style.padding='12px 0';
+  const home=document.createElement('span');
+  home.className='rname';
+  home.textContent=match.team_home || '-';
+  const vs=document.createElement('span');
+  vs.className='rval';
+  vs.textContent='vs';
+  const away=document.createElement('span');
+  away.className='rname';
+  away.style.textAlign='right';
+  away.textContent=match.team_away || '-';
+  teams.append(home,vs,away);
+  card.appendChild(teams);
+
+  const inputs=document.createElement('div');
+  inputs.style.display='flex';
+  inputs.style.gap='10px';
+  inputs.style.marginTop='12px';
+  const homeInput=document.createElement('input');
+  homeInput.type='number';
+  homeInput.min='0';
+  homeInput.placeholder=(match.team_home || 'Takım 1')+' gol';
+  homeInput.dataset.role='home-score';
+  homeInput.style.cssText='width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)';
+  const awayInput=document.createElement('input');
+  awayInput.type='number';
+  awayInput.min='0';
+  awayInput.placeholder=(match.team_away || 'Takım 2')+' gol';
+  awayInput.dataset.role='away-score';
+  awayInput.style.cssText='width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)';
+  inputs.append(homeInput,awayInput);
+  card.appendChild(inputs);
+
+  const message=document.createElement('div');
+  message.className='hc-d';
+  message.dataset.role='match-message';
+  message.style.marginTop='12px';
+  message.hidden=true;
+  card.appendChild(message);
+
+  const button=document.createElement('button');
+  button.className='btn btn-o';
+  button.type='button';
+  button.dataset.role='save-match';
+  button.style.marginTop='14px';
+  button.textContent='Tahmini Kaydet';
+  button.addEventListener('click',()=>saveMatchPrediction(match.id,card));
+  card.appendChild(button);
+
+  if(prediction){
+    lockMatchCard(card,prediction.predicted_home_score,prediction.predicted_away_score);
+  }
+  return card;
+}
+
+async function loadMatches(){
+  const list=document.getElementById('matchesList');
+  if(!list) return;
+  const client=getSupabaseClient();
+  if(!client) return;
+  showMatchPredictionMessage('');
+  const {data:matches,error}=await client.from('matches').select('id,match_no,match_date,match_time,group_name,team_home,team_away,status').order('match_no',{ascending:true});
+  if(error){showMatchPredictionMessage(error.message);return;}
+
+  const user=await getCurrentUser();
+  let predictionMap=new Map();
+  if(user){
+    const {data:predictions,error:predictionError}=await client.from('match_predictions').select('match_id,predicted_home_score,predicted_away_score').eq('user_id',user.id);
+    if(predictionError){showMatchPredictionMessage(predictionError.message);return;}
+    predictionMap=new Map((predictions || []).map(item=>[item.match_id,item]));
+  }
+
+  list.innerHTML='';
+  (matches || []).forEach((match,index)=>{
+    list.appendChild(createMatchCard(match,index,predictionMap.get(match.id)));
+  });
+
+  const showAllButton=document.getElementById('showAllMatches');
+  if(showAllButton){
+    showAllButton.hidden=(matches || []).length<=12;
+  }
+}
+
+async function saveMatchPrediction(matchId,card){
+  const client=getSupabaseClient();
+  if(!client) return;
+  const user=await getCurrentUser();
+  const messageBox=card.querySelector('[data-role="match-message"]');
+  if(!user){
+    if(messageBox){messageBox.textContent='Tahmin yapmak için giriş yapmalısın.';messageBox.hidden=false;}
+    showMatchPredictionMessage('Tahmin yapmak için giriş yapmalısın.');
+    return;
+  }
+
+  const homeInput=card.querySelector('[data-role="home-score"]');
+  const awayInput=card.querySelector('[data-role="away-score"]');
+  const homeScore=homeInput?.value;
+  const awayScore=awayInput?.value;
+  if(homeScore==='' || awayScore===''){
+    if(messageBox){messageBox.textContent='Lütfen iki takım için de skor gir.';messageBox.hidden=false;}
+    return;
+  }
+
+  const payload={
+    user_id:user.id,
+    match_id:matchId,
+    predicted_home_score:Number(homeScore),
+    predicted_away_score:Number(awayScore)
+  };
+  const {error}=await client.from('match_predictions').insert(payload);
+  if(error){
+    const lower=(error.message || '').toLowerCase();
+    if(lower.includes('duplicate') || lower.includes('unique')){
+      lockMatchCard(card,homeScore,awayScore);
+      return;
+    }
+    if(messageBox){messageBox.textContent=error.message;messageBox.hidden=false;}
+    return;
+  }
+  lockMatchCard(card,homeScore,awayScore);
+}
 async function signUpUser(){
   const client=getSupabaseClient();
   if(!client) return;
@@ -307,6 +465,8 @@ window.closeAuthModal=closeAuthModal;
 window.handlePredictionStart=handlePredictionStart;
 window.saveTournamentPredictions=saveTournamentPredictions;
 window.loadTournamentPredictions=loadTournamentPredictions;
+window.loadMatches=loadMatches;
+window.saveMatchPrediction=saveMatchPrediction;
 
 window.addEventListener('scroll',()=>hdr.classList.toggle('sc',window.scrollY>40),{passive:true});
 hbg.addEventListener('click',e=>{e.stopPropagation();const o=mob.classList.toggle('o');hbg.classList.toggle('o',o)});
@@ -335,7 +495,9 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await updateHeaderAuthState();
   await createOrLoadProfile();
   await loadTournamentPredictions();
+  await loadMatches();
 });
+
 
 
 
