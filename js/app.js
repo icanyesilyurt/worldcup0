@@ -11,6 +11,9 @@ function showAuthMessage(message){
 function formatAuthError(error){
   const message=error?.message || String(error || 'Bir hata oluştu.');
   const lower=message.toLowerCase();
+  if(lower.includes('email not confirmed')){
+    return 'E-posta doğrulaması gerekiyor. Supabase ayarlarından email confirmation kapatılabilir.';
+  }
   if(lower.includes('rate') || lower.includes('security') || lower.includes('too many') || lower.includes('after')){
     return 'Çok kısa sürede tekrar denedin. Lütfen biraz bekleyip yeniden dene.';
   }
@@ -30,7 +33,7 @@ function generatePlayerName(){
 }
 
 function generateReferralCode(){
-  return 'OYUNCU'+Math.floor(10000+Math.random()*90000);
+  return 'WCA'+Math.floor(100000+Math.random()*900000);
 }
 
 async function getCurrentUser(){
@@ -72,7 +75,7 @@ async function signUpUser(){
     if(profileError){showAuthMessage(profileError.message);return;}
   }
 
-  showAuthMessage('Üyelik oluşturuldu. Lütfen giriş yap.');
+  window.location.href='profile.html';
 }
 
 async function loginUser(){
@@ -82,9 +85,8 @@ async function loginUser(){
   const password=document.getElementById('loginPassword')?.value;
   const {error}=await client.auth.signInWithPassword({email,password});
   if(error){showAuthMessage(formatAuthError(error));return;}
-  showAuthMessage('Giriş yapıldı.');
   await updateHeaderAuthState();
-  await createOrLoadProfile();
+  window.location.href='profile.html';
 }
 
 async function logoutUser(){
@@ -165,6 +167,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await updateHeaderAuthState();
   await createOrLoadProfile();
 });
+
 
 
 
