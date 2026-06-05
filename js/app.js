@@ -36,12 +36,74 @@ function generateReferralCode(){
   return 'WCA'+Math.floor(100000+Math.random()*900000);
 }
 
+function showHomeAuthTab(tab){
+  const loginForm=document.getElementById('loginForm');
+  const signupForm=document.getElementById('signupForm');
+  const loginTab=document.getElementById('loginTab');
+  const signupTab=document.getElementById('signupTab');
+  if(!loginForm || !signupForm) return;
+  const isSignup=tab==='signup';
+  loginForm.hidden=isSignup;
+  signupForm.hidden=!isSignup;
+  loginTab?.classList.toggle('btn-p',!isSignup);
+  loginTab?.classList.toggle('btn-o',isSignup);
+  signupTab?.classList.toggle('btn-p',isSignup);
+  signupTab?.classList.toggle('btn-o',!isSignup);
+  if(location.hash !== (isSignup ? '#signup' : '#login')){
+    history.replaceState(null,'',isSignup ? '#signup' : '#login');
+  }
+}
+
 async function getCurrentUser(){
   const client=getSupabaseClient();
   if(!client) return null;
   const {data,error}=await client.auth.getUser();
   if(error) return null;
   return data.user || null;
+}
+
+async function loadProfileForUser(user){
+  const client=getSupabaseClient();
+  if(!client || !user) return null;
+  let {data:profile,error}=await client.from('profiles').select('*').eq('id',user.id).single();
+  if(error || !profile){
+    const country=user.user_metadata?.country || 'Türkiye';
+    const insertProfile={
+      id:user.id,
+      email:user.email,
+      display_name:generatePlayerName(),
+      country,
+      premium:false,
+      total_points:0,
+      referral_code:generateReferralCode(),
+      referred_by:null,
+      created_at:new Date().toISOString()
+    };
+    const {data:newProfile,error:insertError}=await client.from('profiles').insert(insertProfile).select('*').single();
+    if(insertError){showAuthMessage(insertError.message);return null;}
+    profile=newProfile;
+  }
+  return profile;
+}
+
+function fillProfileFields(profile,user){
+  document.getElementById('profileDisplayName') && (document.getElementById('profileDisplayName').textContent=profile.display_name || 'Oyuncu');
+  document.getElementById('profileName') && (document.getElementById('profileName').textContent=profile.display_name || 'Oyuncu');
+  document.getElementById('profileEmail') && (document.getElementById('profileEmail').textContent=user.email || profile.email || '-');
+  document.getElementById('profileCountry') && (document.getElementById('profileCountry').textContent=profile.country || '-');
+  document.getElementById('profileCountryTop') && (document.getElementById('profileCountryTop').textContent=profile.country || '-');
+  document.getElementById('profilePoints') && (document.getElementById('profilePoints').textContent=profile.total_points ?? 0);
+  document.getElementById('profileReferral') && (document.getElementById('profileReferral').textContent=profile.referral_code || '-');
+}
+
+function fillHomeSummary(profile,user){
+  document.getElementById('summaryDisplayName') && (document.getElementById('summaryDisplayName').textContent=profile.display_name || 'Oyuncu');
+  document.getElementById('summaryName') && (document.getElementById('summaryName').textContent=profile.display_name || 'Oyuncu');
+  document.getElementById('summaryEmail') && (document.getElementById('summaryEmail').textContent=user.email || profile.email || '-');
+  document.getElementById('summaryCountry') && (document.getElementById('summaryCountry').textContent=profile.country || '-');
+  document.getElementById('summaryCountryTop') && (document.getElementById('summaryCountryTop').textContent=profile.country || '-');
+  document.getElementById('summaryPoints') && (document.getElementById('summaryPoints').textContent=profile.total_points ?? 0);
+  document.getElementById('summaryReferral') && (document.getElementById('summaryReferral').textContent=profile.referral_code || '-');
 }
 
 async function signUpUser(){
@@ -75,7 +137,9 @@ async function signUpUser(){
     if(profileError){showAuthMessage(profileError.message);return;}
   }
 
-  window.location.href='profile.html';
+  showAuthMessage('');
+  await updateHeaderAuthState();
+  await createOrLoadProfile();
 }
 
 async function loginUser(){
@@ -85,8 +149,9 @@ async function loginUser(){
   const password=document.getElementById('loginPassword')?.value;
   const {error}=await client.auth.signInWithPassword({email,password});
   if(error){showAuthMessage(formatAuthError(error));return;}
+  showAuthMessage('');
   await updateHeaderAuthState();
-  window.location.href='profile.html';
+  await createOrLoadProfile();
 }
 
 async function logoutUser(){
@@ -98,41 +163,36 @@ async function logoutUser(){
 async function createOrLoadProfile(){
   const loggedOut=document.getElementById('loggedOutProfile');
   const loggedIn=document.getElementById('loggedInProfile');
-  if(!loggedOut || !loggedIn) return;
+  const homeAuthBox=document.getElementById('homeAuthBox');
+  const homeProfileSummary=document.getElementById('homeProfileSummary');
 
   const client=getSupabaseClient();
-  if(!client){loggedOut.hidden=false;loggedIn.hidden=true;return;}
-  const user=await getCurrentUser();
-  if(!user){loggedOut.hidden=false;loggedIn.hidden=true;return;}
-
-  let {data:profile,error}=await client.from('profiles').select('*').eq('id',user.id).single();
-  if(error || !profile){
-    const country=user.user_metadata?.country || 'Türkiye';
-    const insertProfile={
-      id:user.id,
-      email:user.email,
-      display_name:generatePlayerName(),
-      country,
-      premium:false,
-      total_points:0,
-      referral_code:generateReferralCode(),
-      referred_by:null,
-      created_at:new Date().toISOString()
-    };
-    const {data:newProfile,error:insertError}=await client.from('profiles').insert(insertProfile).select('*').single();
-    if(insertError){showAuthMessage(insertError.message);return;}
-    profile=newProfile;
+  if(!client){
+    if(loggedOut) loggedOut.hidden=false;
+    if(loggedIn) loggedIn.hidden=true;
+    if(homeAuthBox) homeAuthBox.hidden=false;
+    if(homeProfileSummary) homeProfileSummary.hidden=true;
+    return;
   }
 
-  loggedOut.hidden=true;
-  loggedIn.hidden=false;
-  document.getElementById('profileDisplayName').textContent=profile.display_name || 'Oyuncu';
-  document.getElementById('profileName').textContent=profile.display_name || 'Oyuncu';
-  document.getElementById('profileEmail').textContent=user.email || profile.email || '-';
-  document.getElementById('profileCountry').textContent=profile.country || '-';
-  document.getElementById('profileCountryTop').textContent=profile.country || '-';
-  document.getElementById('profilePoints').textContent=profile.total_points ?? 0;
-  document.getElementById('profileReferral').textContent=profile.referral_code || '-';
+  const user=await getCurrentUser();
+  if(!user){
+    if(loggedOut) loggedOut.hidden=false;
+    if(loggedIn) loggedIn.hidden=true;
+    if(homeAuthBox) homeAuthBox.hidden=false;
+    if(homeProfileSummary) homeProfileSummary.hidden=true;
+    return;
+  }
+
+  const profile=await loadProfileForUser(user);
+  if(!profile) return;
+
+  if(loggedOut) loggedOut.hidden=true;
+  if(loggedIn) loggedIn.hidden=false;
+  if(homeAuthBox) homeAuthBox.hidden=true;
+  if(homeProfileSummary) homeProfileSummary.hidden=false;
+  fillProfileFields(profile,user);
+  fillHomeSummary(profile,user);
 }
 
 async function updateHeaderAuthState(){
@@ -147,6 +207,7 @@ window.logoutUser=logoutUser;
 window.getCurrentUser=getCurrentUser;
 window.createOrLoadProfile=createOrLoadProfile;
 window.updateHeaderAuthState=updateHeaderAuthState;
+window.showHomeAuthTab=showHomeAuthTab;
 
 window.addEventListener('scroll',()=>hdr.classList.toggle('sc',window.scrollY>40),{passive:true});
 hbg.addEventListener('click',e=>{e.stopPropagation();const o=mob.classList.toggle('o');hbg.classList.toggle('o',o)});
@@ -164,10 +225,9 @@ document.getElementById('signupForm')?.addEventListener('submit',e=>{e.preventDe
 document.getElementById('loginForm')?.addEventListener('submit',e=>{e.preventDefault();loginUser();});
 
 window.addEventListener('DOMContentLoaded',async()=>{
+  if(document.getElementById('homeAuthBox')){
+    showHomeAuthTab(location.hash==='#signup'?'signup':'login');
+  }
   await updateHeaderAuthState();
   await createOrLoadProfile();
 });
-
-
-
-
