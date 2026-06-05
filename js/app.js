@@ -132,9 +132,22 @@ function setSelectValue(id,value){
   if(option) select.value=option.value;
 }
 
+function setTournamentPredictionLocked(isLocked){
+  ['champion','finalist_1','finalist_2','top_scorer','top_assist','player_of_tournament'].forEach(id=>{
+    const field=document.getElementById(id);
+    if(field) field.disabled=isLocked;
+  });
+  const saveButton=document.getElementById('saveTournamentPredictions');
+  if(saveButton){
+    saveButton.disabled=isLocked;
+    saveButton.hidden=isLocked;
+  }
+}
+
 async function loadTournamentPredictions(){
   const saveButton=document.getElementById('saveTournamentPredictions');
   if(!saveButton) return;
+  setTournamentPredictionLocked(false);
   const client=getSupabaseClient();
   if(!client) return;
   const user=await getCurrentUser();
@@ -148,6 +161,8 @@ async function loadTournamentPredictions(){
   setSelectValue('top_scorer',data.top_scorer);
   setSelectValue('top_assist',data.top_assist);
   setSelectValue('player_of_tournament',data.player_of_tournament);
+  setTournamentPredictionLocked(true);
+  showTournamentPredictionMessage('Turnuva tahminlerin kaydedildi. Bu tahminler artık değiştirilemez.');
 }
 
 async function saveTournamentPredictions(){
@@ -157,6 +172,14 @@ async function saveTournamentPredictions(){
   if(!user){
     showTournamentPredictionMessage('Tahmin yapmak için giriş yapmalısın.');
     setTimeout(()=>openAuthModal('login'),700);
+    return;
+  }
+
+  const {data:existing,error:existingError}=await client.from('tournament_predictions').select('user_id').eq('user_id',user.id).maybeSingle();
+  if(existingError){showTournamentPredictionMessage(existingError.message);return;}
+  if(existing){
+    setTournamentPredictionLocked(true);
+    showTournamentPredictionMessage('Turnuva tahminlerini yalnızca bir kez yapabilirsin.');
     return;
   }
 
@@ -170,9 +193,19 @@ async function saveTournamentPredictions(){
     player_of_tournament:document.getElementById('player_of_tournament')?.value
   };
 
-  const {error}=await client.from('tournament_predictions').upsert(payload,{onConflict:'user_id'});
-  if(error){showTournamentPredictionMessage(error.message);return;}
-  showTournamentPredictionMessage('Turnuva tahminlerin kaydedildi.');
+  const {error}=await client.from('tournament_predictions').insert(payload);
+  if(error){
+    const lower=(error.message || '').toLowerCase();
+    if(lower.includes('duplicate') || lower.includes('unique')){
+      setTournamentPredictionLocked(true);
+      showTournamentPredictionMessage('Turnuva tahminlerini yalnızca bir kez yapabilirsin.');
+      return;
+    }
+    showTournamentPredictionMessage(error.message);
+    return;
+  }
+  setTournamentPredictionLocked(true);
+  showTournamentPredictionMessage('Turnuva tahminlerin kaydedildi. Bu tahminler artık değiştirilemez.');
 }
 async function signUpUser(){
   const client=getSupabaseClient();
@@ -303,6 +336,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await createOrLoadProfile();
   await loadTournamentPredictions();
 });
+
 
 
 
