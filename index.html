@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dünya Kupası Arena</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css"></head>
+<body>
+
+<header class="hdr" id="hdr">
+  <div class="c hdr-i">
+    <a href="index.html" class="logo" >
+      <span class="logo-icon">⚽</span>
+      <span class="logo-txt">
+        <span class="logo-sub">Dünya Kupası</span>
+        <span class="logo-main">Arena</span>
+      </span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="predictions.html">Tahminler</a>
+      <a href="rankings.html">Sıralama</a>
+      <a href="rules.html">Kurallar</a>
+      <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
+      <a href="profile.html#login" class="auth-link auth-logged-out">Giriş Yap</a>
+      <a href="profile.html#signup" class="auth-link auth-logged-out">Üye Ol</a>
+      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
+      <a href="predictions.html" class="btn btn-p" >Tahmine Başla</a>
+    </nav>
+    <button class="hbg" id="hbg" aria-label="Menüyü aç/kapat"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="mob-nav" id="mobnav">
+    <a href="index.html">Ana Sayfa</a>
+    <a href="predictions.html">Tahminler</a>
+    <a href="rankings.html">Sıralama</a>
+    <a href="rules.html">Kurallar</a>
+    <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
+    <a href="profile.html#login" class="auth-link auth-logged-out">Giriş Yap</a>
+    <a href="profile.html#signup" class="auth-link auth-logged-out">Üye Ol</a>
+    <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
+    <a href="predictions.html" class="btn btn-p" >Tahmine Başla</a>
+  </nav>
+</header>
+
+<main data-page="home">
+<section class="hero s" id="home">
+  <div class="hero-pitch" aria-hidden="true">
+    <div class="h-circle"></div><div class="h-line"></div>
+    <div class="h-arc top"></div><div class="h-arc bot"></div>
+  </div>
+  <div class="glow glow-g" aria-hidden="true"></div>
+  <div class="glow glow-b" aria-hidden="true"></div>
+  <div class="c hero-c">
+    <p class="slabel" style="animation:fadeUp .5s .05s both">Dünya Kupası 2026 · 104 Maç</p>
+    <h1 class="htitle">104 Maç.<br>Tek Dünya Sıralaması.<br><span class="htitle-a">Tek Ülke Mücadelesi.</span></h1>
+    <p class="hero-sub">Her maçı tahmin et, puan topla, ülkene destek ol ve Dünya Kupası heyecanını dünyanın dört bir yanındaki futbolseverlerle birlikte yaşa.</p>
+    <div class="hero-btns">
+      <a href="predictions.html" class="btn btn-p" >⚽ Tahmine Başla</a>
+      <a href="rankings.html" class="btn btn-o" >Sıralamayı Gör</a>
+    </div>
+    <div class="stats-bar">
+      <div class="stat"><span class="stat-v">104</span><span class="stat-l">Maç</span></div>
+      <div class="stat"><span class="stat-v">32</span><span class="stat-l">Takım</span></div>
+      <div class="stat"><span class="stat-v">64</span><span class="stat-l">Gün</span></div>
+      <div class="stat"><span class="stat-v">∞</span><span class="stat-l">Rekabet</span></div>
+    </div>
+  </div>
+  <div class="hero-fade" aria-hidden="true"></div>
+</section>
+
+<section class="mani s" id="about">
+  <div class="mani-bg"></div>
+  <div class="c mani-i">
+    <div class="mani-l">
+      <p class="slabel">Manifestomuz</p>
+      <div class="divider"></div>
+      <div class="globe-wrap" aria-hidden="true">
+        <span class="globe-icon">🌍</span>
+        <span class="globe-ring gr1"></span>
+        <span class="globe-ring gr2"></span>
+      </div>
+    </div>
+    <div class="mani-r">
+      <p class="mpara">Dünya Kupası dört yılda bir gelir.</p>
+      <p class="mpara">Farklı ülkelerden milyonlarca insan aynı maçları izler, aynı golleri kutlar ve aynı hüzünleri yaşar.</p>
+      <p class="mpara">World Cup Arena, bu insanları ortak bir deneyimde buluşturur.</p>
+      <p class="mpara mpara-b">Bu sadece bir tahmin oyunu değil.</p>
+      <p class="mpara mpara-b">Bu, her puanın senin ve temsil ettiğin ülke için önem taşıdığı küresel bir futbol arenası.</p>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="how-it-works">
+  <div class="c">
+    <p class="slabel">Oyun</p>
+    <h2 class="stitle">Nasıl Çalışır</h2>
+    <div class="divider"></div>
+    <div class="how-grid">
+      <div class="how-card" style="--a:#f0b429"><div class="hc-top"><span class="hc-num">01</span><span class="hc-icon">🏆</span></div><h3 class="hc-t">Turnuva Tahminleri Yap</h3><p class="hc-d">İlk düdükten önce şampiyonu, finalistleri, gol kralını, asist kralını ve turnuvanın oyuncusunu tahmin et.</p><div class="hc-bar"></div></div>
+      <div class="how-card" style="--a:#3b82f6"><div class="hc-top"><span class="hc-num">02</span><span class="hc-icon">🎯</span></div><h3 class="hc-t">Maç Skorlarını Tahmin Et</h3><p class="hc-d">Her maçtan önce kesin skor tahminini gönder. Tahminin ne kadar yakınsa, puanın o kadar yüksek olur.</p><div class="hc-bar"></div></div>
+      <div class="how-card" style="--a:#1db954"><div class="hc-top"><span class="hc-num">03</span><span class="hc-icon">📈</span></div><h3 class="hc-t">Puan Topla</h3><p class="hc-d">Doğru skorlar, doğru sonuçlar, tahmin serileri ve turnuva tahminlerinden puan kazan. Her maç önemlidir.</p><div class="hc-bar"></div></div>
+      <div class="how-card" style="--a:#e84040"><div class="hc-top"><span class="hc-num">04</span><span class="hc-icon">🌍</span></div><h3 class="hc-t">Ülkeni Temsil Et</h3><p class="hc-d">Puanların, seçtiğin ülkenin genel sıralamasına katkı sağlar. Her tahminde bayrağını taşı.</p><div class="hc-bar"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="soc s" id="social">
+  <div class="soc-bg"></div>
+  <div class="c">
+    <p class="slabel">Topluluk</p>
+    <h2 class="stitle">Sosyal Deneyim</h2>
+    <div class="divider"></div>
+    <p style="max-width:580px;color:var(--t2);font-size:15px;line-height:1.7;position:relative;z-index:1">Maç günlerinden sonra en iyi tahminler, en hızlı yükselenler ve lider ülkeler <strong style="color:var(--t1)">𝕏</strong> üzerinde paylaşılacak. Premium kullanıcılar seçtikleri isim, fotoğraf, ülke bayrağı ve paylaşılabilir sıralama kartı ile görünebilir.</p>
+    <div class="soc-c">
+      <div class="soc-feats">
+        <div class="sf"><span class="sf-icon">⚡</span><div><div class="sf-t">En İyi Tahminler</div><p class="sf-d">Her maç gününün en isabetli tahminleri öne çıkarılır ve topluluğumuzla paylaşılır.</p></div></div>
+        <div class="sf"><span class="sf-icon">📈</span><div><div class="sf-t">En Hızlı Yükselenler</div><p class="sf-d">Bir turun ardından sıralamada büyük bir sıçrama mı yaptın? Haftalık özette yükselen yıldız olarak yer alırsın.</p></div></div>
+        <div class="sf"><span class="sf-icon">🏳️</span><div><div class="sf-t">Lider Ülkeler</div><p class="sf-d">Her maç gününden sonra ülke sıralamasındaki değişimler duyurulur ve milli gurur rekabetini güçlendirir.</p></div></div>
+        <div class="sf"><span class="sf-icon">🃏</span><div><div class="sf-t">Paylaşılabilir Sıralama Kartı</div><p class="sf-d">Premium kullanıcılar, 𝕏 üzerinde paylaşmak için isim, fotoğraf, ülke bayrağı ve sıralama içeren kişiselleştirilmiş bir kart alır.</p></div></div>
+      </div>
+      <div class="sc-wrap">
+        <div class="share-card">
+          <div class="sc-hdr"><span class="sc-logo">⚽ Dünya Kupası Arena</span><span class="sc-x">𝕏</span></div>
+          <div class="sc-user"><div class="sc-avatar">🇹🇷</div><div><div class="sc-name">Oyuncu#19382</div><div class="sc-ctry">Türkiye'yi temsil ediyor</div></div></div>
+          <div class="sc-rank"><div class="sc-rank-n">#1</div><div class="sc-rank-l">Dünya Sıralaması</div></div>
+          <div class="sc-pts">420 puan · Tur 4</div>
+          <div class="sc-foot"><span>worldcuparena.com</span><span>#WCA2026</span></div>
+        </div>
+        <p class="sc-hint">Örnek paylaşım kartı — Premium özellik</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="cta">
+  <div class="cta-bg"><div class="cta-glow"></div></div>
+  <div class="c cta-i">
+    <p class="slabel">Şimdi Katıl</p>
+    <h2 class="cta-t">Küresel Dünya Kupası<br><span class="cta-ta">deneyiminin parçası ol.</span></h2>
+    <p class="cta-sub">104 maç. Sayısız tahmin. Tek küresel arena.</p>
+    <div class="cta-acts"><a href="predictions.html" class="btn btn-p cta-btn" >⚽ Tahmine Başla</a></div>
+    <div class="flags">
+      <span style="animation-delay:.00s">🇧🇷</span><span style="animation-delay:.06s">🇩🇪</span><span style="animation-delay:.12s">🇦🇷</span><span style="animation-delay:.18s">🇫🇷</span><span style="animation-delay:.24s">🇪🇸</span><span style="animation-delay:.30s">🇵🇹</span><span style="animation-delay:.36s">🇮🇹</span><span style="animation-delay:.42s">🇳🇱</span><span style="animation-delay:.48s">🇯🇵</span><span style="animation-delay:.54s">🇲🇦</span><span style="animation-delay:.60s">🇺🇸</span><span style="animation-delay:.66s">🇹🇷</span><span style="animation-delay:.72s">🇷🇸</span><span style="animation-delay:.78s">🇸🇳</span><span style="animation-delay:.84s">🇦🇺</span><span style="animation-delay:.90s">🇰🇷</span>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="c">© 2026 World Cup Arena · Tüm Hakları Saklıdır</div></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
+
+
+
+
+

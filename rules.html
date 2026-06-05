@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dünya Kupası Arena</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css"></head>
+<body>
+
+<header class="hdr" id="hdr">
+  <div class="c hdr-i">
+    <a href="index.html" class="logo" >
+      <span class="logo-icon">⚽</span>
+      <span class="logo-txt">
+        <span class="logo-sub">Dünya Kupası</span>
+        <span class="logo-main">Arena</span>
+      </span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="predictions.html">Tahminler</a>
+      <a href="rankings.html">Sıralama</a>
+      <a href="rules.html">Kurallar</a>
+      <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
+      <a href="profile.html#login" class="auth-link auth-logged-out">Giriş Yap</a>
+      <a href="profile.html#signup" class="auth-link auth-logged-out">Üye Ol</a>
+      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
+      <a href="predictions.html" class="btn btn-p" >Tahmine Başla</a>
+    </nav>
+    <button class="hbg" id="hbg" aria-label="Menüyü aç/kapat"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="mob-nav" id="mobnav">
+    <a href="index.html">Ana Sayfa</a>
+    <a href="predictions.html">Tahminler</a>
+    <a href="rankings.html">Sıralama</a>
+    <a href="rules.html">Kurallar</a>
+    <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
+      <a href="profile.html#login" class="auth-link auth-logged-out">Giriş Yap</a>
+      <a href="profile.html#signup" class="auth-link auth-logged-out">Üye Ol</a>
+      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
+      <a href="predictions.html" class="btn btn-p" >Tahmine Başla</a>
+  </nav>
+</header>
+
+<main data-page="rules">
+<section class="s" id="rules">
+  <div class="c">
+    <p class="slabel">Kurallar</p>
+    <h2 class="stitle">Kurallar ve Puanlama</h2>
+    <div class="divider"></div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:34px">
+      <div class="rank-panel" style="padding:22px">
+        <p class="slabel">01</p>
+        <h3 class="hc-t">Dünya Kupası Arena Nedir?</h3>
+        <p class="hc-d">Dünya Kupası Arena, Dünya Kupası boyunca maç ve turnuva tahminleri yaparak puan topladığın, ülkeni temsil ettiğin ve küresel sıralamada yarıştığın bir tahmin ve topluluk deneyimidir.</p>
+      </div>
+      <div class="rank-panel" style="padding:22px">
+        <p class="slabel">02</p>
+        <h3 class="hc-t">Nasıl Katılırsın?</h3>
+        <p class="hc-d">Profilini oluşturur, temsil etmek istediğin ülkeyi seçer ve maçlar başlamadan önce tahminlerini girersin. Kazandığın puanlar hem kişisel sıralamana hem de ülke puanına eklenir.</p>
+      </div>
+      <div class="rank-panel feat" style="padding:22px">
+        <p class="slabel">03</p>
+        <h3 class="hc-t">Puan Sistemi</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+          <div class="rrow" style="padding:10px 0"><span class="rname">Maç sonucunu doğru bilmek</span><span class="rval rval-g">10 puan</span></div>
+          <div class="rrow" style="padding:10px 0"><span class="rname">Gol farkını doğru bilmek</span><span class="rval rval-g">20 puan</span></div>
+          <div class="rrow" style="padding:10px 0"><span class="rname">Tam skoru doğru bilmek</span><span class="rval rval-g">50 puan</span></div>
+        </div>
+        <p class="hc-d" style="margin-top:14px">Tam skor bilen kullanıcı sonuç ve gol farkı puanlarını da kazanır. Tam skorun toplam değeri 80 puandır.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="c">© 2026 World Cup Arena · Tüm Hakları Saklıdır</div></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
+
+
+

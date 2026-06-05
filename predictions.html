@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dünya Kupası Arena</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css"></head>
+<body>
+
+<header class="hdr" id="hdr">
+  <div class="c hdr-i">
+    <a href="index.html" class="logo" >
+      <span class="logo-icon">⚽</span>
+      <span class="logo-txt">
+        <span class="logo-sub">Dünya Kupası</span>
+        <span class="logo-main">Arena</span>
+      </span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="predictions.html">Tahminler</a>
+      <a href="rankings.html">Sıralama</a>
+      <a href="rules.html">Kurallar</a>
+      <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
+      <a href="profile.html#login" class="auth-link auth-logged-out">Giriş Yap</a>
+      <a href="profile.html#signup" class="auth-link auth-logged-out">Üye Ol</a>
+      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
+      <a href="predictions.html" class="btn btn-p" >Tahmine Başla</a>
+    </nav>
+    <button class="hbg" id="hbg" aria-label="Menüyü aç/kapat"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="mob-nav" id="mobnav">
+    <a href="index.html">Ana Sayfa</a>
+    <a href="predictions.html">Tahminler</a>
+    <a href="rankings.html">Sıralama</a>
+    <a href="rules.html">Kurallar</a>
+    <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
+      <a href="profile.html#login" class="auth-link auth-logged-out">Giriş Yap</a>
+      <a href="profile.html#signup" class="auth-link auth-logged-out">Üye Ol</a>
+      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
+      <a href="predictions.html" class="btn btn-p" >Tahmine Başla</a>
+  </nav>
+</header>
+
+<main data-page="predictions">
+<section class="s" id="predictions">
+  <div class="c">
+    <p class="slabel">Tahminler</p>
+    <h2 class="stitle">Tahminler</h2>
+    <div class="divider"></div>
+
+    <div class="rank-panel feat" style="padding:22px;margin-top:34px">
+      <p class="slabel">Turnuva Tahminleri</p>
+      <h3 class="hc-t">Turnuva Genel Tahminleri</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:18px">
+        <label style="display:flex;flex-direction:column;gap:8px">
+          <span class="hc-d">Şampiyon kim olur?</span>
+          <select style="width:100%;padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1);font-family:var(--ff-b)">
+            <option>🇦🇷 Arjantin</option><option>🇦🇺 Avustralya</option><option>🇦🇹 Avusturya</option><option>🇧🇪 Belçika</option><option>🇧🇦 Bosna Hersek</option><option>🇧🇷 Brezilya</option><option>🇨🇦 Kanada</option><option>🇨🇻 Cabo Verde</option><option>🇨🇴 Kolombiya</option><option>🇨🇩 Kongo DC</option><option>🇨🇮 Fildişi Sahili</option><option>🇭🇷 Hırvatistan</option><option>🇨🇼 Curaçao</option><option>🇨🇿 Çekya</option><option>🇪🇨 Ekvador</option><option>🏴 İngiltere</option><option>🇫🇷 Fransa</option><option>🇩🇪 Almanya</option><option>🇬🇭 Gana</option><option>🇭🇹 Haiti</option><option>🇮🇷 İran</option><option>🇮🇶 Irak</option><option>🇯🇵 Japonya</option><option>🇯🇴 Ürdün</option><option>🇲🇽 Meksika</option><option>🇲🇦 Fas</option><option>🇳🇱 Hollanda</option><option>🇳🇿 Yeni Zelanda</option><option>🇳🇴 Norveç</option><option>🇵🇦 Panama</option><option>🇵🇾 Paraguay</option><option>🇵🇹 Portekiz</option><option>🇶🇦 Katar</option><option>🇰🇷 Güney Kore</option><option>🇸🇦 Suudi Arabistan</option><option>🏴 İskoçya</option><option>🇸🇳 Senegal</option><option>🇿🇦 Güney Afrika</option><option>🇪🇸 İspanya</option><option>🇸🇪 İsveç</option><option>🇨🇭 İsviçre</option><option>🇹🇳 Tunus</option><option>🇹🇷 Türkiye</option><option>🇺🇸 ABD</option><option>🇺🇾 Uruguay</option><option>🇺🇿 Özbekistan</option><option>🇩🇿 Cezayir</option><option>🇪🇬 Mısır</option>
+          </select>
+        </label>
+        <label style="display:flex;flex-direction:column;gap:8px">
+          <span class="hc-d">Finalist 1</span>
+          <select style="width:100%;padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1);font-family:var(--ff-b)">
+            <option>🇧🇷 Brezilya</option><option>🇦🇷 Arjantin</option><option>🇫🇷 Fransa</option><option>🇩🇪 Almanya</option><option>🏴 İngiltere</option><option>🇪🇸 İspanya</option><option>🇵🇹 Portekiz</option><option>🇳🇱 Hollanda</option><option>🇹🇷 Türkiye</option><option>🇺🇸 ABD</option><option>🇺🇾 Uruguay</option><option>🇲🇦 Fas</option><option>🇯🇵 Japonya</option><option>🇨🇴 Kolombiya</option><option>🇧🇪 Belçika</option><option>🇭🇷 Hırvatistan</option><option>🇮🇹 İtalya</option><option>🇨🇭 İsviçre</option><option>🇳🇴 Norveç</option><option>🇸🇳 Senegal</option>
+          </select>
+        </label>
+        <label style="display:flex;flex-direction:column;gap:8px">
+          <span class="hc-d">Finalist 2</span>
+          <select style="width:100%;padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1);font-family:var(--ff-b)">
+            <option>🇫🇷 Fransa</option><option>🇧🇷 Brezilya</option><option>🇦🇷 Arjantin</option><option>🇩🇪 Almanya</option><option>🏴 İngiltere</option><option>🇪🇸 İspanya</option><option>🇵🇹 Portekiz</option><option>🇳🇱 Hollanda</option><option>🇹🇷 Türkiye</option><option>🇺🇸 ABD</option><option>🇺🇾 Uruguay</option><option>🇲🇦 Fas</option><option>🇯🇵 Japonya</option><option>🇨🇴 Kolombiya</option><option>🇧🇪 Belçika</option><option>🇭🇷 Hırvatistan</option><option>🇨🇭 İsviçre</option><option>🇳🇴 Norveç</option><option>🇸🇳 Senegal</option><option>🇰🇷 Güney Kore</option>
+          </select>
+        </label>
+        <label style="display:flex;flex-direction:column;gap:8px">
+          <span class="hc-d">Gol kralı kim olur?</span>
+          <select style="width:100%;padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1);font-family:var(--ff-b)">
+            <option>Kylian Mbappé</option><option>Erling Haaland</option><option>Harry Kane</option><option>Vinícius Júnior</option><option>Lionel Messi</option><option>Cristiano Ronaldo</option><option>Lautaro Martínez</option><option>Jude Bellingham</option><option>Raphinha</option><option>Rodrygo</option><option>Ousmane Dembélé</option><option>Antoine Griezmann</option><option>Jamal Musiala</option><option>Kai Havertz</option><option>Memphis Depay</option><option>Cody Gakpo</option><option>Álvaro Morata</option><option>Lamine Yamal</option><option>Rasmus Højlund</option><option>Dušan Vlahović</option><option>Victor Osimhen</option><option>Mohamed Salah</option><option>Son Heung-min</option><option>Mehdi Taremi</option><option>En-Nesyri</option>
+          </select>
+        </label>
+        <label style="display:flex;flex-direction:column;gap:8px">
+          <span class="hc-d">Asist kralı kim olur?</span>
+          <select style="width:100%;padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1);font-family:var(--ff-b)">
+            <option>Lionel Messi</option><option>Kevin De Bruyne</option><option>Jude Bellingham</option><option>Bruno Fernandes</option><option>Antoine Griezmann</option><option>Lamine Yamal</option><option>Jamal Musiala</option><option>Pedri</option><option>Phil Foden</option><option>Bukayo Saka</option><option>Florian Wirtz</option><option>Martin Ødegaard</option><option>Bernardo Silva</option><option>Ousmane Dembélé</option><option>Raphinha</option><option>Rodrygo</option><option>Federico Valverde</option><option>Christian Pulisic</option><option>Hakim Ziyech</option><option>Achraf Hakimi</option><option>Hakan Çalhanoğlu</option><option>Arda Güler</option><option>Takefusa Kubo</option><option>Son Heung-min</option><option>Mohamed Salah</option>
+          </select>
+        </label>
+        <label style="display:flex;flex-direction:column;gap:8px">
+          <span class="hc-d">Turnuvanın oyuncusu kim olur?</span>
+          <select style="width:100%;padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1);font-family:var(--ff-b)">
+            <option>Kylian Mbappé</option><option>Lionel Messi</option><option>Jude Bellingham</option><option>Vinícius Júnior</option><option>Erling Haaland</option><option>Harry Kane</option><option>Lamine Yamal</option><option>Jamal Musiala</option><option>Kevin De Bruyne</option><option>Florian Wirtz</option><option>Pedri</option><option>Rodri</option><option>Lautaro Martínez</option><option>Federico Valverde</option><option>Bruno Fernandes</option><option>Cristiano Ronaldo</option><option>Raphinha</option><option>Ousmane Dembélé</option><option>Mohamed Salah</option><option>Arda Güler</option>
+          </select>
+        </label>
+      </div>
+      <button class="btn btn-p" style="margin-top:20px">Turnuva Tahminlerini Kaydet</button>
+    </div>
+
+    <div style="margin-top:36px">
+      <p class="slabel">Maç Tahminleri</p>
+      <h3 class="hc-t">Grup Aşaması Maçları</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:18px">
+        <div class="rank-panel" style="padding:18px"><p class="slabel">11 Haziran 2026 · 22:00</p><h3 class="hc-t">Grup A</h3><div class="rrow" style="padding:12px 0"><span class="rname">🇲🇽 Meksika</span><span class="rval">vs</span><span class="rname" style="text-align:right">🇿🇦 Güney Afrika</span></div><div style="display:flex;gap:10px;margin-top:12px"><input type="number" min="0" placeholder="Meksika gol" style="width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)"><input type="number" min="0" placeholder="G. Afrika gol" style="width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)"></div><button class="btn btn-o" style="margin-top:14px">Tahmini Kaydet</button></div>
+        <div class="rank-panel" style="padding:18px"><p class="slabel">11 Haziran 2026 · 04:00</p><h3 class="hc-t">Grup A</h3><div class="rrow" style="padding:12px 0"><span class="rname">🇰🇷 Güney Kore</span><span class="rval">vs</span><span class="rname" style="text-align:right">🇹🇷 Türkiye</span></div><div style="display:flex;gap:10px;margin-top:12px"><input type="number" min="0" placeholder="G. Kore gol" style="width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)"><input type="number" min="0" placeholder="Türkiye gol" style="width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)"></div><button class="btn btn-o" style="margin-top:14px">Tahmini Kaydet</button></div>
+      </div>
+      <div class="rank-cta"><button class="btn btn-p" id="showAllMatches">Tüm Maçları Göster</button></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="c">© 2026 World Cup Arena · Tüm Hakları Saklıdır</div></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
+
+
+

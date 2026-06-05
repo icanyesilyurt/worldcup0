@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dünya Kupası Arena</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css"></head>
+<body>
+
+<header class="hdr" id="hdr">
+  <div class="c hdr-i">
+    <a href="index.html" class="logo" >
+      <span class="logo-icon">⚽</span>
+      <span class="logo-txt">
+        <span class="logo-sub">Dünya Kupası</span>
+        <span class="logo-main">Arena</span>
+      </span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="predictions.html">Tahminler</a>
+      <a href="rankings.html">Sıralama</a>
+      <a href="rules.html">Kurallar</a>
+      <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
+      <a href="profile.html#login" class="auth-link auth-logged-out">Giriş Yap</a>
+      <a href="profile.html#signup" class="auth-link auth-logged-out">Üye Ol</a>
+      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
+      <a href="predictions.html" class="btn btn-p" >Tahmine Başla</a>
+    </nav>
+    <button class="hbg" id="hbg" aria-label="Menüyü aç/kapat"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="mob-nav" id="mobnav">
+    <a href="index.html">Ana Sayfa</a>
+    <a href="predictions.html">Tahminler</a>
+    <a href="rankings.html">Sıralama</a>
+    <a href="rules.html">Kurallar</a>
+    <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
+      <a href="profile.html#login" class="auth-link auth-logged-out">Giriş Yap</a>
+      <a href="profile.html#signup" class="auth-link auth-logged-out">Üye Ol</a>
+      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
+      <a href="predictions.html" class="btn btn-p" >Tahmine Başla</a>
+  </nav>
+</header>
+
+<main data-page="rankings">
+<section class="s" id="rankings">
+  <div class="c">
+    <p class="slabel">Sıralama</p>
+    <h2 class="stitle">Sıralama</h2>
+    <div class="divider"></div>
+
+    <div style="display:grid;grid-template-columns:1fr;gap:18px;margin-top:34px">
+      <div class="rank-panel">
+        <div class="rp-head"><span class="rp-head-icon">📊</span><span class="rp-head-t">Ülke Katılımı</span></div>
+        <ul class="rlist">
+          <li class="rrow"><span class="rname">Türkiye</span><span class="rval rval-g">42 katılımcı</span></li>
+          <li class="rrow"><span class="rname">Brezilya</span><span class="rval">38 katılımcı</span></li>
+          <li class="rrow"><span class="rname">Arjantin</span><span class="rval">36 katılımcı</span></li>
+          <li class="rrow"><span class="rname">Almanya</span><span class="rval">34 katılımcı</span></li>
+          <li class="rrow"><span class="rname">Fransa</span><span class="rval">32 katılımcı</span></li>
+          <li class="rrow"><span class="rname">İspanya</span><span class="rval">31 katılımcı</span></li>
+          <li class="rrow"><span class="rname">İngiltere</span><span class="rval">30 katılımcı</span></li>
+          <li class="rrow"><span class="rname">Portekiz</span><span class="rval">29 katılımcı</span></li>
+          <li class="rrow"><span class="rname">Hollanda</span><span class="rval">27 katılımcı</span></li>
+          <li class="rrow"><span class="rname">Fas</span><span class="rval">26 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">ABD</span><span class="rval">25 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Meksika</span><span class="rval">24 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Kanada</span><span class="rval">23 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Uruguay</span><span class="rval">22 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Kolombiya</span><span class="rval">21 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Japonya</span><span class="rval">20 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Güney Kore</span><span class="rval">19 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Senegal</span><span class="rval">18 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Hırvatistan</span><span class="rval">18 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Belçika</span><span class="rval">17 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">İsviçre</span><span class="rval">17 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Norveç</span><span class="rval">16 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">İsveç</span><span class="rval">16 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Avusturya</span><span class="rval">15 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">İskoçya</span><span class="rval">15 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Çekya</span><span class="rval">14 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Bosna Hersek</span><span class="rval">14 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Sırbistan</span><span class="rval">13 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Avustralya</span><span class="rval">13 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">İran</span><span class="rval">12 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Irak</span><span class="rval">12 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Suudi Arabistan</span><span class="rval">11 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Katar</span><span class="rval">11 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Ürdün</span><span class="rval">10 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Özbekistan</span><span class="rval">10 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Mısır</span><span class="rval">9 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Cezayir</span><span class="rval">9 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Tunus</span><span class="rval">8 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Gana</span><span class="rval">8 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Güney Afrika</span><span class="rval">7 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Fildişi Sahili</span><span class="rval">7 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Cabo Verde</span><span class="rval">6 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Kongo DC</span><span class="rval">6 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Panama</span><span class="rval">5 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Haiti</span><span class="rval">5 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Curaçao</span><span class="rval">4 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Yeni Zelanda</span><span class="rval">4 katılımcı</span></li>
+          <li class="rrow country-extra"><span class="rname">Paraguay</span><span class="rval">4 katılımcı</span></li>
+        </ul>
+        <div class="rank-cta"><button class="btn btn-o" onclick="document.querySelectorAll('.country-extra').forEach(e=>e.hidden=!e.hidden);this.textContent=this.textContent==='Tüm Listeyi Gör'?'Listeyi Kapat':'Tüm Listeyi Gör'">Tüm Listeyi Gör</button></div>
+      </div>
+
+      <div class="rank-panel feat">
+        <div class="rp-head"><span class="rp-head-icon">🏅</span><span class="rp-head-t">Bireysel Sıralama</span></div>
+        <ul class="rlist">
+          <li class="rrow"><span class="rbadge" style="color:#f0b429">1</span><span class="rname">İZZET</span><span class="rval">Türkiye</span><span class="rval rval-g">420 puan</span></li>
+          <li class="rrow"><span class="rbadge" style="color:#a0aec0">2</span><span class="rname">Oyuncu#77291</span><span class="rval">Brezilya</span><span class="rval rval-g">390 puan</span></li>
+          <li class="rrow"><span class="rbadge" style="color:#cd7f32">3</span><span class="rname">El Matador</span><span class="rval">Arjantin</span><span class="rval rval-g">360 puan</span></li>
+          <li class="rrow"><span class="rbadge">4</span><span class="rname">Oyuncu#05511</span><span class="rval">Almanya</span><span class="rval rval-g">344 puan</span></li>
+          <li class="rrow"><span class="rbadge">5</span><span class="rname">Paris10</span><span class="rval">Fransa</span><span class="rval rval-g">320 puan</span></li>
+          <li class="rrow"><span class="rbadge">6</span><span class="rname">Oyuncu#31088</span><span class="rval">İspanya</span><span class="rval rval-g">302 puan</span></li>
+          <li class="rrow"><span class="rbadge">7</span><span class="rname">LondonAce</span><span class="rval">İngiltere</span><span class="rval rval-g">296 puan</span></li>
+          <li class="rrow"><span class="rbadge">8</span><span class="rname">Oyuncu#44820</span><span class="rval">Portekiz</span><span class="rval rval-g">281 puan</span></li>
+          <li class="rrow"><span class="rbadge">9</span><span class="rname">OrangeWall</span><span class="rval">Hollanda</span><span class="rval rval-g">276 puan</span></li>
+          <li class="rrow"><span class="rbadge">10</span><span class="rname">Oyuncu#90317</span><span class="rval">Fas</span><span class="rval rval-g">260 puan</span></li>
+          <li class="rrow player-extra"><span class="rbadge">11</span><span class="rname">Oyuncu#18304</span><span class="rval">ABD</span><span class="rval rval-g">251 puan</span></li>
+          <li class="rrow player-extra"><span class="rbadge">12</span><span class="rname">AztecaKing</span><span class="rval">Meksika</span><span class="rval rval-g">244 puan</span></li>
+          <li class="rrow player-extra"><span class="rbadge">13</span><span class="rname">Oyuncu#22971</span><span class="rval">Kanada</span><span class="rval rval-g">238 puan</span></li>
+          <li class="rrow player-extra"><span class="rbadge">14</span><span class="rname">CelesteFan</span><span class="rval">Uruguay</span><span class="rval rval-g">230 puan</span></li>
+          <li class="rrow player-extra"><span class="rbadge">15</span><span class="rname">Oyuncu#67104</span><span class="rval">Kolombiya</span><span class="rval rval-g">221 puan</span></li>
+          <li class="rrow player-extra"><span class="rbadge">16</span><span class="rname">SamuraiBlue</span><span class="rval">Japonya</span><span class="rval rval-g">214 puan</span></li>
+          <li class="rrow player-extra"><span class="rbadge">17</span><span class="rname">Oyuncu#19382</span><span class="rval">Türkiye</span><span class="rval rval-g">208 puan</span></li>
+          <li class="rrow player-extra"><span class="rbadge">18</span><span class="rname">SeoulStar</span><span class="rval">Güney Kore</span><span class="rval rval-g">204 puan</span></li>
+          <li class="rrow player-extra"><span class="rbadge">19</span><span class="rname">Oyuncu#39180</span><span class="rval">Senegal</span><span class="rval rval-g">198 puan</span></li>
+          <li class="rrow player-extra"><span class="rbadge">20</span><span class="rname">Zagreb11</span><span class="rval">Hırvatistan</span><span class="rval rval-g">190 puan</span></li>
+        </ul>
+        <div class="rank-cta"><button class="btn btn-p" onclick="document.querySelectorAll('.player-extra').forEach(e=>e.hidden=!e.hidden);this.textContent=this.textContent==='İlk 500’ü Gör'?'Listeyi Kapat':'İlk 500’ü Gör'">İlk 500’ü Gör</button></div>
+      </div>
+
+      <div class="rank-panel">
+        <div class="rp-head"><span class="rp-head-icon">🌍</span><span class="rp-head-t">Ülke / Kolektif Puan Sıralaması</span></div>
+        <ul class="rlist">
+          <li class="rrow"><span class="rbadge" style="color:#f0b429">1</span><span class="rname">Brezilya</span><span class="rval">38 katılımcı</span><span class="rval rval-g">12.400 puan (kolektif)</span></li>
+          <li class="rrow"><span class="rbadge" style="color:#a0aec0">2</span><span class="rname">Türkiye</span><span class="rval">42 katılımcı</span><span class="rval rval-g">11.850 puan (kolektif)</span></li>
+          <li class="rrow"><span class="rbadge" style="color:#cd7f32">3</span><span class="rname">Arjantin</span><span class="rval">36 katılımcı</span><span class="rval rval-g">10.700 puan (kolektif)</span></li>
+          <li class="rrow"><span class="rbadge">4</span><span class="rname">Almanya</span><span class="rval">34 katılımcı</span><span class="rval rval-g">9.950 puan (kolektif)</span></li>
+          <li class="rrow"><span class="rbadge">5</span><span class="rname">Fransa</span><span class="rval">32 katılımcı</span><span class="rval rval-g">9.200 puan (kolektif)</span></li>
+          <li class="rrow"><span class="rbadge">6</span><span class="rname">İspanya</span><span class="rval">31 katılımcı</span><span class="rval rval-g">8.940 puan (kolektif)</span></li>
+          <li class="rrow"><span class="rbadge">7</span><span class="rname">İngiltere</span><span class="rval">30 katılımcı</span><span class="rval rval-g">8.620 puan (kolektif)</span></li>
+          <li class="rrow"><span class="rbadge">8</span><span class="rname">Portekiz</span><span class="rval">29 katılımcı</span><span class="rval rval-g">8.300 puan (kolektif)</span></li>
+          <li class="rrow"><span class="rbadge">9</span><span class="rname">Hollanda</span><span class="rval">27 katılımcı</span><span class="rval rval-g">7.760 puan (kolektif)</span></li>
+          <li class="rrow"><span class="rbadge">10</span><span class="rname">Fas</span><span class="rval">26 katılımcı</span><span class="rval rval-g">7.420 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">11</span><span class="rname">ABD</span><span class="rval">25 katılımcı</span><span class="rval rval-g">7.100 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">12</span><span class="rname">Meksika</span><span class="rval">24 katılımcı</span><span class="rval rval-g">6.850 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">13</span><span class="rname">Kanada</span><span class="rval">23 katılımcı</span><span class="rval rval-g">6.430 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">14</span><span class="rname">Uruguay</span><span class="rval">22 katılımcı</span><span class="rval rval-g">6.180 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">15</span><span class="rname">Kolombiya</span><span class="rval">21 katılımcı</span><span class="rval rval-g">5.940 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">16</span><span class="rname">Japonya</span><span class="rval">20 katılımcı</span><span class="rval rval-g">5.620 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">17</span><span class="rname">Güney Kore</span><span class="rval">19 katılımcı</span><span class="rval rval-g">5.380 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">18</span><span class="rname">Senegal</span><span class="rval">18 katılımcı</span><span class="rval rval-g">5.010 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">19</span><span class="rname">Hırvatistan</span><span class="rval">18 katılımcı</span><span class="rval rval-g">4.890 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">20</span><span class="rname">Belçika</span><span class="rval">17 katılımcı</span><span class="rval rval-g">4.670 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">21</span><span class="rname">İsviçre</span><span class="rval">17 katılımcı</span><span class="rval rval-g">4.530 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">22</span><span class="rname">Norveç</span><span class="rval">16 katılımcı</span><span class="rval rval-g">4.260 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">23</span><span class="rname">İsveç</span><span class="rval">16 katılımcı</span><span class="rval rval-g">4.100 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">24</span><span class="rname">Avusturya</span><span class="rval">15 katılımcı</span><span class="rval rval-g">3.980 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">25</span><span class="rname">İskoçya</span><span class="rval">15 katılımcı</span><span class="rval rval-g">3.760 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">26</span><span class="rname">Çekya</span><span class="rval">14 katılımcı</span><span class="rval rval-g">3.520 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">27</span><span class="rname">Bosna Hersek</span><span class="rval">14 katılımcı</span><span class="rval rval-g">3.300 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">28</span><span class="rname">Sırbistan</span><span class="rval">13 katılımcı</span><span class="rval rval-g">3.120 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">29</span><span class="rname">Avustralya</span><span class="rval">13 katılımcı</span><span class="rval rval-g">2.960 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">30</span><span class="rname">İran</span><span class="rval">12 katılımcı</span><span class="rval rval-g">2.820 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">31</span><span class="rname">Irak</span><span class="rval">12 katılımcı</span><span class="rval rval-g">2.690 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">32</span><span class="rname">Suudi Arabistan</span><span class="rval">11 katılımcı</span><span class="rval rval-g">2.510 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">33</span><span class="rname">Katar</span><span class="rval">11 katılımcı</span><span class="rval rval-g">2.340 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">34</span><span class="rname">Ürdün</span><span class="rval">10 katılımcı</span><span class="rval rval-g">2.190 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">35</span><span class="rname">Özbekistan</span><span class="rval">10 katılımcı</span><span class="rval rval-g">2.060 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">36</span><span class="rname">Mısır</span><span class="rval">9 katılımcı</span><span class="rval rval-g">1.920 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">37</span><span class="rname">Cezayir</span><span class="rval">9 katılımcı</span><span class="rval rval-g">1.840 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">38</span><span class="rname">Tunus</span><span class="rval">8 katılımcı</span><span class="rval rval-g">1.710 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">39</span><span class="rname">Gana</span><span class="rval">8 katılımcı</span><span class="rval rval-g">1.640 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">40</span><span class="rname">Güney Afrika</span><span class="rval">7 katılımcı</span><span class="rval rval-g">1.500 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">41</span><span class="rname">Fildişi Sahili</span><span class="rval">7 katılımcı</span><span class="rval rval-g">1.430 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">42</span><span class="rname">Cabo Verde</span><span class="rval">6 katılımcı</span><span class="rval rval-g">1.220 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">43</span><span class="rname">Kongo DC</span><span class="rval">6 katılımcı</span><span class="rval rval-g">1.160 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">44</span><span class="rname">Panama</span><span class="rval">5 katılımcı</span><span class="rval rval-g">980 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">45</span><span class="rname">Haiti</span><span class="rval">5 katılımcı</span><span class="rval rval-g">920 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">46</span><span class="rname">Curaçao</span><span class="rval">4 katılımcı</span><span class="rval rval-g">760 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">47</span><span class="rname">Yeni Zelanda</span><span class="rval">4 katılımcı</span><span class="rval rval-g">720 puan (kolektif)</span></li>
+          <li class="rrow collective-extra"><span class="rbadge">48</span><span class="rname">Paraguay</span><span class="rval">4 katılımcı</span><span class="rval rval-g">690 puan (kolektif)</span></li>
+        </ul>
+        <div class="rank-cta"><button class="btn btn-o" onclick="document.querySelectorAll('.collective-extra').forEach(e=>e.hidden=!e.hidden);this.textContent=this.textContent==='Tüm Ülkeleri Gör'?'Listeyi Kapat':'Tüm Ülkeleri Gör'">Tüm Ülkeleri Gör</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="c">© 2026 World Cup Arena · Tüm Hakları Saklıdır</div></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
+
+
+
