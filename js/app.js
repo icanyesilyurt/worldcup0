@@ -118,6 +118,62 @@ function fillProfileFields(profile,user){
   document.getElementById('profileReferral') && (document.getElementById('profileReferral').textContent=profile.referral_code || '-');
 }
 
+function showTournamentPredictionMessage(message){
+  const box=document.getElementById('tournamentPredictionMessage');
+  if(!box) return;
+  box.textContent=message;
+  box.hidden=!message;
+}
+
+function setSelectValue(id,value){
+  const select=document.getElementById(id);
+  if(!select || !value) return;
+  const option=[...select.options].find(item=>item.value===value || item.textContent===value);
+  if(option) select.value=option.value;
+}
+
+async function loadTournamentPredictions(){
+  const saveButton=document.getElementById('saveTournamentPredictions');
+  if(!saveButton) return;
+  const client=getSupabaseClient();
+  if(!client) return;
+  const user=await getCurrentUser();
+  if(!user) return;
+  const {data,error}=await client.from('tournament_predictions').select('champion,finalist_1,finalist_2,top_scorer,top_assist,player_of_tournament').eq('user_id',user.id).maybeSingle();
+  if(error){showTournamentPredictionMessage(error.message);return;}
+  if(!data) return;
+  setSelectValue('champion',data.champion);
+  setSelectValue('finalist_1',data.finalist_1);
+  setSelectValue('finalist_2',data.finalist_2);
+  setSelectValue('top_scorer',data.top_scorer);
+  setSelectValue('top_assist',data.top_assist);
+  setSelectValue('player_of_tournament',data.player_of_tournament);
+}
+
+async function saveTournamentPredictions(){
+  const client=getSupabaseClient();
+  if(!client) return;
+  const user=await getCurrentUser();
+  if(!user){
+    showTournamentPredictionMessage('Tahmin yapmak için giriş yapmalısın.');
+    setTimeout(()=>openAuthModal('login'),700);
+    return;
+  }
+
+  const payload={
+    user_id:user.id,
+    champion:document.getElementById('champion')?.value,
+    finalist_1:document.getElementById('finalist_1')?.value,
+    finalist_2:document.getElementById('finalist_2')?.value,
+    top_scorer:document.getElementById('top_scorer')?.value,
+    top_assist:document.getElementById('top_assist')?.value,
+    player_of_tournament:document.getElementById('player_of_tournament')?.value
+  };
+
+  const {error}=await client.from('tournament_predictions').upsert(payload,{onConflict:'user_id'});
+  if(error){showTournamentPredictionMessage(error.message);return;}
+  showTournamentPredictionMessage('Turnuva tahminlerin kaydedildi.');
+}
 async function signUpUser(){
   const client=getSupabaseClient();
   if(!client) return;
@@ -216,6 +272,8 @@ window.showAuthTab=showAuthTab;
 window.openAuthModal=openAuthModal;
 window.closeAuthModal=closeAuthModal;
 window.handlePredictionStart=handlePredictionStart;
+window.saveTournamentPredictions=saveTournamentPredictions;
+window.loadTournamentPredictions=loadTournamentPredictions;
 
 window.addEventListener('scroll',()=>hdr.classList.toggle('sc',window.scrollY>40),{passive:true});
 hbg.addEventListener('click',e=>{e.stopPropagation();const o=mob.classList.toggle('o');hbg.classList.toggle('o',o)});
@@ -231,6 +289,7 @@ if(showAllMatchesBtn){
 
 document.getElementById('signupForm')?.addEventListener('submit',e=>{e.preventDefault();signUpUser();});
 document.getElementById('loginForm')?.addEventListener('submit',e=>{e.preventDefault();loginUser();});
+document.getElementById('saveTournamentPredictions')?.addEventListener('click',e=>{e.preventDefault();saveTournamentPredictions();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape') closeAuthModal();});
 
 window.addEventListener('DOMContentLoaded',async()=>{
@@ -242,5 +301,9 @@ window.addEventListener('DOMContentLoaded',async()=>{
   }
   await updateHeaderAuthState();
   await createOrLoadProfile();
+  await loadTournamentPredictions();
 });
+
+
+
 
