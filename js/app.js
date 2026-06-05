@@ -36,7 +36,7 @@ function generateReferralCode(){
   return 'WCA'+Math.floor(100000+Math.random()*900000);
 }
 
-function showHomeAuthTab(tab){
+function showAuthTab(tab){
   const loginForm=document.getElementById('loginForm');
   const signupForm=document.getElementById('signupForm');
   const loginTab=document.getElementById('loginTab');
@@ -49,9 +49,22 @@ function showHomeAuthTab(tab){
   loginTab?.classList.toggle('btn-o',isSignup);
   signupTab?.classList.toggle('btn-p',isSignup);
   signupTab?.classList.toggle('btn-o',!isSignup);
-  if(location.hash !== (isSignup ? '#signup' : '#login')){
-    history.replaceState(null,'',isSignup ? '#signup' : '#login');
-  }
+}
+
+function openAuthModal(tab='login'){
+  const modal=document.getElementById('authModal');
+  if(!modal){window.location.href='index.html#'+tab;return;}
+  showAuthMessage('');
+  showAuthTab(tab);
+  modal.hidden=false;
+  document.body.classList.add('modal-open');
+}
+
+function closeAuthModal(){
+  const modal=document.getElementById('authModal');
+  if(!modal) return;
+  modal.hidden=true;
+  document.body.classList.remove('modal-open');
 }
 
 async function getCurrentUser(){
@@ -60,6 +73,15 @@ async function getCurrentUser(){
   const {data,error}=await client.auth.getUser();
   if(error) return null;
   return data.user || null;
+}
+
+function handlePredictionStart(event){
+  event?.preventDefault();
+  getCurrentUser().then(user=>{
+    if(user){window.location.href='predictions.html';return;}
+    openAuthModal('login');
+  });
+  return false;
 }
 
 async function loadProfileForUser(user){
@@ -96,16 +118,6 @@ function fillProfileFields(profile,user){
   document.getElementById('profileReferral') && (document.getElementById('profileReferral').textContent=profile.referral_code || '-');
 }
 
-function fillHomeSummary(profile,user){
-  document.getElementById('summaryDisplayName') && (document.getElementById('summaryDisplayName').textContent=profile.display_name || 'Oyuncu');
-  document.getElementById('summaryName') && (document.getElementById('summaryName').textContent=profile.display_name || 'Oyuncu');
-  document.getElementById('summaryEmail') && (document.getElementById('summaryEmail').textContent=user.email || profile.email || '-');
-  document.getElementById('summaryCountry') && (document.getElementById('summaryCountry').textContent=profile.country || '-');
-  document.getElementById('summaryCountryTop') && (document.getElementById('summaryCountryTop').textContent=profile.country || '-');
-  document.getElementById('summaryPoints') && (document.getElementById('summaryPoints').textContent=profile.total_points ?? 0);
-  document.getElementById('summaryReferral') && (document.getElementById('summaryReferral').textContent=profile.referral_code || '-');
-}
-
 async function signUpUser(){
   const client=getSupabaseClient();
   if(!client) return;
@@ -138,8 +150,9 @@ async function signUpUser(){
   }
 
   showAuthMessage('');
+  closeAuthModal();
   await updateHeaderAuthState();
-  await createOrLoadProfile();
+  window.location.href='profile.html';
 }
 
 async function loginUser(){
@@ -150,8 +163,9 @@ async function loginUser(){
   const {error}=await client.auth.signInWithPassword({email,password});
   if(error){showAuthMessage(formatAuthError(error));return;}
   showAuthMessage('');
+  closeAuthModal();
   await updateHeaderAuthState();
-  await createOrLoadProfile();
+  window.location.href='profile.html';
 }
 
 async function logoutUser(){
@@ -163,15 +177,11 @@ async function logoutUser(){
 async function createOrLoadProfile(){
   const loggedOut=document.getElementById('loggedOutProfile');
   const loggedIn=document.getElementById('loggedInProfile');
-  const homeAuthBox=document.getElementById('homeAuthBox');
-  const homeProfileSummary=document.getElementById('homeProfileSummary');
 
   const client=getSupabaseClient();
   if(!client){
     if(loggedOut) loggedOut.hidden=false;
     if(loggedIn) loggedIn.hidden=true;
-    if(homeAuthBox) homeAuthBox.hidden=false;
-    if(homeProfileSummary) homeProfileSummary.hidden=true;
     return;
   }
 
@@ -179,8 +189,6 @@ async function createOrLoadProfile(){
   if(!user){
     if(loggedOut) loggedOut.hidden=false;
     if(loggedIn) loggedIn.hidden=true;
-    if(homeAuthBox) homeAuthBox.hidden=false;
-    if(homeProfileSummary) homeProfileSummary.hidden=true;
     return;
   }
 
@@ -189,10 +197,7 @@ async function createOrLoadProfile(){
 
   if(loggedOut) loggedOut.hidden=true;
   if(loggedIn) loggedIn.hidden=false;
-  if(homeAuthBox) homeAuthBox.hidden=true;
-  if(homeProfileSummary) homeProfileSummary.hidden=false;
   fillProfileFields(profile,user);
-  fillHomeSummary(profile,user);
 }
 
 async function updateHeaderAuthState(){
@@ -207,7 +212,10 @@ window.logoutUser=logoutUser;
 window.getCurrentUser=getCurrentUser;
 window.createOrLoadProfile=createOrLoadProfile;
 window.updateHeaderAuthState=updateHeaderAuthState;
-window.showHomeAuthTab=showHomeAuthTab;
+window.showAuthTab=showAuthTab;
+window.openAuthModal=openAuthModal;
+window.closeAuthModal=closeAuthModal;
+window.handlePredictionStart=handlePredictionStart;
 
 window.addEventListener('scroll',()=>hdr.classList.toggle('sc',window.scrollY>40),{passive:true});
 hbg.addEventListener('click',e=>{e.stopPropagation();const o=mob.classList.toggle('o');hbg.classList.toggle('o',o)});
@@ -223,11 +231,16 @@ if(showAllMatchesBtn){
 
 document.getElementById('signupForm')?.addEventListener('submit',e=>{e.preventDefault();signUpUser();});
 document.getElementById('loginForm')?.addEventListener('submit',e=>{e.preventDefault();loginUser();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape') closeAuthModal();});
 
 window.addEventListener('DOMContentLoaded',async()=>{
-  if(document.getElementById('homeAuthBox')){
-    showHomeAuthTab(location.hash==='#signup'?'signup':'login');
+  if(document.getElementById('authModal')){
+    showAuthTab(location.hash==='#signup'?'signup':'login');
+    if(location.hash==='#login' || location.hash==='#signup'){
+      openAuthModal(location.hash==='#signup'?'signup':'login');
+    }
   }
   await updateHeaderAuthState();
   await createOrLoadProfile();
 });
+

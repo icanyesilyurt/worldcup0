@@ -23,12 +23,10 @@
       <a href="rankings.html">Sıralama</a>
       <a href="rules.html">Kurallar</a>
       <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
-      <a href="index.html#login" class="auth-link auth-logged-out">Giriş Yap</a>
-      <a href="index.html#signup" class="auth-link auth-logged-out">Üye Ol</a>
+      <a href="#" class="auth-link auth-logged-out" onclick="openAuthModal('login');return false">Giriş Yap</a>
       <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
-      <a href="predictions.html" class="btn btn-p" >Tahmine Başla</a>
-    </nav>
-    <button class="hbg" id="hbg" aria-label="Menüyü aç/kapat"><span></span><span></span><span></span></button>
+      <a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)">Tahmine Başla</a>
+    </nav>    <button class="hbg" id="hbg" aria-label="Menüyü aç/kapat"><span></span><span></span><span></span></button>
   </div>
   <nav class="mob-nav" id="mobnav">
     <a href="index.html">Ana Sayfa</a>
@@ -36,12 +34,10 @@
     <a href="rankings.html">Sıralama</a>
     <a href="rules.html">Kurallar</a>
     <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
-    <a href="index.html#login" class="auth-link auth-logged-out">Giriş Yap</a>
-    <a href="index.html#signup" class="auth-link auth-logged-out">Üye Ol</a>
+    <a href="#" class="auth-link auth-logged-out" onclick="openAuthModal('login');return false">Giriş Yap</a>
     <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
-    <a href="predictions.html" class="btn btn-p" >Tahmine Başla</a>
-  </nav>
-</header>
+    <a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)">Tahmine Başla</a>
+  </nav></header>
 
 <main data-page="home">
 <section class="hero s" id="home">
@@ -56,7 +52,7 @@
     <h1 class="htitle">104 Maç.<br>Tek Dünya Sıralaması.<br><span class="htitle-a">Tek Ülke Mücadelesi.</span></h1>
     <p class="hero-sub">Her maçı tahmin et, puan topla, ülkene destek ol ve Dünya Kupası heyecanını dünyanın dört bir yanındaki futbolseverlerle birlikte yaşa.</p>
     <div class="hero-btns">
-      <a href="predictions.html" class="btn btn-p" >⚽ Tahmine Başla</a>
+      <a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)">⚽ Tahmine Başla</a>
       <a href="rankings.html" class="btn btn-o" >Sıralamayı Gör</a>
     </div>
     <div class="stats-bar">
@@ -68,53 +64,6 @@
   </div>
   <div class="hero-fade" aria-hidden="true"></div>
 </section>
-<section class="s" id="authArea">
-  <div class="c">
-    <div id="authMessage" class="rank-panel" style="padding:18px;margin-bottom:16px" hidden></div>
-
-    <div id="homeAuthBox" class="rank-panel feat" style="padding:22px;max-width:520px">
-      <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap">
-        <button class="btn btn-p" id="loginTab" type="button" onclick="showHomeAuthTab('login')">Giriş Yap</button>
-        <button class="btn btn-o" id="signupTab" type="button" onclick="showHomeAuthTab('signup')">Üye Ol</button>
-      </div>
-      <form id="loginForm" style="display:flex;flex-direction:column;gap:12px">
-        <p class="slabel">Giriş Yap</p>
-        <label style="display:flex;flex-direction:column;gap:7px"><span class="hc-d">E-posta</span><input id="loginEmail" type="email" required placeholder="email@ornek.com" style="padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)"></label>
-        <label style="display:flex;flex-direction:column;gap:7px"><span class="hc-d">Şifre</span><input id="loginPassword" type="password" required placeholder="Şifre" style="padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)"></label>
-        <button class="btn btn-p" type="submit">Giriş Yap</button>
-        <button class="btn btn-o" type="button" onclick="showHomeAuthTab('signup')">Hesabın yok mu? Üye ol</button>
-      </form>
-      <form id="signupForm" hidden style="display:flex;flex-direction:column;gap:12px">
-        <p class="slabel">Üye Ol</p>
-        <label style="display:flex;flex-direction:column;gap:7px"><span class="hc-d">E-posta</span><input id="signupEmail" type="email" required placeholder="email@ornek.com" style="padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)"></label>
-        <label style="display:flex;flex-direction:column;gap:7px"><span class="hc-d">Şifre</span><input id="signupPassword" type="password" required placeholder="Şifre" style="padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)"></label>
-        <label style="display:flex;flex-direction:column;gap:7px"><span class="hc-d">Ülke seçimi</span><select id="signupCountry" required style="padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)"><option>Türkiye</option><option>Brezilya</option><option>Arjantin</option><option>Almanya</option><option>Fransa</option><option>İspanya</option><option>İngiltere</option><option>Portekiz</option><option>Hollanda</option><option>Fas</option><option>ABD</option><option>Meksika</option><option>Kanada</option><option>Uruguay</option><option>Kolombiya</option><option>Japonya</option><option>Güney Kore</option><option>Senegal</option><option>Hırvatistan</option><option>Belçika</option><option>İsviçre</option><option>Norveç</option><option>İsveç</option><option>Avusturya</option><option>İskoçya</option><option>Çekya</option><option>Bosna Hersek</option><option>Sırbistan</option><option>Avustralya</option><option>İran</option><option>Irak</option><option>Suudi Arabistan</option><option>Katar</option><option>Ürdün</option><option>Özbekistan</option><option>Mısır</option><option>Cezayir</option><option>Tunus</option><option>Gana</option><option>Güney Afrika</option><option>Fildişi Sahili</option><option>Cabo Verde</option><option>Kongo DC</option><option>Panama</option><option>Haiti</option><option>Curaçao</option><option>Yeni Zelanda</option><option>Paraguay</option></select></label>
-        <button class="btn btn-p" type="submit">Üye Ol</button>
-        <button class="btn btn-o" type="button" onclick="showHomeAuthTab('login')">Hesabın var mı? Giriş yap</button>
-      </form>
-    </div>
-
-    <div id="homeProfileSummary" class="rank-panel feat" hidden style="padding:22px;max-width:560px">
-      <p class="slabel">Profil Özeti</p>
-      <div class="sc-user" style="margin:10px 0 20px">
-        <div class="sc-avatar">⚽</div>
-        <div>
-          <div class="sc-name" id="summaryDisplayName">Oyuncu#000000</div>
-          <div class="sc-ctry" id="summaryCountryTop">Türkiye</div>
-        </div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <div class="rrow" style="padding:10px 0"><span class="rname">Kullanıcı adı</span><span class="rval rval-g" id="summaryName">-</span></div>
-        <div class="rrow" style="padding:10px 0"><span class="rname">E-posta</span><span class="rval rval-g" id="summaryEmail">-</span></div>
-        <div class="rrow" style="padding:10px 0"><span class="rname">Ülke</span><span class="rval rval-g" id="summaryCountry">-</span></div>
-        <div class="rrow" style="padding:10px 0"><span class="rname">Toplam puan</span><span class="rval rval-g" id="summaryPoints">0</span></div>
-        <div class="rrow" style="padding:10px 0"><span class="rname">Davet kodu</span><span class="rval rval-g" id="summaryReferral">-</span></div>
-      </div>
-      <a href="profile.html" class="btn btn-p" style="margin-top:20px">Tam Profili Gör</a>
-    </div>
-  </div>
-</section>
-
 <section class="mani s" id="about">
   <div class="mani-bg"></div>
   <div class="c mani-i">
@@ -185,7 +134,7 @@
     <p class="slabel">Şimdi Katıl</p>
     <h2 class="cta-t">Küresel Dünya Kupası<br><span class="cta-ta">deneyiminin parçası ol.</span></h2>
     <p class="cta-sub">104 maç. Sayısız tahmin. Tek küresel arena.</p>
-    <div class="cta-acts"><a href="predictions.html" class="btn btn-p cta-btn" >⚽ Tahmine Başla</a></div>
+    <div class="cta-acts"><a href="predictions.html" class="btn btn-p cta-btn predict-start" onclick="return handlePredictionStart(event)">⚽ Tahmine Başla</a></div>
     <div class="flags">
       <span style="animation-delay:.00s">🇧🇷</span><span style="animation-delay:.06s">🇩🇪</span><span style="animation-delay:.12s">🇦🇷</span><span style="animation-delay:.18s">🇫🇷</span><span style="animation-delay:.24s">🇪🇸</span><span style="animation-delay:.30s">🇵🇹</span><span style="animation-delay:.36s">🇮🇹</span><span style="animation-delay:.42s">🇳🇱</span><span style="animation-delay:.48s">🇯🇵</span><span style="animation-delay:.54s">🇲🇦</span><span style="animation-delay:.60s">🇺🇸</span><span style="animation-delay:.66s">🇹🇷</span><span style="animation-delay:.72s">🇷🇸</span><span style="animation-delay:.78s">🇸🇳</span><span style="animation-delay:.84s">🇦🇺</span><span style="animation-delay:.90s">🇰🇷</span>
     </div>
@@ -193,6 +142,31 @@
 </section>
 </main>
 
+<div class="auth-modal" id="authModal" hidden>
+  <div class="auth-modal__overlay" onclick="closeAuthModal()"></div>
+  <div class="auth-modal__card" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+    <button class="auth-modal__close" type="button" aria-label="Kapat" onclick="closeAuthModal()">×</button>
+    <p class="slabel" id="authModalTitle">Hesap</p>
+    <div id="authMessage" class="auth-message" hidden></div>
+    <div class="auth-tabs">
+      <button class="btn btn-p" id="loginTab" type="button" onclick="showAuthTab('login')">Giriş Yap</button>
+      <button class="btn btn-o" id="signupTab" type="button" onclick="showAuthTab('signup')">Üye Ol</button>
+    </div>
+    <form id="loginForm" class="auth-form">
+      <label><span class="hc-d">E-posta</span><input id="loginEmail" type="email" required placeholder="email@ornek.com"></label>
+      <label><span class="hc-d">Şifre</span><input id="loginPassword" type="password" required placeholder="Şifre"></label>
+      <button class="btn btn-p" type="submit">Giriş Yap</button>
+      <button class="auth-switch" type="button" onclick="showAuthTab('signup')">Hesabın yok mu? Üye ol</button>
+    </form>
+    <form id="signupForm" class="auth-form" hidden>
+      <label><span class="hc-d">E-posta</span><input id="signupEmail" type="email" required placeholder="email@ornek.com"></label>
+      <label><span class="hc-d">Şifre</span><input id="signupPassword" type="password" required placeholder="Şifre"></label>
+      <label><span class="hc-d">Ülke seçimi</span><select id="signupCountry" required><option>Türkiye</option><option>Brezilya</option><option>Arjantin</option><option>Almanya</option><option>Fransa</option><option>İspanya</option><option>İngiltere</option><option>Portekiz</option><option>Hollanda</option><option>Fas</option><option>ABD</option><option>Meksika</option><option>Kanada</option><option>Uruguay</option><option>Kolombiya</option><option>Japonya</option><option>Güney Kore</option><option>Senegal</option><option>Hırvatistan</option><option>Belçika</option><option>İsviçre</option><option>Norveç</option><option>İsveç</option><option>Avusturya</option><option>İskoçya</option><option>Çekya</option><option>Bosna Hersek</option><option>Sırbistan</option><option>Avustralya</option><option>İran</option><option>Irak</option><option>Suudi Arabistan</option><option>Katar</option><option>Ürdün</option><option>Özbekistan</option><option>Mısır</option><option>Cezayir</option><option>Tunus</option><option>Gana</option><option>Güney Afrika</option><option>Fildişi Sahili</option><option>Cabo Verde</option><option>Kongo DC</option><option>Panama</option><option>Haiti</option><option>Curaçao</option><option>Yeni Zelanda</option><option>Paraguay</option></select></label>
+      <button class="btn btn-p" type="submit">Üye Ol</button>
+      <button class="auth-switch" type="button" onclick="showAuthTab('login')">Hesabın var mı? Giriş yap</button>
+    </form>
+  </div>
+</div>
 <footer><div class="c">© 2026 World Cup Arena · Tüm Hakları Saklıdır</div></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -200,6 +174,8 @@
 <script src="js/app.js"></script>
 </body>
 </html>
+
+
 
 
 

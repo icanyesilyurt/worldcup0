@@ -143,3 +143,18 @@ button{cursor:pointer;border:none;background:none;font-family:var(--ff-u)}
 footer{border-top:1px solid var(--border);padding:22px 0;text-align:center;font-family:var(--ff-u);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);position:relative;z-index:1}
 @media(max-width:900px){.nav{display:none}.hbg{display:flex}.mob-nav{display:flex}.mani-i{grid-template-columns:1fr;gap:28px}.mani-l{position:static;display:flex;align-items:center;gap:18px}.globe-wrap{margin-top:0}.mpara-b{margin-left:0}.how-grid{grid-template-columns:repeat(2,1fr)}.rank-grid{grid-template-columns:1fr;max-width:420px}.soc-c{grid-template-columns:1fr}.sc-wrap{position:static;max-width:360px;margin:0 auto}}
 @media(max-width:540px){.how-grid{grid-template-columns:1fr;gap:10px}.hero-btns{flex-direction:column;align-items:flex-start}.stats-bar{max-width:100%}.stat-v{font-size:22px}.flags span{font-size:22px}}
+.auth-modal{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;padding:20px}
+.auth-modal[hidden]{display:none}
+.auth-modal__overlay{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(6px)}
+.auth-modal__card{position:relative;z-index:1;width:min(100%,460px);max-height:calc(100svh - 40px);overflow:auto;background:linear-gradient(160deg,var(--bg-raised),var(--bg-card));border:1px solid rgba(240,180,41,.35);border-radius:12px;padding:24px;box-shadow:0 28px 80px rgba(0,0,0,.7)}
+.auth-modal__close{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;border:1px solid var(--border-b);color:var(--t1);font-size:24px;line-height:1;background:var(--bg-card)}
+.auth-modal__close:hover{border-color:var(--gold);color:var(--gold)}
+.auth-message{padding:12px 14px;margin:10px 0 14px;border:1px solid rgba(232,64,64,.35);border-radius:8px;background:rgba(232,64,64,.08);color:var(--t1);font-size:13px}
+.auth-tabs{display:flex;gap:10px;margin:14px 0 18px;flex-wrap:wrap}
+.auth-form{display:flex;flex-direction:column;gap:12px}
+.auth-form label{display:flex;flex-direction:column;gap:7px}
+.auth-form input,.auth-form select{width:100%;padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1);font-family:var(--ff-b);font-size:14px}
+.auth-switch{align-self:flex-start;color:var(--gold);font-family:var(--ff-b);font-size:13px;text-align:left}
+body.modal-open{overflow:hidden}
+@media(max-width:540px){.auth-modal{align-items:flex-start;padding:74px 14px 14px}.auth-modal__card{padding:20px;max-height:calc(100svh - 88px)}}
+
