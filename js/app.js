@@ -479,7 +479,7 @@ function createAdminMatchCard(match){
   button.style.marginTop='14px';
   button.dataset.role='admin-save-result';
   button.textContent=match.status==='finished'?'Sonucu Güncelle':'Sonucu Kaydet';
-  button.addEventListener('click',()=>saveAdminMatchResult(match.id,card));
+  button.addEventListener('click',()=>saveMatchResult(match.id));
   card.appendChild(button);
   return card;
 }
@@ -551,7 +551,7 @@ async function adminLogin(){
   await renderAdminPanel();
 }
 
-async function saveAdminMatchResult(matchId,card){
+async function saveMatchResult(matchId){
   const client=getSupabaseClient();
   if(!client) return;
   const user=await getCurrentUser();
@@ -559,25 +559,53 @@ async function saveAdminMatchResult(matchId,card){
   const email=normalizeEmail(user.email);
   if(email!==ADMIN_EMAIL){showAdminDenied(email);return;}
 
+  const card=document.querySelector(`[data-match-id="${matchId}"]`);
+  if(!card){writeAdminDebug('Sonuç kaydedilemedi: maç kartı bulunamadı. matchId: '+matchId);return;}
   const homeInput=card.querySelector('[data-role="admin-home-score"]');
   const awayInput=card.querySelector('[data-role="admin-away-score"]');
   const message=card.querySelector('[data-role="admin-match-message"]');
-  const status=card.querySelector('[data-role="admin-status"]');
-  const button=card.querySelector('[data-role="admin-save-result"]');
   if(homeInput.value==='' || awayInput.value===''){
     if(message){message.textContent='Lütfen iki takımın skorunu da gir.';message.hidden=false;}
     return;
   }
 
-  const {error}=await client.from('matches').update({
-    home_score:Number(homeInput.value),
-    away_score:Number(awayInput.value),
-    status:'finished'
-  }).eq('id',matchId);
-  if(error){if(message){message.textContent=error.message;message.hidden=false;}return;}
-  if(status) status.textContent='Durum: finished';
-  if(button) button.textContent='Sonucu Güncelle';
+  const homeScore=Number(homeInput.value);
+  const awayScore=Number(awayInput.value);
+  writeAdminDebug('Sonuç kaydetme denemesi');
+  writeAdminDebug('Güncellenen matchId: '+matchId);
+  writeAdminDebug('home_score: '+homeScore);
+  writeAdminDebug('away_score: '+awayScore);
+
+  const {data:updatedMatch,error}=await client
+    .from('matches')
+    .update({
+      home_score:homeScore,
+      away_score:awayScore,
+      status:'finished'
+    })
+    .eq('id',matchId)
+    .select('id,home_score,away_score,status')
+    .single();
+
+  if(error){
+    const errorMessage='Sonuç kaydedilemedi: '+error.message;
+    writeAdminDebug(errorMessage);
+    if(message){message.textContent=errorMessage;message.hidden=false;}
+    return;
+  }
+  if(!updatedMatch){
+    const errorMessage='Sonuç kaydedilemedi: Güncellenen maç bulunamadı. matchId: '+matchId;
+    writeAdminDebug(errorMessage);
+    if(message){message.textContent=errorMessage;message.hidden=false;}
+    return;
+  }
+
+  writeAdminDebug('Sonuç kaydedildi.');
+  writeAdminDebug('Güncellenen matchId: '+updatedMatch.id);
+  writeAdminDebug('home_score: '+updatedMatch.home_score);
+  writeAdminDebug('away_score: '+updatedMatch.away_score);
   if(message){message.textContent='Sonuç kaydedildi.';message.hidden=false;}
+  await renderAdminPanel();
 }
 async function signUpUser(){
   const client=getSupabaseClient();
@@ -682,7 +710,7 @@ window.loadTournamentPredictions=loadTournamentPredictions;
 window.loadMatches=loadMatches;
 window.saveMatchPrediction=saveMatchPrediction;
 window.loadAdminPanel=loadAdminPanel;
-window.saveAdminMatchResult=saveAdminMatchResult;
+window.saveMatchResult=saveMatchResult;
 window.adminLogin=adminLogin;
 
 window.addEventListener('scroll',()=>hdr.classList.toggle('sc',window.scrollY>40),{passive:true});
@@ -718,6 +746,8 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await loadMatches();
   await loadAdminPanel();
 });
+
+
 
 
 
