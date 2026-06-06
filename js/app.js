@@ -367,18 +367,27 @@ async function saveMatchPrediction(matchId,card){
 }
 const ADMIN_EMAIL='ican.yslyrt@gmail.com';
 
-function showAdminMessage(message,showLoginButton=false){
+function showAdminMessage(message){
   const box=document.getElementById('adminAccessMessage');
-  const loginButton=document.getElementById('adminLoginButton');
-  if(box){
-    box.innerHTML=message;
-    box.hidden=!message;
-  }
-  if(loginButton) loginButton.hidden=!showLoginButton;
+  if(!box) return;
+  box.innerHTML=message;
+  box.hidden=!message;
 }
 
 function normalizeEmail(email){
   return (email || '').trim().toLowerCase();
+}
+
+function setAdminView(isAdmin){
+  const loginPanel=document.getElementById('adminLoginPanel');
+  const adminPanel=document.getElementById('adminPanel');
+  if(loginPanel) loginPanel.hidden=isAdmin;
+  if(adminPanel) adminPanel.hidden=!isAdmin;
+}
+
+function showAdminDenied(email){
+  setAdminView(false);
+  showAdminMessage('Bu sayfaya erişim yetkin yok. Giriş yapılan e-posta: '+email);
 }
 
 function createAdminMatchCard(match){
@@ -459,24 +468,12 @@ function createAdminMatchCard(match){
   return card;
 }
 
-async function loadAdminPanel(){
+async function renderAdminPanel(){
   const list=document.getElementById('adminMatchesList');
   if(!list) return;
   const client=getSupabaseClient();
   if(!client) return;
-  const user=await getCurrentUser();
-  if(!user){
-    showAdminMessage('Admin paneline erişmek için giriş yapmalısın.',true);
-    list.innerHTML='';
-    return;
-  }
-  const email=normalizeEmail(user.email);
-  if(email!==ADMIN_EMAIL){
-    showAdminMessage('Bu sayfaya erişim yetkin yok.<br><span class="hc-d">Giriş yapılan e-posta: '+email+'</span>');
-    list.innerHTML='';
-    return;
-  }
-
+  setAdminView(true);
   showAdminMessage('');
   const {data:matches,error}=await client.from('matches').select('id,match_no,match_date,match_time,group_name,team_home,team_away,status,home_score,away_score').order('match_no',{ascending:true});
   if(error){showAdminMessage(error.message);return;}
@@ -484,13 +481,46 @@ async function loadAdminPanel(){
   (matches || []).forEach(match=>list.appendChild(createAdminMatchCard(match)));
 }
 
+async function loadAdminPanel(){
+  const list=document.getElementById('adminMatchesList');
+  if(!list) return;
+  setAdminView(false);
+  const user=await getCurrentUser();
+  if(!user){
+    showAdminMessage('');
+    return;
+  }
+  const email=normalizeEmail(user.email);
+  if(email!==ADMIN_EMAIL){
+    showAdminDenied(email);
+    return;
+  }
+  await renderAdminPanel();
+}
+
+async function adminLogin(){
+  const client=getSupabaseClient();
+  if(!client) return;
+  const email=document.getElementById('adminEmail')?.value.trim();
+  const password=document.getElementById('adminPassword')?.value;
+  const {data,error}=await client.auth.signInWithPassword({email,password});
+  if(error){showAdminMessage(formatAuthError(error));return;}
+  const signedEmail=normalizeEmail(data.user?.email);
+  if(signedEmail!==ADMIN_EMAIL){
+    showAdminDenied(signedEmail);
+    return;
+  }
+  await updateHeaderAuthState();
+  await renderAdminPanel();
+}
+
 async function saveAdminMatchResult(matchId,card){
   const client=getSupabaseClient();
   if(!client) return;
   const user=await getCurrentUser();
-  if(!user){showAdminMessage('Admin paneline erişmek için giriş yapmalısın.',true);return;}
+  if(!user){setAdminView(false);showAdminMessage('Admin girişi yapmalısın.');return;}
   const email=normalizeEmail(user.email);
-  if(email!==ADMIN_EMAIL){showAdminMessage('Bu sayfaya erişim yetkin yok.<br><span class="hc-d">Giriş yapılan e-posta: '+email+'</span>');return;}
+  if(email!==ADMIN_EMAIL){showAdminDenied(email);return;}
 
   const homeInput=card.querySelector('[data-role="admin-home-score"]');
   const awayInput=card.querySelector('[data-role="admin-away-score"]');
@@ -616,6 +646,7 @@ window.loadMatches=loadMatches;
 window.saveMatchPrediction=saveMatchPrediction;
 window.loadAdminPanel=loadAdminPanel;
 window.saveAdminMatchResult=saveAdminMatchResult;
+window.adminLogin=adminLogin;
 
 window.addEventListener('scroll',()=>hdr.classList.toggle('sc',window.scrollY>40),{passive:true});
 hbg.addEventListener('click',e=>{e.stopPropagation();const o=mob.classList.toggle('o');hbg.classList.toggle('o',o)});
@@ -631,6 +662,7 @@ if(showAllMatchesBtn){
 
 document.getElementById('signupForm')?.addEventListener('submit',e=>{e.preventDefault();signUpUser();});
 document.getElementById('loginForm')?.addEventListener('submit',e=>{e.preventDefault();loginUser();});
+document.getElementById('adminLoginForm')?.addEventListener('submit',e=>{e.preventDefault();adminLogin();});
 document.getElementById('saveTournamentPredictions')?.addEventListener('click',e=>{e.preventDefault();saveTournamentPredictions();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape') closeAuthModal();});
 
@@ -649,6 +681,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await loadMatches();
   await loadAdminPanel();
 });
+
 
 
 

@@ -22,10 +22,7 @@
       <a href="predictions.html">Tahminler</a>
       <a href="rankings.html">Sıralama</a>
       <a href="rules.html">Kurallar</a>
-      <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
-      <a href="#" class="auth-link auth-logged-out" onclick="openAuthModal('login');return false">Giriş Yap</a>
-      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
-      <a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)">Tahmine Başla</a>
+      <a href="index.html" class="btn btn-p">Siteye Dön</a>
     </nav>
     <button class="hbg" id="hbg" aria-label="Menüyü aç/kapat"><span></span><span></span><span></span></button>
   </div>
@@ -34,10 +31,7 @@
     <a href="predictions.html">Tahminler</a>
     <a href="rankings.html">Sıralama</a>
     <a href="rules.html">Kurallar</a>
-    <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
-    <a href="#" class="auth-link auth-logged-out" onclick="openAuthModal('login');return false">Giriş Yap</a>
-    <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
-    <a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)">Tahmine Başla</a>
+    <a href="index.html" class="btn btn-p">Siteye Dön</a>
   </nav>
 </header>
 
@@ -47,9 +41,23 @@
     <p class="slabel">Admin</p>
     <h2 class="stitle">Maç Sonuçları</h2>
     <div class="divider"></div>
+
     <div id="adminAccessMessage" class="rank-panel" style="padding:18px;margin-top:24px" hidden></div>
-    <a id="adminLoginButton" href="index.html?auth=login" class="btn btn-p" style="margin-top:18px" hidden>Giriş Yap</a>
-    <div id="adminMatchesList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:34px"></div>
+
+    <div id="adminLoginPanel" class="rank-panel feat" style="padding:22px;margin-top:34px;max-width:520px">
+      <p class="slabel">Admin Giriş</p>
+      <h3 class="hc-t">Admin Giriş</h3>
+      <form id="adminLoginForm" style="display:flex;flex-direction:column;gap:12px;margin-top:18px">
+        <label style="display:flex;flex-direction:column;gap:7px"><span class="hc-d">E-posta</span><input id="adminEmail" type="email" required placeholder="admin@ornek.com" style="padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)"></label>
+        <label style="display:flex;flex-direction:column;gap:7px"><span class="hc-d">Şifre</span><input id="adminPassword" type="password" required placeholder="Şifre" style="padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)"></label>
+        <button class="btn btn-p" id="adminLoginButton" type="submit">Admin Girişi Yap</button>
+        <a href="index.html" class="btn btn-o" style="align-self:flex-start">Siteye Dön</a>
+      </form>
+    </div>
+
+    <div id="adminPanel" hidden>
+      <div id="adminMatchesList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:34px"></div>
+    </div>
   </div>
 </section>
 </main>
@@ -61,4 +69,3 @@
 <script src="js/app.js"></script>
 </body>
 </html>
-
