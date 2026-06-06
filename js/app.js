@@ -367,11 +367,18 @@ async function saveMatchPrediction(matchId,card){
 }
 const ADMIN_EMAIL='ican.yslyrt@gmail.com';
 
-function showAdminMessage(message){
+function showAdminMessage(message,showLoginButton=false){
   const box=document.getElementById('adminAccessMessage');
-  if(!box) return;
-  box.textContent=message;
-  box.hidden=!message;
+  const loginButton=document.getElementById('adminLoginButton');
+  if(box){
+    box.innerHTML=message;
+    box.hidden=!message;
+  }
+  if(loginButton) loginButton.hidden=!showLoginButton;
+}
+
+function normalizeEmail(email){
+  return (email || '').trim().toLowerCase();
 }
 
 function createAdminMatchCard(match){
@@ -458,9 +465,14 @@ async function loadAdminPanel(){
   const client=getSupabaseClient();
   if(!client) return;
   const user=await getCurrentUser();
-  if(!user){window.location.href='index.html';return;}
-  if((user.email || '').toLowerCase()!==ADMIN_EMAIL){
-    showAdminMessage('Bu sayfaya erişim yetkin yok.');
+  if(!user){
+    showAdminMessage('Admin paneline erişmek için giriş yapmalısın.',true);
+    list.innerHTML='';
+    return;
+  }
+  const email=normalizeEmail(user.email);
+  if(email!==ADMIN_EMAIL){
+    showAdminMessage('Bu sayfaya erişim yetkin yok.<br><span class="hc-d">Giriş yapılan e-posta: '+email+'</span>');
     list.innerHTML='';
     return;
   }
@@ -476,8 +488,9 @@ async function saveAdminMatchResult(matchId,card){
   const client=getSupabaseClient();
   if(!client) return;
   const user=await getCurrentUser();
-  if(!user){window.location.href='index.html';return;}
-  if((user.email || '').toLowerCase()!==ADMIN_EMAIL){showAdminMessage('Bu sayfaya erişim yetkin yok.');return;}
+  if(!user){showAdminMessage('Admin paneline erişmek için giriş yapmalısın.',true);return;}
+  const email=normalizeEmail(user.email);
+  if(email!==ADMIN_EMAIL){showAdminMessage('Bu sayfaya erişim yetkin yok.<br><span class="hc-d">Giriş yapılan e-posta: '+email+'</span>');return;}
 
   const homeInput=card.querySelector('[data-role="admin-home-score"]');
   const awayInput=card.querySelector('[data-role="admin-away-score"]');
@@ -623,9 +636,11 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape') closeAuthModal();})
 
 window.addEventListener('DOMContentLoaded',async()=>{
   if(document.getElementById('authModal')){
-    showAuthTab(location.hash==='#signup'?'signup':'login');
-    if(location.hash==='#login' || location.hash==='#signup'){
-      openAuthModal(location.hash==='#signup'?'signup':'login');
+    const authParam=new URLSearchParams(location.search).get('auth');
+    const requestedAuth=authParam==='signup' || location.hash==='#signup' ? 'signup' : 'login';
+    showAuthTab(requestedAuth);
+    if(location.hash==='#login' || location.hash==='#signup' || authParam==='login' || authParam==='signup'){
+      openAuthModal(requestedAuth);
     }
   }
   await updateHeaderAuthState();
@@ -634,6 +649,8 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await loadMatches();
   await loadAdminPanel();
 });
+
+
 
 
 
