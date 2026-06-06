@@ -374,6 +374,22 @@ function showAdminMessage(message){
   box.hidden=!message;
 }
 
+const adminDebugLines=[];
+
+function writeAdminDebug(message){
+  const box=document.getElementById('adminDebug');
+  if(!box) return;
+  adminDebugLines.push(message);
+  box.textContent=adminDebugLines.join('\n');
+  box.hidden=false;
+}
+
+function clearAdminDebug(){
+  adminDebugLines.length=0;
+  const box=document.getElementById('adminDebug');
+  if(box){box.textContent='';box.hidden=true;}
+}
+
 function normalizeEmail(email){
   return (email || '').trim().toLowerCase();
 }
@@ -485,12 +501,24 @@ async function loadAdminPanel(){
   const list=document.getElementById('adminMatchesList');
   if(!list) return;
   setAdminView(false);
-  const user=await getCurrentUser();
+  clearAdminDebug();
+  const client=getSupabaseClient();
+  if(!client) return;
+  const {data,error}=await client.auth.getSession();
+  if(error){
+    writeAdminDebug('Supabase hata mesajı: '+error.message);
+    showAdminMessage(error.message);
+    return;
+  }
+  const user=data.session?.user || null;
   if(!user){
+    writeAdminDebug('Oturum yok');
     showAdminMessage('');
     return;
   }
   const email=normalizeEmail(user.email);
+  writeAdminDebug('Oturum var');
+  writeAdminDebug('Giriş yapılan email: '+email);
   if(email!==ADMIN_EMAIL){
     showAdminDenied(email);
     return;
@@ -501,11 +529,20 @@ async function loadAdminPanel(){
 async function adminLogin(){
   const client=getSupabaseClient();
   if(!client) return;
+  clearAdminDebug();
+  writeAdminDebug('Giriş denemesi yapıldı');
   const email=document.getElementById('adminEmail')?.value.trim();
   const password=document.getElementById('adminPassword')?.value;
   const {data,error}=await client.auth.signInWithPassword({email,password});
-  if(error){showAdminMessage(formatAuthError(error));return;}
+  if(error){
+    writeAdminDebug('Giriş başarısız');
+    writeAdminDebug('Supabase hata mesajı: '+error.message);
+    showAdminMessage(error.message);
+    return;
+  }
+  writeAdminDebug('Giriş başarılı');
   const signedEmail=normalizeEmail(data.user?.email);
+  writeAdminDebug('Giriş yapılan email: '+signedEmail);
   if(signedEmail!==ADMIN_EMAIL){
     showAdminDenied(signedEmail);
     return;
@@ -681,6 +718,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await loadMatches();
   await loadAdminPanel();
 });
+
 
 
 
