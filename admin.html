@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dünya Kupası Arena · Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css"></head>
+<body>
+
+<header class="hdr" id="hdr">
+  <div class="c hdr-i">
+    <a href="index.html" class="logo" >
+      <span class="logo-icon">⚽</span>
+      <span class="logo-txt">
+        <span class="logo-sub">Dünya Kupası</span>
+        <span class="logo-main">Arena</span>
+      </span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="predictions.html">Tahminler</a>
+      <a href="rankings.html">Sıralama</a>
+      <a href="rules.html">Kurallar</a>
+      <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
+      <a href="#" class="auth-link auth-logged-out" onclick="openAuthModal('login');return false">Giriş Yap</a>
+      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
+      <a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)">Tahmine Başla</a>
+    </nav>
+    <button class="hbg" id="hbg" aria-label="Menüyü aç/kapat"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="mob-nav" id="mobnav">
+    <a href="index.html">Ana Sayfa</a>
+    <a href="predictions.html">Tahminler</a>
+    <a href="rankings.html">Sıralama</a>
+    <a href="rules.html">Kurallar</a>
+    <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
+    <a href="#" class="auth-link auth-logged-out" onclick="openAuthModal('login');return false">Giriş Yap</a>
+    <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
+    <a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)">Tahmine Başla</a>
+  </nav>
+</header>
+
+<main data-page="admin">
+<section class="s" id="admin">
+  <div class="c">
+    <p class="slabel">Admin</p>
+    <h2 class="stitle">Maç Sonuçları</h2>
+    <div class="divider"></div>
+    <div id="adminAccessMessage" class="rank-panel" style="padding:18px;margin-top:24px" hidden></div>
+    <div id="adminMatchesList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:34px"></div>
+  </div>
+</section>
+</main>
+
+<footer><div class="c">© 2026 World Cup Arena · Tüm Hakları Saklıdır</div></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

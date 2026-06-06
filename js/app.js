@@ -365,6 +365,140 @@ async function saveMatchPrediction(matchId,card){
   }
   lockMatchCard(card,homeScore,awayScore);
 }
+const ADMIN_EMAIL='ican.yslyrt@gmail.com';
+
+function showAdminMessage(message){
+  const box=document.getElementById('adminAccessMessage');
+  if(!box) return;
+  box.textContent=message;
+  box.hidden=!message;
+}
+
+function createAdminMatchCard(match){
+  const card=document.createElement('div');
+  card.className='rank-panel feat';
+  card.style.padding='18px';
+  card.dataset.matchId=match.id;
+
+  const meta=document.createElement('p');
+  meta.className='slabel';
+  meta.textContent='Maç '+match.match_no+' · '+(match.match_date || '-')+' · '+(match.match_time || '-');
+  card.appendChild(meta);
+
+  const group=document.createElement('h3');
+  group.className='hc-t';
+  group.textContent=match.group_name || '-';
+  card.appendChild(group);
+
+  const teams=document.createElement('div');
+  teams.className='rrow';
+  teams.style.padding='12px 0';
+  const home=document.createElement('span');
+  home.className='rname';
+  home.textContent=match.team_home || '-';
+  const vs=document.createElement('span');
+  vs.className='rval';
+  vs.textContent='vs';
+  const away=document.createElement('span');
+  away.className='rname';
+  away.style.textAlign='right';
+  away.textContent=match.team_away || '-';
+  teams.append(home,vs,away);
+  card.appendChild(teams);
+
+  const status=document.createElement('div');
+  status.className='hc-d';
+  status.dataset.role='admin-status';
+  status.style.marginTop='10px';
+  status.textContent='Durum: '+(match.status || '-');
+  card.appendChild(status);
+
+  const inputs=document.createElement('div');
+  inputs.style.display='flex';
+  inputs.style.gap='10px';
+  inputs.style.marginTop='14px';
+  const homeInput=document.createElement('input');
+  homeInput.type='number';
+  homeInput.min='0';
+  homeInput.placeholder=(match.team_home || 'Ev sahibi')+' skor';
+  homeInput.value=match.home_score ?? '';
+  homeInput.dataset.role='admin-home-score';
+  homeInput.style.cssText='width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)';
+  const awayInput=document.createElement('input');
+  awayInput.type='number';
+  awayInput.min='0';
+  awayInput.placeholder=(match.team_away || 'Deplasman')+' skor';
+  awayInput.value=match.away_score ?? '';
+  awayInput.dataset.role='admin-away-score';
+  awayInput.style.cssText='width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1)';
+  inputs.append(homeInput,awayInput);
+  card.appendChild(inputs);
+
+  const message=document.createElement('div');
+  message.className='hc-d';
+  message.dataset.role='admin-match-message';
+  message.style.marginTop='12px';
+  message.hidden=true;
+  card.appendChild(message);
+
+  const button=document.createElement('button');
+  button.className='btn btn-p';
+  button.type='button';
+  button.style.marginTop='14px';
+  button.dataset.role='admin-save-result';
+  button.textContent=match.status==='finished'?'Sonucu Güncelle':'Sonucu Kaydet';
+  button.addEventListener('click',()=>saveAdminMatchResult(match.id,card));
+  card.appendChild(button);
+  return card;
+}
+
+async function loadAdminPanel(){
+  const list=document.getElementById('adminMatchesList');
+  if(!list) return;
+  const client=getSupabaseClient();
+  if(!client) return;
+  const user=await getCurrentUser();
+  if(!user){window.location.href='index.html';return;}
+  if((user.email || '').toLowerCase()!==ADMIN_EMAIL){
+    showAdminMessage('Bu sayfaya erişim yetkin yok.');
+    list.innerHTML='';
+    return;
+  }
+
+  showAdminMessage('');
+  const {data:matches,error}=await client.from('matches').select('id,match_no,match_date,match_time,group_name,team_home,team_away,status,home_score,away_score').order('match_no',{ascending:true});
+  if(error){showAdminMessage(error.message);return;}
+  list.innerHTML='';
+  (matches || []).forEach(match=>list.appendChild(createAdminMatchCard(match)));
+}
+
+async function saveAdminMatchResult(matchId,card){
+  const client=getSupabaseClient();
+  if(!client) return;
+  const user=await getCurrentUser();
+  if(!user){window.location.href='index.html';return;}
+  if((user.email || '').toLowerCase()!==ADMIN_EMAIL){showAdminMessage('Bu sayfaya erişim yetkin yok.');return;}
+
+  const homeInput=card.querySelector('[data-role="admin-home-score"]');
+  const awayInput=card.querySelector('[data-role="admin-away-score"]');
+  const message=card.querySelector('[data-role="admin-match-message"]');
+  const status=card.querySelector('[data-role="admin-status"]');
+  const button=card.querySelector('[data-role="admin-save-result"]');
+  if(homeInput.value==='' || awayInput.value===''){
+    if(message){message.textContent='Lütfen iki takımın skorunu da gir.';message.hidden=false;}
+    return;
+  }
+
+  const {error}=await client.from('matches').update({
+    home_score:Number(homeInput.value),
+    away_score:Number(awayInput.value),
+    status:'finished'
+  }).eq('id',matchId);
+  if(error){if(message){message.textContent=error.message;message.hidden=false;}return;}
+  if(status) status.textContent='Durum: finished';
+  if(button) button.textContent='Sonucu Güncelle';
+  if(message){message.textContent='Sonuç kaydedildi.';message.hidden=false;}
+}
 async function signUpUser(){
   const client=getSupabaseClient();
   if(!client) return;
@@ -467,6 +601,8 @@ window.saveTournamentPredictions=saveTournamentPredictions;
 window.loadTournamentPredictions=loadTournamentPredictions;
 window.loadMatches=loadMatches;
 window.saveMatchPrediction=saveMatchPrediction;
+window.loadAdminPanel=loadAdminPanel;
+window.saveAdminMatchResult=saveAdminMatchResult;
 
 window.addEventListener('scroll',()=>hdr.classList.toggle('sc',window.scrollY>40),{passive:true});
 hbg.addEventListener('click',e=>{e.stopPropagation();const o=mob.classList.toggle('o');hbg.classList.toggle('o',o)});
@@ -496,7 +632,9 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await createOrLoadProfile();
   await loadTournamentPredictions();
   await loadMatches();
+  await loadAdminPanel();
 });
+
 
 
 
