@@ -173,3 +173,13 @@ body.modal-open{overflow:hidden}
 .mob-nav .lang-switch{margin:12px 20px 4px;justify-content:center;align-self:flex-start}
 @media(max-width:900px){.nav .lang-switch{display:none}}
 @media(max-width:540px){.lang-switch{gap:5px;padding:4px 6px}.lang-switch button{font-size:10px}}
+
+.community-card{position:relative;overflow:hidden}
+.community-card::before{content:'';position:absolute;top:-60px;right:-60px;width:170px;height:170px;background:radial-gradient(circle,rgba(240,180,41,.16),transparent 68%);pointer-events:none}
+.community-badge{position:relative;font-size:44px;line-height:1;margin:8px 0 14px;text-shadow:0 8px 24px rgba(240,180,41,.22)}
+.leader-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.leader-tag,.rank-leader-tag{display:inline-flex;align-items:center;gap:5px;border:1px solid rgba(240,180,41,.42);background:rgba(240,180,41,.1);color:var(--gold);border-radius:999px;padding:4px 9px;font-family:var(--ff-u);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.rank-leader-tag{padding:3px 7px;font-size:10px;color:#f6d06a;background:rgba(240,180,41,.08)}
+.referral-code-box{display:inline-flex;align-items:center;max-width:100%;padding:12px 14px;border:1px solid rgba(240,180,41,.38);border-radius:8px;background:rgba(240,180,41,.08);color:var(--gold);font-family:var(--ff-u);font-size:18px;font-weight:700;letter-spacing:.08em;word-break:break-all}
+.copy-referral-message{margin-top:12px;color:var(--gold)}
+@media(max-width:540px){.community-badge{font-size:38px}.leader-tag,.rank-leader-tag{font-size:10px}.referral-code-box{font-size:16px;width:100%;justify-content:center}}

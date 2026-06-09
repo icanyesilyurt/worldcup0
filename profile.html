@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
@@ -88,6 +88,19 @@
           <div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="referralCode">Davet kodu</span><span class="rval rval-g" id="profileReferral">-</span></div>
         </div>
         <button class="btn btn-o" onclick="logoutUser()" style="margin-top:20px" data-i18n="navLogout">Çıkış Yap</button>
+      </div>
+      <div class="rank-panel feat community-card" style="padding:22px">
+        <p class="slabel" data-i18n="communityTitle">Topluluk Ünvanı</p>
+        <div class="community-badge" id="profileCommunityBadge">—</div>
+        <h3 class="hc-t" id="profileCommunityTitle" data-i18n="noReferralBadge">Henüz rozet yok</h3>
+        <p class="hc-d" id="profileReferralCount">0 Davet</p>
+        <div class="leader-tags" id="profileLeaderTags"></div>
+      </div>
+      <div class="rank-panel" style="padding:22px">
+        <p class="slabel" data-i18n="myReferralCode">Davet Kodum</p>
+        <div class="referral-code-box" id="profileReferralCodeValue">-</div>
+        <button class="btn btn-p" type="button" onclick="copyReferralCode()" style="margin-top:16px" data-i18n="copyCode">Kopyala</button>
+        <p class="hc-d copy-referral-message" id="copyReferralMessage" hidden></p>
       </div>
       <div class="rank-panel feat" style="padding:22px;border-color:rgba(240,180,41,.55)">
         <p class="slabel">Premium</p><h3 class="hc-t" data-i18n="premiumVisibility">Premium Görünürlük</h3>
