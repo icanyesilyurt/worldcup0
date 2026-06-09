@@ -551,6 +551,83 @@ async function adminLogin(){
   await renderAdminPanel();
 }
 
+function calculateMatchPoints(actualHome,actualAway,predictedHome,predictedAway){
+  if(actualHome===predictedHome && actualAway===predictedAway) return 80;
+  const actualDiff=actualHome-actualAway;
+  const predictedDiff=predictedHome-predictedAway;
+  const actualResult=Math.sign(actualDiff);
+  const predictedResult=Math.sign(predictedDiff);
+  if(actualResult===predictedResult && actualDiff===predictedDiff) return 30;
+  if(actualResult===predictedResult) return 10;
+  return 0;
+}
+
+async function calculatePointsForMatch(matchId,homeScore,awayScore){
+  const client=getSupabaseClient();
+  if(!client) return;
+  const {data:predictions,error}=await client
+    .from('match_predictions')
+    .select('id,user_id,predicted_home_score,predicted_away_score,calculated')
+    .eq('match_id',matchId)
+    .eq('calculated',false);
+
+  if(error){
+    writeAdminDebug('Puan hesaplanamadı: '+error.message);
+    return;
+  }
+  if(!predictions || predictions.length===0){
+    writeAdminDebug('Bu maç için henüz tahmin yok.');
+    return;
+  }
+
+  let processedCount=0;
+  let totalDistributed=0;
+  for(const prediction of predictions){
+    const points=calculateMatchPoints(
+      homeScore,
+      awayScore,
+      Number(prediction.predicted_home_score),
+      Number(prediction.predicted_away_score)
+    );
+
+    const {error:updatePredictionError}=await client
+      .from('match_predictions')
+      .update({points,calculated:true})
+      .eq('id',prediction.id)
+      .eq('calculated',false);
+    if(updatePredictionError){
+      writeAdminDebug('Tahmin puanı güncellenemedi: '+updatePredictionError.message);
+      continue;
+    }
+
+    const {data:profile,error:profileError}=await client
+      .from('profiles')
+      .select('total_points')
+      .eq('id',prediction.user_id)
+      .single();
+    if(profileError){
+      writeAdminDebug('Profil puanı okunamadı: '+profileError.message);
+      continue;
+    }
+
+    const currentPoints=Number(profile?.total_points || 0);
+    const {error:updateProfileError}=await client
+      .from('profiles')
+      .update({total_points:currentPoints+points})
+      .eq('id',prediction.user_id);
+    if(updateProfileError){
+      writeAdminDebug('Profil puanı güncellenemedi: '+updateProfileError.message);
+      continue;
+    }
+
+    processedCount++;
+    totalDistributed+=points;
+  }
+
+  writeAdminDebug('Puan hesaplandı.');
+  writeAdminDebug('Kaç tahmin işlendi: '+processedCount);
+  writeAdminDebug('Toplam kaç puan dağıtıldı: '+totalDistributed);
+}
 async function saveMatchResult(matchId){
   const client=getSupabaseClient();
   if(!client) return;
@@ -604,6 +681,7 @@ async function saveMatchResult(matchId){
   writeAdminDebug('Güncellenen matchId: '+updatedMatch.id);
   writeAdminDebug('home_score: '+updatedMatch.home_score);
   writeAdminDebug('away_score: '+updatedMatch.away_score);
+  await calculatePointsForMatch(updatedMatch.id,Number(updatedMatch.home_score),Number(updatedMatch.away_score));
   if(message){message.textContent='Sonuç kaydedildi.';message.hidden=false;}
   await renderAdminPanel();
 }
@@ -746,6 +824,8 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await loadMatches();
   await loadAdminPanel();
 });
+
+
 
 
 
