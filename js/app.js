@@ -814,7 +814,7 @@ async function loadRankings(){
   showRankingsMessage('');
 
   cachedRankingProfiles=await fetchProfilesForRankings();
-  cachedCountryStats=aggregateCountries(cachedRankingProfiles).sort((a,b)=>b.count-a.count || b.total-a.total || a.country.localeCompare(b.country,'tr'));
+  cachedCountryStats=aggregateCountries(cachedRankingProfiles).sort((a,b)=>b.count-a.count || a.country.localeCompare(b.country,'tr'));
   const collectiveStats=[...cachedCountryStats].sort((a,b)=>b.total-a.total || b.count-a.count || a.country.localeCompare(b.country,'tr'));
 
   countryParticipationExpanded=false;
@@ -982,6 +982,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await loadAdminPanel();
   await loadRankings();
 });
+
 
 
 
