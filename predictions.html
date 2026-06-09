@@ -41,87 +41,87 @@
       </span>
     </a>
     <nav class="nav">
-      <a href="index.html">Ana Sayfa</a>
-      <a href="predictions.html">Tahminler</a>
-      <a href="rankings.html">Sıralama</a>
-      <a href="rules.html">Kurallar</a>
-      <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
-      <a href="profile.html#login" class="auth-link auth-logged-out">Giriş Yap</a>
-      <a href="profile.html#signup" class="auth-link auth-logged-out">Üye Ol</a>
-      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
-      <a href="predictions.html" class="btn btn-p" >Tahmine Başla</a>
+      <a href="index.html" data-i18n="navHome">Ana Sayfa</a>
+      <a href="predictions.html" data-i18n="navPredictions">Tahminler</a>
+      <a href="rankings.html" data-i18n="navRankings">Sıralama</a>
+      <a href="rules.html" data-i18n="navRules">Kurallar</a>
+      <a href="profile.html" class="auth-link auth-logged-in" data-i18n="navProfile" hidden>Profil</a>
+      <a href="profile.html#login" class="auth-link auth-logged-out" data-i18n="navLogin">Giriş Yap</a>
+      <a href="profile.html#signup" class="auth-link auth-logged-out" data-i18n="navSignup">Üye Ol</a>
+      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden data-i18n="navLogout">Çıkış Yap</a>
+      <div class="lang-switch" aria-label="Dil seçimi"><button type="button" data-lang="tr" onclick="setLanguage('tr')">TR</button><span>|</span><button type="button" data-lang="en" onclick="setLanguage('en')">EN</button><span>|</span><button type="button" data-lang="es" onclick="setLanguage('es')">ES</button></div><a href="predictions.html" class="btn btn-p"  data-i18n="navStart">Tahmine Başla</a>
     </nav>
     <button class="hbg" id="hbg" aria-label="Menüyü aç/kapat"><span></span><span></span><span></span></button>
   </div>
   <nav class="mob-nav" id="mobnav">
-    <a href="index.html">Ana Sayfa</a>
-    <a href="predictions.html">Tahminler</a>
-    <a href="rankings.html">Sıralama</a>
-    <a href="rules.html">Kurallar</a>
-    <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
-      <a href="profile.html#login" class="auth-link auth-logged-out">Giriş Yap</a>
-      <a href="profile.html#signup" class="auth-link auth-logged-out">Üye Ol</a>
-      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
-      <a href="predictions.html" class="btn btn-p" >Tahmine Başla</a>
+    <a href="index.html" data-i18n="navHome">Ana Sayfa</a>
+    <a href="predictions.html" data-i18n="navPredictions">Tahminler</a>
+    <a href="rankings.html" data-i18n="navRankings">Sıralama</a>
+    <a href="rules.html" data-i18n="navRules">Kurallar</a>
+    <a href="profile.html" class="auth-link auth-logged-in" data-i18n="navProfile" hidden>Profil</a>
+      <a href="profile.html#login" class="auth-link auth-logged-out" data-i18n="navLogin">Giriş Yap</a>
+      <a href="profile.html#signup" class="auth-link auth-logged-out" data-i18n="navSignup">Üye Ol</a>
+      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden data-i18n="navLogout">Çıkış Yap</a>
+      <div class="lang-switch lang-switch-mobile" aria-label="Dil seçimi"><button type="button" data-lang="tr" onclick="setLanguage('tr')">TR</button><span>|</span><button type="button" data-lang="en" onclick="setLanguage('en')">EN</button><span>|</span><button type="button" data-lang="es" onclick="setLanguage('es')">ES</button></div><a href="predictions.html" class="btn btn-p"  data-i18n="navStart">Tahmine Başla</a>
   </nav>
 </header>
 
 <main data-page="predictions">
 <section class="s" id="predictions">
   <div class="c">
-    <p class="slabel">Tahminler</p>
-    <h2 class="stitle">Tahminler</h2>
+    <p class="slabel" data-i18n="predLabel">Tahminler</p>
+    <h2 class="stitle" data-i18n="predTitle">Tahminler</h2>
     <div class="divider"></div>
 
     <div class="rank-panel tournament-warning" style="padding:22px;margin-top:28px">
-      <p class="slabel">Önemli Uyarı</p>
-      <h3 class="hc-t">Tahminlerini kaydetmeden önce kontrol et</h3>
-      <p class="hc-d">Turnuva tahminleri yalnızca bir kez yapılabilir. Kaydedildikten sonra değiştirilemez.</p>
-      <p class="hc-d">Şampiyon, finalistler, gol kralı, asist kralı ve turnuvanın oyuncusu tahminlerini dikkatli seç.</p>
-      <p class="hc-d">Maç skor tahminleri de her maç için yalnızca bir kez yapılabilir. Kaydetmeden önce skorunu kontrol et.</p>
-      <p class="hc-d" style="color:var(--gold);font-weight:600">Acele etme. Erken tahminler yanıltıcı olabilir.</p>
+      <p class="slabel" data-i18n="warningLabel">Önemli Uyarı</p>
+      <h3 class="hc-t" data-i18n="warningTitle">Tahminlerini kaydetmeden önce kontrol et</h3>
+      <p class="hc-d" data-i18n="warning1">Turnuva tahminleri yalnızca bir kez yapılabilir. Kaydedildikten sonra değiştirilemez.</p>
+      <p class="hc-d" data-i18n="warning2">Şampiyon, finalistler, gol kralı, asist kralı ve turnuvanın oyuncusu tahminlerini dikkatli seç.</p>
+      <p class="hc-d" data-i18n="warning3">Maç skor tahminleri de her maç için yalnızca bir kez yapılabilir. Kaydetmeden önce skorunu kontrol et.</p>
+      <p class="hc-d" style="color:var(--gold);font-weight:600" data-i18n="warning4">Acele etme. Erken tahminler yanıltıcı olabilir.</p>
     </div>
     <div class="rank-panel feat" style="padding:22px;margin-top:18px">
-      <p class="slabel">Turnuva Tahminleri</p>
-      <h3 class="hc-t">Turnuva Genel Tahminleri</h3>
+      <p class="slabel" data-i18n="tournamentPredictions">Turnuva Tahminleri</p>
+      <h3 class="hc-t" data-i18n="tournamentGeneral">Turnuva Genel Tahminleri</h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:18px">
         <label style="display:flex;flex-direction:column;gap:8px">
-          <span class="hc-d">Şampiyon kim olur?</span>
+          <span class="hc-d" data-i18n="championQuestion">Şampiyon kim olur?</span>
           <select id="champion" style="width:100%;padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1);font-family:var(--ff-b)">
             <option>Mexico</option><option>South Africa</option><option>South Korea</option><option>Czechia</option><option>Canada</option><option>Bosnia and Herzegovina</option><option>Qatar</option><option>Switzerland</option><option>Brazil</option><option>Morocco</option><option>Haiti</option><option>Scotland</option><option>United States</option><option>Paraguay</option><option>Australia</option><option>T&#252;rkiye</option><option>Germany</option><option>Cura&#231;ao</option><option>C&#244;te d’Ivoire</option><option>Ecuador</option><option>Netherlands</option><option>Japan</option><option>Sweden</option><option>Tunisia</option><option>Spain</option><option>Cabo Verde</option><option>Saudi Arabia</option><option>Uruguay</option><option>Belgium</option><option>Egypt</option><option>Iran</option><option>New Zealand</option><option>France</option><option>Senegal</option><option>Iraq</option><option>Norway</option><option>Argentina</option><option>Algeria</option><option>Austria</option><option>Jordan</option><option>Portugal</option><option>DRC</option><option>Uzbekistan</option><option>Colombia</option><option>England</option><option>Croatia</option><option>Ghana</option><option>Panama</option>
           
           </select>
         </label>
         <label style="display:flex;flex-direction:column;gap:8px">
-          <span class="hc-d">Finalist 1</span>
+          <span class="hc-d" data-i18n="finalist1">Finalist 1</span>
           <select id="finalist_1" style="width:100%;padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1);font-family:var(--ff-b)">
             <option>Mexico</option><option>South Africa</option><option>South Korea</option><option>Czechia</option><option>Canada</option><option>Bosnia and Herzegovina</option><option>Qatar</option><option>Switzerland</option><option>Brazil</option><option>Morocco</option><option>Haiti</option><option>Scotland</option><option>United States</option><option>Paraguay</option><option>Australia</option><option>T&#252;rkiye</option><option>Germany</option><option>Cura&#231;ao</option><option>C&#244;te d’Ivoire</option><option>Ecuador</option><option>Netherlands</option><option>Japan</option><option>Sweden</option><option>Tunisia</option><option>Spain</option><option>Cabo Verde</option><option>Saudi Arabia</option><option>Uruguay</option><option>Belgium</option><option>Egypt</option><option>Iran</option><option>New Zealand</option><option>France</option><option>Senegal</option><option>Iraq</option><option>Norway</option><option>Argentina</option><option>Algeria</option><option>Austria</option><option>Jordan</option><option>Portugal</option><option>DRC</option><option>Uzbekistan</option><option>Colombia</option><option>England</option><option>Croatia</option><option>Ghana</option><option>Panama</option>
           
           </select>
         </label>
         <label style="display:flex;flex-direction:column;gap:8px">
-          <span class="hc-d">Finalist 2</span>
+          <span class="hc-d" data-i18n="finalist2">Finalist 2</span>
           <select id="finalist_2" style="width:100%;padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1);font-family:var(--ff-b)">
             <option>Mexico</option><option>South Africa</option><option>South Korea</option><option>Czechia</option><option>Canada</option><option>Bosnia and Herzegovina</option><option>Qatar</option><option>Switzerland</option><option>Brazil</option><option>Morocco</option><option>Haiti</option><option>Scotland</option><option>United States</option><option>Paraguay</option><option>Australia</option><option>T&#252;rkiye</option><option>Germany</option><option>Cura&#231;ao</option><option>C&#244;te d’Ivoire</option><option>Ecuador</option><option>Netherlands</option><option>Japan</option><option>Sweden</option><option>Tunisia</option><option>Spain</option><option>Cabo Verde</option><option>Saudi Arabia</option><option>Uruguay</option><option>Belgium</option><option>Egypt</option><option>Iran</option><option>New Zealand</option><option>France</option><option>Senegal</option><option>Iraq</option><option>Norway</option><option>Argentina</option><option>Algeria</option><option>Austria</option><option>Jordan</option><option>Portugal</option><option>DRC</option><option>Uzbekistan</option><option>Colombia</option><option>England</option><option>Croatia</option><option>Ghana</option><option>Panama</option>
           
           </select>
         </label>
         <label style="display:flex;flex-direction:column;gap:8px">
-          <span class="hc-d">Gol kralı kim olur?</span>
+          <span class="hc-d" data-i18n="topScorerQuestion">Gol kralı kim olur?</span>
           <select id="top_scorer" style="width:100%;padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1);font-family:var(--ff-b)">
             <option>Kylian Mbapp&#233;</option><option>Erling Haaland</option><option>Harry Kane</option><option>Lionel Messi</option><option>Cristiano Ronaldo</option><option>Vin&#237;cius J&#250;nior</option><option>Rodrygo</option><option>Lautaro Mart&#237;nez</option><option>Juli&#225;n &#193;lvarez</option><option>Neymar</option><option>Endrick</option><option>Bukayo Saka</option><option>Phil Foden</option><option>Jude Bellingham</option><option>Lamine Yamal</option><option>&#193;lvaro Morata</option><option>Kai Havertz</option><option>Jamal Musiala</option><option>Cody Gakpo</option><option>Memphis Depay</option><option>Rafael Le&#227;o</option><option>Victor Osimhen</option><option>Mehdi Taremi</option><option>Darwin N&#250;&#241;ez</option><option>Alexander Isak</option><option>Son Heung-min</option><option>Hirving Lozano</option><option>Jonathan David</option><option>Christian Pulisic</option><option>Youssef En-Nesyri</option>
           
           </select>
         </label>
         <label style="display:flex;flex-direction:column;gap:8px">
-          <span class="hc-d">Asist kralı kim olur?</span>
+          <span class="hc-d" data-i18n="topAssistQuestion">Asist kralı kim olur?</span>
           <select id="top_assist" style="width:100%;padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1);font-family:var(--ff-b)">
             <option>Kevin De Bruyne</option><option>Lionel Messi</option><option>Bruno Fernandes</option><option>Antoine Griezmann</option><option>Jude Bellingham</option><option>Jamal Musiala</option><option>Phil Foden</option><option>Bukayo Saka</option><option>Lamine Yamal</option><option>Pedri</option><option>Gavi</option><option>Rodri</option><option>Bernardo Silva</option><option>Vitinha</option><option>Ousmane Demb&#233;l&#233;</option><option>Kylian Mbapp&#233;</option><option>Vin&#237;cius J&#250;nior</option><option>Neymar</option><option>Rodrygo</option><option>Christian Eriksen</option><option>Federico Valverde</option><option>Alexis Mac Allister</option><option>Enzo Fern&#225;ndez</option><option>Christian Pulisic</option><option>Hakim Ziyech</option><option>Son Heung-min</option><option>Takefusa Kubo</option><option>Xavi Simons</option><option>Florian Wirtz</option><option>Joshua Kimmich</option>
           
           </select>
         </label>
         <label style="display:flex;flex-direction:column;gap:8px">
-          <span class="hc-d">Turnuvanın oyuncusu kim olur?</span>
+          <span class="hc-d" data-i18n="playerTournamentQuestion">Turnuvanın oyuncusu kim olur?</span>
           <select id="player_of_tournament" style="width:100%;padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1);font-family:var(--ff-b)">
             <option>Kylian Mbapp&#233;</option><option>Lionel Messi</option><option>Jude Bellingham</option><option>Vin&#237;cius J&#250;nior</option><option>Kevin De Bruyne</option><option>Harry Kane</option><option>Cristiano Ronaldo</option><option>Lamine Yamal</option><option>Jamal Musiala</option><option>Phil Foden</option><option>Bukayo Saka</option><option>Rodri</option><option>Bruno Fernandes</option><option>Antoine Griezmann</option><option>Neymar</option><option>Lautaro Mart&#237;nez</option><option>Federico Valverde</option><option>Pedri</option><option>Bernardo Silva</option><option>Florian Wirtz</option><option>Erling Haaland</option><option>Son Heung-min</option><option>Christian Pulisic</option><option>Virgil van Dijk</option><option>Achraf Hakimi</option><option>Declan Rice</option><option>Rafael Le&#227;o</option><option>Xavi Simons</option><option>Juli&#225;n &#193;lvarez</option><option>Emiliano Mart&#237;nez</option>
           
@@ -129,16 +129,16 @@
         </label>
       </div>
       <div id="tournamentPredictionMessage" class="hc-d" style="margin-top:18px" hidden></div>
-      <button class="btn btn-p" id="saveTournamentPredictions" style="margin-top:20px">Turnuva Tahminlerini Kaydet</button>
-      <a href="#match-predictions" class="btn btn-o" style="margin-top:20px;margin-left:10px">Maç Tahminlerine Git</a>
+      <button class="btn btn-p" id="saveTournamentPredictions" style="margin-top:20px" data-i18n="saveTournament">Turnuva Tahminlerini Kaydet</button>
+      <a href="#match-predictions" class="btn btn-o" style="margin-top:20px;margin-left:10px" data-i18n="goMatchPredictions">Maç Tahminlerine Git</a>
     </div>
 
     <div id="match-predictions" style="margin-top:44px;scroll-margin-top:100px">
-      <p class="slabel">Maç Tahminleri</p>
-      <h3 class="hc-t match-section-title">Grup Aşaması Maçları</h3>
+      <p class="slabel" data-i18n="matchPredictions">Maç Tahminleri</p>
+      <h3 class="hc-t match-section-title" data-i18n="groupMatches">Grup Aşaması Maçları</h3>
       <div id="matchPredictionMessage" class="hc-d" style="margin-top:14px" hidden></div>
       <div id="matchesList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:18px"></div>
-      <div class="rank-cta"><button class="btn btn-p" id="showAllMatches" hidden>Tüm Maçları Göster</button></div>
+      <div class="rank-cta"><button class="btn btn-p" id="showAllMatches" data-i18n="showAllMatches" hidden>Tüm Maçları Göster</button></div>
     </div>
   </div>
 </section>
@@ -151,12 +151,3 @@
 <script src="js/app.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-

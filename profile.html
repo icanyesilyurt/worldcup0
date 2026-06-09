@@ -41,65 +41,65 @@
       </span>
     </a>
     <nav class="nav">
-      <a href="index.html">Ana Sayfa</a>
-      <a href="predictions.html">Tahminler</a>
-      <a href="rankings.html">Sıralama</a>
-      <a href="rules.html">Kurallar</a>
-      <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
-      <a href="#" class="auth-link auth-logged-out" onclick="openAuthModal('login');return false">Giriş Yap</a>
-      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
-      <a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)">Tahmine Başla</a>
+      <a href="index.html" data-i18n="navHome">Ana Sayfa</a>
+      <a href="predictions.html" data-i18n="navPredictions">Tahminler</a>
+      <a href="rankings.html" data-i18n="navRankings">Sıralama</a>
+      <a href="rules.html" data-i18n="navRules">Kurallar</a>
+      <a href="profile.html" class="auth-link auth-logged-in" data-i18n="navProfile" hidden>Profil</a>
+      <a href="#" class="auth-link auth-logged-out" onclick="openAuthModal('login');return false" data-i18n="navLogin">Giriş Yap</a>
+      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden data-i18n="navLogout">Çıkış Yap</a>
+      <div class="lang-switch" aria-label="Dil seçimi"><button type="button" data-lang="tr" onclick="setLanguage('tr')">TR</button><span>|</span><button type="button" data-lang="en" onclick="setLanguage('en')">EN</button><span>|</span><button type="button" data-lang="es" onclick="setLanguage('es')">ES</button></div><a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)" data-i18n="navStart">Tahmine Başla</a>
     </nav>    <button class="hbg" id="hbg" aria-label="Menüyü aç/kapat"><span></span><span></span><span></span></button>
   </div>
   <nav class="mob-nav" id="mobnav">
-    <a href="index.html">Ana Sayfa</a>
-    <a href="predictions.html">Tahminler</a>
-    <a href="rankings.html">Sıralama</a>
-    <a href="rules.html">Kurallar</a>
-    <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
-    <a href="#" class="auth-link auth-logged-out" onclick="openAuthModal('login');return false">Giriş Yap</a>
-    <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
-    <a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)">Tahmine Başla</a>
+    <a href="index.html" data-i18n="navHome">Ana Sayfa</a>
+    <a href="predictions.html" data-i18n="navPredictions">Tahminler</a>
+    <a href="rankings.html" data-i18n="navRankings">Sıralama</a>
+    <a href="rules.html" data-i18n="navRules">Kurallar</a>
+    <a href="profile.html" class="auth-link auth-logged-in" data-i18n="navProfile" hidden>Profil</a>
+    <a href="#" class="auth-link auth-logged-out" onclick="openAuthModal('login');return false" data-i18n="navLogin">Giriş Yap</a>
+    <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden data-i18n="navLogout">Çıkış Yap</a>
+    <div class="lang-switch lang-switch-mobile" aria-label="Dil seçimi"><button type="button" data-lang="tr" onclick="setLanguage('tr')">TR</button><span>|</span><button type="button" data-lang="en" onclick="setLanguage('en')">EN</button><span>|</span><button type="button" data-lang="es" onclick="setLanguage('es')">ES</button></div><a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)" data-i18n="navStart">Tahmine Başla</a>
   </nav></header>
 
 <main data-page="profile">
 <section class="s" id="profile">
   <div class="c">
-    <p class="slabel">Profil</p>
-    <h2 class="stitle">Profil</h2>
+    <p class="slabel" data-i18n="profileLabel">Profil</p>
+    <h2 class="stitle" data-i18n="profileTitle">Profil</h2>
     <div class="divider"></div>
     <div id="authMessage" class="rank-panel" style="padding:18px;margin-top:24px" hidden></div>
     <div id="loggedOutProfile" class="rank-panel" style="padding:22px;margin-top:34px;max-width:520px">
-      <p class="slabel">Giriş Gerekli</p>
-      <h3 class="hc-t">Profilini görmek için giriş yapmalısın.</h3>
-      <a href="index.html#login" class="btn btn-p" style="margin-top:18px">Giriş Yap</a>
+      <p class="slabel" data-i18n="loginRequired">Giriş Gerekli</p>
+      <h3 class="hc-t" data-i18n="loginRequiredText">Profilini görmek için giriş yapmalısın.</h3>
+      <a href="index.html#login" class="btn btn-p" style="margin-top:18px" data-i18n="navLogin">Giriş Yap</a>
     </div>
     <div id="loggedInProfile" hidden style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:34px">
       <div class="rank-panel feat" style="padding:22px">
-        <p class="slabel">Profil Kartı</p>
+        <p class="slabel" data-i18n="profileCard">Profil Kartı</p>
         <div class="sc-user" style="margin:10px 0 22px"><div class="sc-avatar">⚽</div><div><div class="sc-name" id="profileDisplayName">Oyuncu#000000</div><div class="sc-ctry" id="profileCountryTop">Türkiye</div></div></div>
         <div style="display:flex;flex-direction:column;gap:10px">
-          <div class="rrow" style="padding:10px 0"><span class="rname">Kullanıcı adı</span><span class="rval rval-g" id="profileName">Oyuncu#000000</span></div>
-          <div class="rrow" style="padding:10px 0"><span class="rname">E-posta</span><span class="rval rval-g" id="profileEmail">-</span></div>
-          <div class="rrow" style="padding:10px 0"><span class="rname">Ülke</span><span class="rval rval-g" id="profileCountry">Türkiye</span></div>
-          <div class="rrow" style="padding:10px 0"><span class="rname">Toplam puan</span><span class="rval rval-g" id="profilePoints">0</span></div>
-          <div class="rrow" style="padding:10px 0"><span class="rname">Dünya sırası</span><span class="rval rval-g" id="profileWorldRank">-</span></div>
-          <div class="rrow" style="padding:10px 0"><span class="rname">Ülke içi sırası</span><span class="rval rval-g" id="profileCountryRank">-</span></div>
-          <div class="rrow" style="padding:10px 0"><span class="rname">Davet kodu</span><span class="rval rval-g" id="profileReferral">-</span></div>
+          <div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="username">Kullanıcı adı</span><span class="rval rval-g" id="profileName">Oyuncu#000000</span></div>
+          <div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="email">E-posta</span><span class="rval rval-g" id="profileEmail">-</span></div>
+          <div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="country">Ülke</span><span class="rval rval-g" id="profileCountry">Türkiye</span></div>
+          <div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="totalPoints">Toplam puan</span><span class="rval rval-g" id="profilePoints">0</span></div>
+          <div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="worldRank">Dünya sırası</span><span class="rval rval-g" id="profileWorldRank">-</span></div>
+          <div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="countryRank">Ülke içi sırası</span><span class="rval rval-g" id="profileCountryRank">-</span></div>
+          <div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="referralCode">Davet kodu</span><span class="rval rval-g" id="profileReferral">-</span></div>
         </div>
-        <button class="btn btn-o" onclick="logoutUser()" style="margin-top:20px">Çıkış Yap</button>
+        <button class="btn btn-o" onclick="logoutUser()" style="margin-top:20px" data-i18n="navLogout">Çıkış Yap</button>
       </div>
       <div class="rank-panel feat" style="padding:22px;border-color:rgba(240,180,41,.55)">
-        <p class="slabel">Premium</p><h3 class="hc-t">Premium Görünürlük</h3>
-        <p class="hc-d">Premium kullanıcılar sıralamada kendi seçtikleri isimle görünebilir, profil fotoğrafı ekleyebilir ve paylaşılabilir kullanıcı kartı oluşturabilir.</p>
+        <p class="slabel">Premium</p><h3 class="hc-t" data-i18n="premiumVisibility">Premium Görünürlük</h3>
+        <p class="hc-d" data-i18n="premiumText">Premium kullanıcılar sıralamada kendi seçtikleri isimle görünebilir, profil fotoğrafı ekleyebilir ve paylaşılabilir kullanıcı kartı oluşturabilir.</p>
         <div style="display:flex;flex-direction:column;gap:10px;margin-top:18px">
-          <div class="rrow" style="padding:9px 0"><span class="rname">Özel kullanıcı adı</span><span class="rval rval-g">✓</span></div>
-          <div class="rrow" style="padding:9px 0"><span class="rname">Profil fotoğrafı</span><span class="rval rval-g">✓</span></div>
-          <div class="rrow" style="padding:9px 0"><span class="rname">Sıralamada görünür isim</span><span class="rval rval-g">✓</span></div>
-          <div class="rrow" style="padding:9px 0"><span class="rname">Paylaşılabilir kullanıcı kartı</span><span class="rval rval-g">✓</span></div>
-          <div class="rrow" style="padding:9px 0"><span class="rname">X paylaşımlarında etiketlenme şansı</span><span class="rval rval-g">✓</span></div>
+          <div class="rrow" style="padding:9px 0"><span class="rname" data-i18n="customUsername">Özel kullanıcı adı</span><span class="rval rval-g">✓</span></div>
+          <div class="rrow" style="padding:9px 0"><span class="rname" data-i18n="profilePhoto">Profil fotoğrafı</span><span class="rval rval-g">✓</span></div>
+          <div class="rrow" style="padding:9px 0"><span class="rname" data-i18n="visibleName">Sıralamada görünür isim</span><span class="rval rval-g">✓</span></div>
+          <div class="rrow" style="padding:9px 0"><span class="rname" data-i18n="shareableCard">Paylaşılabilir kullanıcı kartı</span><span class="rval rval-g">✓</span></div>
+          <div class="rrow" style="padding:9px 0"><span class="rname" data-i18n="xTagChance">X paylaşımlarında etiketlenme şansı</span><span class="rval rval-g">✓</span></div>
         </div>
-        <button class="btn btn-p" style="margin-top:20px">Premium’a Geç</button>
+        <button class="btn btn-p" style="margin-top:20px" data-i18n="premiumUpgrade">Premium’a Geç</button>
       </div>
     </div>
   </div>
@@ -113,16 +113,3 @@
 <script src="js/app.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-

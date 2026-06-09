@@ -41,49 +41,49 @@
       </span>
     </a>
     <nav class="nav">
-      <a href="index.html">Ana Sayfa</a>
-      <a href="predictions.html">Tahminler</a>
-      <a href="rankings.html">Sıralama</a>
-      <a href="rules.html">Kurallar</a>
-      <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
-      <a href="profile.html#login" class="auth-link auth-logged-out">Giriş Yap</a>
-      <a href="profile.html#signup" class="auth-link auth-logged-out">Üye Ol</a>
-      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
-      <a href="predictions.html" class="btn btn-p" >Tahmine Başla</a>
+      <a href="index.html" data-i18n="navHome">Ana Sayfa</a>
+      <a href="predictions.html" data-i18n="navPredictions">Tahminler</a>
+      <a href="rankings.html" data-i18n="navRankings">Sıralama</a>
+      <a href="rules.html" data-i18n="navRules">Kurallar</a>
+      <a href="profile.html" class="auth-link auth-logged-in" data-i18n="navProfile" hidden>Profil</a>
+      <a href="profile.html#login" class="auth-link auth-logged-out" data-i18n="navLogin">Giriş Yap</a>
+      <a href="profile.html#signup" class="auth-link auth-logged-out" data-i18n="navSignup">Üye Ol</a>
+      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden data-i18n="navLogout">Çıkış Yap</a>
+      <div class="lang-switch" aria-label="Dil seçimi"><button type="button" data-lang="tr" onclick="setLanguage('tr')">TR</button><span>|</span><button type="button" data-lang="en" onclick="setLanguage('en')">EN</button><span>|</span><button type="button" data-lang="es" onclick="setLanguage('es')">ES</button></div><a href="predictions.html" class="btn btn-p"  data-i18n="navStart">Tahmine Başla</a>
     </nav>
     <button class="hbg" id="hbg" aria-label="Menüyü aç/kapat"><span></span><span></span><span></span></button>
   </div>
   <nav class="mob-nav" id="mobnav">
-    <a href="index.html">Ana Sayfa</a>
-    <a href="predictions.html">Tahminler</a>
-    <a href="rankings.html">Sıralama</a>
-    <a href="rules.html">Kurallar</a>
-    <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
-      <a href="profile.html#login" class="auth-link auth-logged-out">Giriş Yap</a>
-      <a href="profile.html#signup" class="auth-link auth-logged-out">Üye Ol</a>
-      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
-      <a href="predictions.html" class="btn btn-p" >Tahmine Başla</a>
+    <a href="index.html" data-i18n="navHome">Ana Sayfa</a>
+    <a href="predictions.html" data-i18n="navPredictions">Tahminler</a>
+    <a href="rankings.html" data-i18n="navRankings">Sıralama</a>
+    <a href="rules.html" data-i18n="navRules">Kurallar</a>
+    <a href="profile.html" class="auth-link auth-logged-in" data-i18n="navProfile" hidden>Profil</a>
+      <a href="profile.html#login" class="auth-link auth-logged-out" data-i18n="navLogin">Giriş Yap</a>
+      <a href="profile.html#signup" class="auth-link auth-logged-out" data-i18n="navSignup">Üye Ol</a>
+      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden data-i18n="navLogout">Çıkış Yap</a>
+      <div class="lang-switch lang-switch-mobile" aria-label="Dil seçimi"><button type="button" data-lang="tr" onclick="setLanguage('tr')">TR</button><span>|</span><button type="button" data-lang="en" onclick="setLanguage('en')">EN</button><span>|</span><button type="button" data-lang="es" onclick="setLanguage('es')">ES</button></div><a href="predictions.html" class="btn btn-p"  data-i18n="navStart">Tahmine Başla</a>
   </nav>
 </header>
 
 <main data-page="rules">
 <section class="s" id="rules">
   <div class="c">
-    <p class="slabel">Kurallar</p>
-    <h2 class="stitle">Kurallar ve Puanlama</h2>
+    <p class="slabel" data-i18n="rulesLabel">Kurallar</p>
+    <h2 class="stitle" data-i18n="rulesTitle">Kurallar ve Puanlama</h2>
     <div class="divider"></div>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:34px">
-      <div class="rank-panel" style="padding:22px"><p class="slabel">01</p><h3 class="hc-t">Dünya Kupası Arena Nedir?</h3><p class="hc-d">Dünya Kupası Arena, Dünya Kupası boyunca maç ve turnuva tahminleri yaparak puan topladığın, ülkeni temsil ettiğin ve küresel sıralamada yarıştığın bir tahmin ve topluluk deneyimidir.</p></div>
-      <div class="rank-panel" style="padding:22px"><p class="slabel">02</p><h3 class="hc-t">Nasıl Katılırsın?</h3><p class="hc-d">Profilini oluşturur, temsil etmek istediğin ülkeyi seçer ve maçlar başlamadan önce tahminlerini girersin. Kazandığın puanlar kişisel sıralamana ve ülke puanına yansır.</p></div>
-      <div class="rank-panel" style="padding:22px"><p class="slabel">03</p><h3 class="hc-t">Maç Tahminleri</h3><p class="hc-d">Her maç için skor tahmini maç başlamadan önce yapılır. Tahmin kaydedildikten sonra değiştirilemez.</p></div>
-      <div class="rank-panel" style="padding:22px"><p class="slabel">04</p><h3 class="hc-t">Turnuva Tahminleri</h3><p class="hc-d">Şampiyon, finalistler, gol kralı, asist kralı ve turnuvanın oyuncusu için turnuva tahminleri yapılır. Bu tahminler bir kez kaydedilir.</p><div style="display:flex;flex-direction:column;gap:10px;margin-top:14px"><div class="rrow" style="padding:10px 0"><span class="rname">Şampiyon doğru</span><span class="rval rval-g">250 puan</span></div><div class="rrow" style="padding:10px 0"><span class="rname">Finalist doğru</span><span class="rval rval-g">100 puan</span></div><div class="rrow" style="padding:10px 0"><span class="rname">Gol kralı doğru</span><span class="rval rval-g">150 puan</span></div><div class="rrow" style="padding:10px 0"><span class="rname">Asist kralı doğru</span><span class="rval rval-g">150 puan</span></div><div class="rrow" style="padding:10px 0"><span class="rname">Turnuvanın oyuncusu doğru</span><span class="rval rval-g">150 puan</span></div></div></div>
-      <div class="rank-panel feat" style="padding:22px"><p class="slabel">05</p><h3 class="hc-t">Puan Sistemi</h3><div style="display:flex;flex-direction:column;gap:10px;margin-top:14px"><div class="rrow" style="padding:10px 0"><span class="rname">Tam skor doğru</span><span class="rval rval-g">80 puan</span></div><div class="rrow" style="padding:10px 0"><span class="rname">Sonuç doğru + gol farkı doğru</span><span class="rval rval-g">30 puan</span></div><div class="rrow" style="padding:10px 0"><span class="rname">Sadece sonuç doğru</span><span class="rval rval-g">10 puan</span></div><div class="rrow" style="padding:10px 0"><span class="rname">Yanlış tahmin</span><span class="rval rval-g">0 puan</span></div></div></div>
-      <div class="rank-panel" style="padding:22px"><p class="slabel">06</p><h3 class="hc-t">Ülke Puanı</h3><p class="hc-d">Kullanıcının kazandığı her puan, kayıt olurken seçtiği ülkenin kolektif toplamına da katkı sağlar.</p></div>
-      <div class="rank-panel" style="padding:22px"><p class="slabel">07</p><h3 class="hc-t">Sosyal Paylaşımlar</h3><p class="hc-d">Günün iyi tahminleri, hızlı yükselen kullanıcıları ve öne çıkan ülkeleri sosyal hesaplarımızda paylaşılabilir.</p></div>
-      <div class="rank-panel" style="padding:22px;border-color:rgba(240,180,41,.55)"><p class="slabel">08</p><h3 class="hc-t">Premium Görünürlük</h3><p class="hc-d">Premium kullanıcılar sıralamada kendi seçtikleri isimle görünebilir, profil fotoğrafı ekleyebilir ve paylaşılabilir kullanıcı kartı oluşturabilir.</p></div>
-      <div class="rank-panel" style="padding:22px"><p class="slabel">09</p><h3 class="hc-t">Genel Kurallar</h3><p class="hc-d">Tahminler maç başlamadan önce yapılmalıdır. Maç başladıktan sonra tahmin değiştirilemez. Her kullanıcı yalnızca bir hesap kullanabilir. Haksız avantaj sağlayan hesaplar kaldırılabilir.</p></div>
-      <div class="rank-panel feat" style="padding:22px"><p class="slabel">10</p><h3 class="hc-t">Önemli Uyarı</h3><p class="hc-d">Bu platform bahis sitesi değildir. Para karşılığı maç sonucu üzerinden kazanç vaat etmez. Amaç Dünya Kupası boyunca küresel bir tahmin, rekabet ve topluluk deneyimi oluşturmaktır.</p></div>
+      <div class="rank-panel" style="padding:22px"><p class="slabel">01</p><h3 class="hc-t" data-i18n="whatIs">Dünya Kupası Arena Nedir?</h3><p class="hc-d" data-i18n="rulesWhatDesc">Dünya Kupası Arena, Dünya Kupası boyunca maç ve turnuva tahminleri yaparak puan topladığın, ülkeni temsil ettiğin ve küresel sıralamada yarıştığın bir tahmin ve topluluk deneyimidir.</p></div>
+      <div class="rank-panel" style="padding:22px"><p class="slabel">02</p><h3 class="hc-t" data-i18n="howJoin">Nasıl Katılırsın?</h3><p class="hc-d" data-i18n="rulesJoinDesc">Profilini oluşturur, temsil etmek istediğin ülkeyi seçer ve maçlar başlamadan önce tahminlerini girersin. Kazandığın puanlar kişisel sıralamana ve ülke puanına yansır.</p></div>
+      <div class="rank-panel" style="padding:22px"><p class="slabel">03</p><h3 class="hc-t" data-i18n="rulesMatch">Maç Tahminleri</h3><p class="hc-d" data-i18n="rulesMatchDesc">Her maç için skor tahmini maç başlamadan önce yapılır. Tahmin kaydedildikten sonra değiştirilemez.</p></div>
+      <div class="rank-panel" style="padding:22px"><p class="slabel">04</p><h3 class="hc-t" data-i18n="rulesTournament">Turnuva Tahminleri</h3><p class="hc-d" data-i18n="rulesTournamentDesc">Şampiyon, finalistler, gol kralı, asist kralı ve turnuvanın oyuncusu için turnuva tahminleri yapılır. Bu tahminler bir kez kaydedilir.</p><div style="display:flex;flex-direction:column;gap:10px;margin-top:14px"><div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="championCorrect">Şampiyon doğru</span><span class="rval rval-g" data-i18n="points250">250 puan</span></div><div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="finalistCorrect">Finalist doğru</span><span class="rval rval-g" data-i18n="points100">100 puan</span></div><div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="topScorerCorrect">Gol kralı doğru</span><span class="rval rval-g" data-i18n="points150">150 puan</span></div><div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="topAssistCorrect">Asist kralı doğru</span><span class="rval rval-g" data-i18n="points150">150 puan</span></div><div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="playerTournamentCorrect">Turnuvanın oyuncusu doğru</span><span class="rval rval-g" data-i18n="points150">150 puan</span></div></div></div>
+      <div class="rank-panel feat" style="padding:22px"><p class="slabel">05</p><h3 class="hc-t" data-i18n="pointsSystem">Puan Sistemi</h3><div style="display:flex;flex-direction:column;gap:10px;margin-top:14px"><div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="exactScoreCorrect">Tam skor doğru</span><span class="rval rval-g" data-i18n="points80">80 puan</span></div><div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="resultDiffCorrect">Sonuç doğru + gol farkı doğru</span><span class="rval rval-g" data-i18n="points30">30 puan</span></div><div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="resultOnlyCorrect">Sadece sonuç doğru</span><span class="rval rval-g" data-i18n="points10">10 puan</span></div><div class="rrow" style="padding:10px 0"><span class="rname" data-i18n="wrongPrediction">Yanlış tahmin</span><span class="rval rval-g" data-i18n="points0">0 puan</span></div></div></div>
+      <div class="rank-panel" style="padding:22px"><p class="slabel">06</p><h3 class="hc-t" data-i18n="countryPoints">Ülke Puanı</h3><p class="hc-d" data-i18n="rulesCountryDesc">Kullanıcının kazandığı her puan, kayıt olurken seçtiği ülkenin kolektif toplamına da katkı sağlar.</p></div>
+      <div class="rank-panel" style="padding:22px"><p class="slabel">07</p><h3 class="hc-t" data-i18n="socialShares">Sosyal Paylaşımlar</h3><p class="hc-d" data-i18n="rulesSocialDesc">Günün iyi tahminleri, hızlı yükselen kullanıcıları ve öne çıkan ülkeleri sosyal hesaplarımızda paylaşılabilir.</p></div>
+      <div class="rank-panel" style="padding:22px;border-color:rgba(240,180,41,.55)"><p class="slabel">08</p><h3 class="hc-t" data-i18n="premiumVisibility">Premium Görünürlük</h3><p class="hc-d">Premium kullanıcılar sıralamada kendi seçtikleri isimle görünebilir, profil fotoğrafı ekleyebilir ve paylaşılabilir kullanıcı kartı oluşturabilir.</p></div>
+      <div class="rank-panel" style="padding:22px"><p class="slabel">09</p><h3 class="hc-t" data-i18n="generalRules">Genel Kurallar</h3><p class="hc-d" data-i18n="rulesGeneralDesc">Tahminler maç başlamadan önce yapılmalıdır. Maç başladıktan sonra tahmin değiştirilemez. Her kullanıcı yalnızca bir hesap kullanabilir. Haksız avantaj sağlayan hesaplar kaldırılabilir.</p></div>
+      <div class="rank-panel feat" style="padding:22px"><p class="slabel">10</p><h3 class="hc-t" data-i18n="importantWarning">Önemli Uyarı</h3><p class="hc-d" data-i18n="rulesWarningDesc">Bu platform bahis sitesi değildir. Para karşılığı maç sonucu üzerinden kazanç vaat etmez. Amaç Dünya Kupası boyunca küresel bir tahmin, rekabet ve topluluk deneyimi oluşturmaktır.</p></div>
     </div>
   </div>
 </section>
@@ -96,11 +96,3 @@
 <script src="js/app.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-

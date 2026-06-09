@@ -41,25 +41,25 @@
       </span>
     </a>
     <nav class="nav">
-      <a href="index.html">Ana Sayfa</a>
-      <a href="predictions.html">Tahminler</a>
-      <a href="rankings.html">Sıralama</a>
-      <a href="rules.html">Kurallar</a>
-      <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
-      <a href="#" class="auth-link auth-logged-out" onclick="openAuthModal('login');return false">Giriş Yap</a>
-      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
-      <a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)">Tahmine Başla</a>
+      <a href="index.html" data-i18n="navHome">Ana Sayfa</a>
+      <a href="predictions.html" data-i18n="navPredictions">Tahminler</a>
+      <a href="rankings.html" data-i18n="navRankings">Sıralama</a>
+      <a href="rules.html" data-i18n="navRules">Kurallar</a>
+      <a href="profile.html" class="auth-link auth-logged-in" data-i18n="navProfile" hidden>Profil</a>
+      <a href="#" class="auth-link auth-logged-out" onclick="openAuthModal('login');return false" data-i18n="navLogin">Giriş Yap</a>
+      <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden data-i18n="navLogout">Çıkış Yap</a>
+      <div class="lang-switch" aria-label="Dil seçimi"><button type="button" data-lang="tr" onclick="setLanguage('tr')">TR</button><span>|</span><button type="button" data-lang="en" onclick="setLanguage('en')">EN</button><span>|</span><button type="button" data-lang="es" onclick="setLanguage('es')">ES</button></div><a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)" data-i18n="navStart">Tahmine Başla</a>
     </nav>    <button class="hbg" id="hbg" aria-label="Menüyü aç/kapat"><span></span><span></span><span></span></button>
   </div>
   <nav class="mob-nav" id="mobnav">
-    <a href="index.html">Ana Sayfa</a>
-    <a href="predictions.html">Tahminler</a>
-    <a href="rankings.html">Sıralama</a>
-    <a href="rules.html">Kurallar</a>
-    <a href="profile.html" class="auth-link auth-logged-in" hidden>Profil</a>
-    <a href="#" class="auth-link auth-logged-out" onclick="openAuthModal('login');return false">Giriş Yap</a>
-    <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden>Çıkış Yap</a>
-    <a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)">Tahmine Başla</a>
+    <a href="index.html" data-i18n="navHome">Ana Sayfa</a>
+    <a href="predictions.html" data-i18n="navPredictions">Tahminler</a>
+    <a href="rankings.html" data-i18n="navRankings">Sıralama</a>
+    <a href="rules.html" data-i18n="navRules">Kurallar</a>
+    <a href="profile.html" class="auth-link auth-logged-in" data-i18n="navProfile" hidden>Profil</a>
+    <a href="#" class="auth-link auth-logged-out" onclick="openAuthModal('login');return false" data-i18n="navLogin">Giriş Yap</a>
+    <a href="#" class="auth-link auth-logged-in" onclick="logoutUser();return false" hidden data-i18n="navLogout">Çıkış Yap</a>
+    <div class="lang-switch lang-switch-mobile" aria-label="Dil seçimi"><button type="button" data-lang="tr" onclick="setLanguage('tr')">TR</button><span>|</span><button type="button" data-lang="en" onclick="setLanguage('en')">EN</button><span>|</span><button type="button" data-lang="es" onclick="setLanguage('es')">ES</button></div><a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)" data-i18n="navStart">Tahmine Başla</a>
   </nav></header>
 
 <main data-page="home">
@@ -71,18 +71,18 @@
   <div class="glow glow-g" aria-hidden="true"></div>
   <div class="glow glow-b" aria-hidden="true"></div>
   <div class="c hero-c">
-    <p class="slabel" style="animation:fadeUp .5s .05s both">Dünya Kupası 2026 · 104 Maç</p>
-    <h1 class="htitle">104 Maç.<br>48 Ülke.<br>Milyonlarca Futbolsever.<br><span class="htitle-a">Tek Dünya Kupası Arenası.</span></h1>
-    <p class="hero-sub">Her maçı tahmin et, puan topla, ülkene katkı sağla ve Dünya Kupası 2026 boyunca dünyanın dört bir yanındaki futbolseverlerle aynı sıralamada yarış.</p>
+    <p class="slabel" style="animation:fadeUp .5s .05s both" data-i18n="homeLabel">Dünya Kupası 2026 · 104 Maç</p>
+    <h1 class="htitle" data-i18n-html="homeTitle">104 Maç.<br>48 Ülke.<br>Milyonlarca Futbolsever.<br><span class="htitle-a">Tek Dünya Kupası Arenası.</span></h1>
+    <p class="hero-sub" data-i18n="homeSub">Her maçı tahmin et, puan topla, ülkene katkı sağla ve Dünya Kupası 2026 boyunca dünyanın dört bir yanındaki futbolseverlerle aynı sıralamada yarış.</p>
     <div class="hero-btns">
-      <a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)">⚽ Tahmine Başla</a>
-      <a href="rankings.html" class="btn btn-o" >Sıralamayı Gör</a>
+      <a href="predictions.html" class="btn btn-p predict-start" onclick="return handlePredictionStart(event)" data-i18n="navStartIcon">⚽ Tahmine Başla</a>
+      <a href="rankings.html" class="btn btn-o" data-i18n="rankingsSee">Sıralamayı Gör</a>
     </div>
     <div class="stats-bar">
-      <div class="stat"><span class="stat-v">104</span><span class="stat-l">Maç</span></div>
-      <div class="stat"><span class="stat-v">48</span><span class="stat-l">Ülke</span></div>
-      <div class="stat"><span class="stat-v">39</span><span class="stat-l">Gün</span></div>
-      <div class="stat"><span class="stat-v">∞</span><span class="stat-l">Rekabet</span></div>
+      <div class="stat"><span class="stat-v">104</span><span class="stat-l" data-i18n="statMatches">Maç</span></div>
+      <div class="stat"><span class="stat-v">48</span><span class="stat-l" data-i18n="statCountries">Ülke</span></div>
+      <div class="stat"><span class="stat-v">39</span><span class="stat-l" data-i18n="statDays">Gün</span></div>
+      <div class="stat"><span class="stat-v">∞</span><span class="stat-l" data-i18n="statCompetition">Rekabet</span></div>
     </div>
   </div>
   <div class="hero-fade" aria-hidden="true"></div>
@@ -91,7 +91,7 @@
   <div class="mani-bg"></div>
   <div class="c mani-i">
     <div class="mani-l">
-      <p class="slabel">Manifestomuz</p>
+      <p class="slabel" data-i18n="manifestLabel">Manifestomuz</p>
       <div class="divider"></div>
       <div class="globe-wrap" aria-hidden="true">
         <span class="globe-icon">🌍</span>
@@ -100,25 +100,25 @@
       </div>
     </div>
     <div class="mani-r">
-      <p class="mpara">Dünya Kupası dört yılda bir gelir.</p>
-      <p class="mpara">Farklı ülkelerden milyonlarca insan aynı maçları izler, aynı golleri kutlar ve aynı hüzünleri yaşar.</p>
-      <p class="mpara">World Cup Arena, bu insanları ortak bir deneyimde buluşturur.</p>
-      <p class="mpara mpara-b">Bu sadece bir tahmin oyunu değil.</p>
-      <p class="mpara mpara-b">Bu, her puanın hem senin hem de temsil ettiğin ülkenin kaderini etkilediği küresel bir futbol arenası.</p>
+      <p class="mpara" data-i18n="manifest1">Dünya Kupası dört yılda bir gelir.</p>
+      <p class="mpara" data-i18n="manifest2">Farklı ülkelerden milyonlarca insan aynı maçları izler, aynı golleri kutlar ve aynı hüzünleri yaşar.</p>
+      <p class="mpara" data-i18n="manifest3">World Cup Arena, bu insanları ortak bir deneyimde buluşturur.</p>
+      <p class="mpara mpara-b" data-i18n="manifest4">Bu sadece bir tahmin oyunu değil.</p>
+      <p class="mpara mpara-b" data-i18n="manifest5">Bu, her puanın hem senin hem de temsil ettiğin ülkenin kaderini etkilediği küresel bir futbol arenası.</p>
     </div>
   </div>
 </section>
 
 <section class="s" id="how-it-works">
   <div class="c">
-    <p class="slabel">Oyun</p>
-    <h2 class="stitle">Nasıl Çalışır</h2>
+    <p class="slabel" data-i18n="gameLabel">Oyun</p>
+    <h2 class="stitle" data-i18n="howTitle">Nasıl Çalışır</h2>
     <div class="divider"></div>
     <div class="how-grid">
-      <div class="how-card" style="--a:#f0b429"><div class="hc-top"><span class="hc-num">01</span><span class="hc-icon">🏆</span></div><h3 class="hc-t">Turnuva Tahminleri Yap</h3><p class="hc-d">İlk düdükten önce şampiyonu, finalistleri, gol kralını, asist kralını ve turnuvanın oyuncusunu tahmin et.</p><div class="hc-bar"></div></div>
-      <div class="how-card" style="--a:#3b82f6"><div class="hc-top"><span class="hc-num">02</span><span class="hc-icon">🎯</span></div><h3 class="hc-t">Maç Skorlarını Tahmin Et</h3><p class="hc-d">Her maçtan önce kesin skor tahminini gönder. Tahminin ne kadar yakınsa, puanın o kadar yüksek olur.</p><div class="hc-bar"></div></div>
-      <div class="how-card" style="--a:#1db954"><div class="hc-top"><span class="hc-num">03</span><span class="hc-icon">📈</span></div><h3 class="hc-t">Puan Topla</h3><p class="hc-d">Doğru skorlar, doğru sonuçlar, tahmin serileri ve turnuva tahminlerinden puan kazan. Her maç önemlidir.</p><div class="hc-bar"></div></div>
-      <div class="how-card" style="--a:#e84040"><div class="hc-top"><span class="hc-num">04</span><span class="hc-icon">🌍</span></div><h3 class="hc-t">Ülkeni Temsil Et</h3><p class="hc-d">Puanların, seçtiğin ülkenin genel sıralamasına katkı sağlar. Her tahminde bayrağını taşı.</p><div class="hc-bar"></div></div>
+      <div class="how-card" style="--a:#f0b429"><div class="hc-top"><span class="hc-num">01</span><span class="hc-icon">🏆</span></div><h3 class="hc-t" data-i18n="how1Title">Turnuva Tahminleri Yap</h3><p class="hc-d" data-i18n="how1Desc">İlk düdükten önce şampiyonu, finalistleri, gol kralını, asist kralını ve turnuvanın oyuncusunu tahmin et.</p><div class="hc-bar"></div></div>
+      <div class="how-card" style="--a:#3b82f6"><div class="hc-top"><span class="hc-num">02</span><span class="hc-icon">🎯</span></div><h3 class="hc-t" data-i18n="how2Title">Maç Skorlarını Tahmin Et</h3><p class="hc-d" data-i18n="how2Desc">Her maçtan önce kesin skor tahminini gönder. Tahminin ne kadar yakınsa, puanın o kadar yüksek olur.</p><div class="hc-bar"></div></div>
+      <div class="how-card" style="--a:#1db954"><div class="hc-top"><span class="hc-num">03</span><span class="hc-icon">📈</span></div><h3 class="hc-t" data-i18n="how3Title">Puan Topla</h3><p class="hc-d" data-i18n="how3Desc">Doğru skorlar, doğru sonuçlar, tahmin serileri ve turnuva tahminlerinden puan kazan. Her maç önemlidir.</p><div class="hc-bar"></div></div>
+      <div class="how-card" style="--a:#e84040"><div class="hc-top"><span class="hc-num">04</span><span class="hc-icon">🌍</span></div><h3 class="hc-t" data-i18n="how4Title">Ülkeni Temsil Et</h3><p class="hc-d" data-i18n="how4Desc">Puanların, seçtiğin ülkenin genel sıralamasına katkı sağlar. Her tahminde bayrağını taşı.</p><div class="hc-bar"></div></div>
     </div>
   </div>
 </section>
@@ -126,8 +126,8 @@
 <section class="soc s" id="social">
   <div class="soc-bg"></div>
   <div class="c">
-    <p class="slabel">Topluluk</p>
-    <h2 class="stitle">Sosyal Deneyim</h2>
+    <p class="slabel" data-i18n="communityLabel">Topluluk</p>
+    <h2 class="stitle" data-i18n="socialTitle">Sosyal Deneyim</h2>
     <div class="divider"></div>
     <p style="max-width:580px;color:var(--t2);font-size:15px;line-height:1.7;position:relative;z-index:1">Maç günlerinden sonra en iyi tahminler, en hızlı yükselenler ve lider ülkeler <strong style="color:var(--t1)">𝕏</strong> üzerinde paylaşılacak. Premium kullanıcılar seçtikleri isim, fotoğraf, ülke bayrağı ve paylaşılabilir sıralama kartı ile görünebilir.</p>
     <div class="soc-c">
@@ -154,10 +154,10 @@
 <section class="cta" id="cta">
   <div class="cta-bg"><div class="cta-glow"></div></div>
   <div class="c cta-i">
-    <p class="slabel">Şimdi Katıl</p>
-    <h2 class="cta-t">Küresel Dünya Kupası<br><span class="cta-ta">deneyiminin parçası ol.</span></h2>
-    <p class="cta-sub">104 maç. Sayısız tahmin. Tek küresel arena.</p>
-    <div class="cta-acts"><a href="predictions.html" class="btn btn-p cta-btn predict-start" onclick="return handlePredictionStart(event)">⚽ Tahmine Başla</a></div>
+    <p class="slabel" data-i18n="joinNow">Şimdi Katıl</p>
+    <h2 class="cta-t" data-i18n-html="ctaTitle">Küresel Dünya Kupası<br><span class="cta-ta">deneyiminin parçası ol.</span></h2>
+    <p class="cta-sub" data-i18n="ctaSub">104 maç. Sayısız tahmin. Tek küresel arena.</p>
+    <div class="cta-acts"><a href="predictions.html" class="btn btn-p cta-btn predict-start" onclick="return handlePredictionStart(event)" data-i18n="navStartIcon">⚽ Tahmine Başla</a></div>
     <div class="flags">
       <span style="animation-delay:.00s">🇧🇷</span><span style="animation-delay:.06s">🇩🇪</span><span style="animation-delay:.12s">🇦🇷</span><span style="animation-delay:.18s">🇫🇷</span><span style="animation-delay:.24s">🇪🇸</span><span style="animation-delay:.30s">🇵🇹</span><span style="animation-delay:.36s">🇮🇹</span><span style="animation-delay:.42s">🇳🇱</span><span style="animation-delay:.48s">🇯🇵</span><span style="animation-delay:.54s">🇲🇦</span><span style="animation-delay:.60s">🇺🇸</span><span style="animation-delay:.66s">🇹🇷</span><span style="animation-delay:.72s">🇷🇸</span><span style="animation-delay:.78s">🇸🇳</span><span style="animation-delay:.84s">🇦🇺</span><span style="animation-delay:.90s">🇰🇷</span>
     </div>
@@ -169,24 +169,24 @@
   <div class="auth-modal__overlay" onclick="closeAuthModal()"></div>
   <div class="auth-modal__card" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
     <button class="auth-modal__close" type="button" aria-label="Kapat" onclick="closeAuthModal()">×</button>
-    <p class="slabel" id="authModalTitle">Hesap</p>
+    <p class="slabel" id="authModalTitle" data-i18n="account">Hesap</p>
     <div id="authMessage" class="auth-message" hidden></div>
     <div class="auth-tabs">
-      <button class="btn btn-p" id="loginTab" type="button" onclick="showAuthTab('login')">Giriş Yap</button>
-      <button class="btn btn-o" id="signupTab" type="button" onclick="showAuthTab('signup')">Üye Ol</button>
+      <button class="btn btn-p" id="loginTab" type="button" onclick="showAuthTab('login')" data-i18n="navLogin">Giriş Yap</button>
+      <button class="btn btn-o" id="signupTab" type="button" onclick="showAuthTab('signup')" data-i18n="navSignup">Üye Ol</button>
     </div>
     <form id="loginForm" class="auth-form">
-      <label><span class="hc-d">E-posta</span><input id="loginEmail" type="email" required placeholder="email@ornek.com"></label>
-      <label><span class="hc-d">Şifre</span><input id="loginPassword" type="password" required placeholder="Şifre"></label>
-      <button class="btn btn-p" type="submit">Giriş Yap</button>
-      <button class="auth-switch" type="button" onclick="showAuthTab('signup')">Hesabın yok mu? Üye ol</button>
+      <label><span class="hc-d" data-i18n="email">E-posta</span><input id="loginEmail" type="email" required placeholder="email@ornek.com" data-i18n-placeholder="emailPlaceholder"></label>
+      <label><span class="hc-d" data-i18n="password">Şifre</span><input id="loginPassword" type="password" required placeholder="Şifre" data-i18n-placeholder="passwordPlaceholder"></label>
+      <button class="btn btn-p" type="submit" data-i18n="navLogin">Giriş Yap</button>
+      <button class="auth-switch" type="button" onclick="showAuthTab('signup')" data-i18n="noAccount">Hesabın yok mu? Üye ol</button>
     </form>
     <form id="signupForm" class="auth-form" hidden>
-      <label><span class="hc-d">E-posta</span><input id="signupEmail" type="email" required placeholder="email@ornek.com"></label>
-      <label><span class="hc-d">Şifre</span><input id="signupPassword" type="password" required placeholder="Şifre"></label>
-      <label><span class="hc-d">Ülke seçimi</span><select id="signupCountry" required><option>Türkiye</option><option>Brezilya</option><option>Arjantin</option><option>Almanya</option><option>Fransa</option><option>İspanya</option><option>İngiltere</option><option>Portekiz</option><option>Hollanda</option><option>Fas</option><option>ABD</option><option>Meksika</option><option>Kanada</option><option>Uruguay</option><option>Kolombiya</option><option>Japonya</option><option>Güney Kore</option><option>Senegal</option><option>Hırvatistan</option><option>Belçika</option><option>İsviçre</option><option>Norveç</option><option>İsveç</option><option>Avusturya</option><option>İskoçya</option><option>Çekya</option><option>Bosna Hersek</option><option>Sırbistan</option><option>Avustralya</option><option>İran</option><option>Irak</option><option>Suudi Arabistan</option><option>Katar</option><option>Ürdün</option><option>Özbekistan</option><option>Mısır</option><option>Cezayir</option><option>Tunus</option><option>Gana</option><option>Güney Afrika</option><option>Fildişi Sahili</option><option>Cabo Verde</option><option>Kongo DC</option><option>Panama</option><option>Haiti</option><option>Curaçao</option><option>Yeni Zelanda</option><option>Paraguay</option></select></label>
-      <button class="btn btn-p" type="submit">Üye Ol</button>
-      <button class="auth-switch" type="button" onclick="showAuthTab('login')">Hesabın var mı? Giriş yap</button>
+      <label><span class="hc-d" data-i18n="email">E-posta</span><input id="signupEmail" type="email" required placeholder="email@ornek.com" data-i18n-placeholder="emailPlaceholder"></label>
+      <label><span class="hc-d" data-i18n="password">Şifre</span><input id="signupPassword" type="password" required placeholder="Şifre" data-i18n-placeholder="passwordPlaceholder"></label>
+      <label><span class="hc-d" data-i18n="countrySelect">Ülke seçimi</span><select id="signupCountry" required><option>Türkiye</option><option>Brezilya</option><option>Arjantin</option><option>Almanya</option><option>Fransa</option><option>İspanya</option><option>İngiltere</option><option>Portekiz</option><option>Hollanda</option><option>Fas</option><option>ABD</option><option>Meksika</option><option>Kanada</option><option>Uruguay</option><option>Kolombiya</option><option>Japonya</option><option>Güney Kore</option><option>Senegal</option><option>Hırvatistan</option><option>Belçika</option><option>İsviçre</option><option>Norveç</option><option>İsveç</option><option>Avusturya</option><option>İskoçya</option><option>Çekya</option><option>Bosna Hersek</option><option>Sırbistan</option><option>Avustralya</option><option>İran</option><option>Irak</option><option>Suudi Arabistan</option><option>Katar</option><option>Ürdün</option><option>Özbekistan</option><option>Mısır</option><option>Cezayir</option><option>Tunus</option><option>Gana</option><option>Güney Afrika</option><option>Fildişi Sahili</option><option>Cabo Verde</option><option>Kongo DC</option><option>Panama</option><option>Haiti</option><option>Curaçao</option><option>Yeni Zelanda</option><option>Paraguay</option></select></label>
+      <button class="btn btn-p" type="submit" data-i18n="navSignup">Üye Ol</button>
+      <button class="auth-switch" type="button" onclick="showAuthTab('login')" data-i18n="hasAccount">Hesabın var mı? Giriş yap</button>
     </form>
   </div>
 </div>
@@ -197,13 +197,3 @@
 <script src="js/app.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-

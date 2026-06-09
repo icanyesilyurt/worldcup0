@@ -1,4 +1,25 @@
-﻿const hdr=document.getElementById('hdr'),hbg=document.getElementById('hbg'),mob=document.getElementById('mobnav');
+﻿const translations={
+  tr:{navHome:'Ana Sayfa',navPredictions:'Tahminler',navRankings:'Sıralama',navRules:'Kurallar',navProfile:'Profil',navLogin:'Giriş Yap',navSignup:'Üye Ol',navLogout:'Çıkış Yap',navStart:'Tahmine Başla',homeLabel:'Dünya Kupası 2026 · 104 Maç',homeTitle:'104 Maç.<br>48 Ülke.<br>Milyonlarca Futbolsever.<br><span class="htitle-a">Tek Dünya Kupası Arenası.</span>',homeSub:'Her maçı tahmin et, puan topla, ülkene katkı sağla ve Dünya Kupası 2026 boyunca dünyanın dört bir yanındaki futbolseverlerle aynı sıralamada yarış.',rankingsSee:'Sıralamayı Gör',statMatches:'Maç',statCountries:'Ülke',statDays:'Gün',statCompetition:'Rekabet',manifestLabel:'Manifestomuz',manifest1:'Dünya Kupası dört yılda bir gelir.',manifest2:'Farklı ülkelerden milyonlarca insan aynı maçları izler, aynı golleri kutlar ve aynı hüzünleri yaşar.',manifest3:'World Cup Arena, bu insanları ortak bir deneyimde buluşturur.',manifest4:'Bu sadece bir tahmin oyunu değil.',manifest5:'Bu, her puanın hem senin hem de temsil ettiğin ülkenin kaderini etkilediği küresel bir futbol arenası.',gameLabel:'Oyun',howTitle:'Nasıl Çalışır',how1Title:'Turnuva Tahminleri Yap',how1Desc:'İlk düdükten önce şampiyonu, finalistleri, gol kralını, asist kralını ve turnuvanın oyuncusunu tahmin et.',how2Title:'Maç Skorlarını Tahmin Et',how2Desc:'Her maçtan önce kesin skor tahminini gönder. Tahminin ne kadar yakınsa, puanın o kadar yüksek olur.',how3Title:'Puan Topla',how3Desc:'Doğru skorlar, doğru sonuçlar, tahmin serileri ve turnuva tahminlerinden puan kazan. Her maç önemlidir.',how4Title:'Ülkeni Temsil Et',how4Desc:'Puanların, seçtiğin ülkenin genel sıralamasına katkı sağlar. Her tahminde bayrağını taşı.',communityLabel:'Topluluk',socialTitle:'Sosyal Deneyim',joinNow:'Şimdi Katıl',ctaTitle:'Küresel Dünya Kupası<br><span class="cta-ta">deneyiminin parçası ol.</span>',ctaSub:'104 maç. Sayısız tahmin. Tek küresel arena.',predLabel:'Tahminler',predTitle:'Tahminler',warningLabel:'Önemli Uyarı',warningTitle:'Tahminlerini kaydetmeden önce kontrol et',warning1:'Turnuva tahminleri yalnızca bir kez yapılabilir. Kaydedildikten sonra değiştirilemez.',warning2:'Şampiyon, finalistler, gol kralı, asist kralı ve turnuvanın oyuncusu tahminlerini dikkatli seç.',warning3:'Maç skor tahminleri de her maç için yalnızca bir kez yapılabilir. Kaydetmeden önce skorunu kontrol et.',warning4:'Acele etme. Erken tahminler yanıltıcı olabilir.',tournamentPredictions:'Turnuva Tahminleri',tournamentGeneral:'Turnuva Genel Tahminleri',championQuestion:'Şampiyon kim olur?',finalist1:'Finalist 1',finalist2:'Finalist 2',topScorerQuestion:'Gol kralı kim olur?',topAssistQuestion:'Asist kralı kim olur?',playerTournamentQuestion:'Turnuvanın oyuncusu kim olur?',saveTournament:'Turnuva Tahminlerini Kaydet',goMatchPredictions:'Maç Tahminlerine Git',matchPredictions:'Maç Tahminleri',groupMatches:'Grup Aşaması Maçları',showAllMatches:'Tüm Maçları Göster',rankingsLabel:'Sıralama',rankingsTitle:'Sıralama',individualRanking:'Bireysel Sıralama',countryParticipation:'Ülke Katılımı',collectiveRanking:'Ülke / Kolektif Puan Sıralaması',showMore:'Daha Fazla Gör',showAllRanking:'Tüm Sıralamayı Göster',closeList:'Listeyi Kapat',points:'puan',participant:'katılımcı',user:'kullanıcı',selfTag:'Sen',rulesLabel:'Kurallar',rulesTitle:'Kurallar ve Puanlama',whatIs:'Dünya Kupası Arena Nedir?',howJoin:'Nasıl Katılırsın?',rulesMatch:'Maç Tahminleri',rulesTournament:'Turnuva Tahminleri',pointsSystem:'Puan Sistemi',countryPoints:'Ülke Puanı',socialShares:'Sosyal Paylaşımlar',premiumVisibility:'Premium Görünürlük',generalRules:'Genel Kurallar',importantWarning:'Önemli Uyarı',profileLabel:'Profil',profileTitle:'Profil',loginRequired:'Giriş Gerekli',loginRequiredText:'Profilini görmek için giriş yapmalısın.',profileCard:'Profil Kartı',username:'Kullanıcı adı',email:'E-posta',country:'Ülke',totalPoints:'Toplam puan',worldRank:'Dünya sırası',countryRank:'Ülke içi sırası',referralCode:'Davet kodu',premiumText:'Premium kullanıcılar sıralamada kendi seçtikleri isimle görünebilir, profil fotoğrafı ekleyebilir ve paylaşılabilir kullanıcı kartı oluşturabilir.',premiumUpgrade:'Premium’a Geç',customUsername:'Özel kullanıcı adı',profilePhoto:'Profil fotoğrafı',visibleName:'Sıralamada görünür isim',shareableCard:'Paylaşılabilir kullanıcı kartı',xTagChance:'X paylaşımlarında etiketlenme şansı',account:'Hesap',password:'Şifre',countrySelect:'Ülke seçimi',noAccount:'Hesabın yok mu? Üye ol',hasAccount:'Hesabın var mı? Giriş yap',navStartIcon:'⚽ Tahmine Başla',rulesWhatDesc:'Dünya Kupası Arena, Dünya Kupası boyunca maç ve turnuva tahminleri yaparak puan topladığın, ülkeni temsil ettiğin ve küresel sıralamada yarıştığın bir tahmin ve topluluk deneyimidir.',rulesJoinDesc:'Profilini oluşturur, temsil etmek istediğin ülkeyi seçer ve maçlar başlamadan önce tahminlerini girersin. Kazandığın puanlar kişisel sıralamana ve ülke puanına yansır.',rulesMatchDesc:'Her maç için skor tahmini maç başlamadan önce yapılır. Tahmin kaydedildikten sonra değiştirilemez.',rulesTournamentDesc:'Şampiyon, finalistler, gol kralı, asist kralı ve turnuvanın oyuncusu için turnuva tahminleri yapılır. Bu tahminler bir kez kaydedilir.',championCorrect:'Şampiyon doğru',finalistCorrect:'Finalist doğru',topScorerCorrect:'Gol kralı doğru',topAssistCorrect:'Asist kralı doğru',playerTournamentCorrect:'Turnuvanın oyuncusu doğru',exactScoreCorrect:'Tam skor doğru',resultDiffCorrect:'Sonuç doğru + gol farkı doğru',resultOnlyCorrect:'Sadece sonuç doğru',wrongPrediction:'Yanlış tahmin',rulesCountryDesc:'Kullanıcının kazandığı her puan, kayıt olurken seçtiği ülkenin kolektif toplamına da katkı sağlar.',rulesSocialDesc:'Günün iyi tahminleri, hızlı yükselen kullanıcıları ve öne çıkan ülkeleri sosyal hesaplarımızda paylaşılabilir.',rulesGeneralDesc:'Tahminler maç başlamadan önce yapılmalıdır. Maç başladıktan sonra tahmin değiştirilemez. Her kullanıcı yalnızca bir hesap kullanabilir. Haksız avantaj sağlayan hesaplar kaldırılabilir.',rulesWarningDesc:'Bu platform bahis sitesi değildir. Para karşılığı maç sonucu üzerinden kazanç vaat etmez. Amaç Dünya Kupası boyunca küresel bir tahmin, rekabet ve topluluk deneyimi oluşturmaktır.',points250:'250 puan',points150:'150 puan',points100:'100 puan',points80:'80 puan',points30:'30 puan',points10:'10 puan',points0:'0 puan',emailPlaceholder:'email@ornek.com',passwordPlaceholder:'Şifre'},
+  en:{navHome:'Home',navPredictions:'Predictions',navRankings:'Rankings',navRules:'Rules',navProfile:'Profile',navLogin:'Log In',navSignup:'Sign Up',navLogout:'Log Out',navStart:'Start Predicting',homeLabel:'World Cup 2026 · 104 Matches',homeTitle:'104 Matches.<br>48 Nations.<br>Millions of Football Fans.<br><span class="htitle-a">One World Cup Arena.</span>',homeSub:'Predict every match, collect points, support your country, and compete in the same global ranking with football fans from all around the world during World Cup 2026.',rankingsSee:'View Rankings',statMatches:'Matches',statCountries:'Nations',statDays:'Days',statCompetition:'Competition',manifestLabel:'Our Manifesto',manifest1:'The World Cup comes once every four years.',manifest2:'Millions of people from different countries watch the same matches, celebrate the same goals, and share the same heartbreaks.',manifest3:'World Cup Arena brings these people together in one shared experience.',manifest4:'This is not just a prediction game.',manifest5:'This is a global football arena where every point shapes both your destiny and the country you represent.',gameLabel:'Game',howTitle:'How It Works',how1Title:'Make Tournament Predictions',how1Desc:'Before the first whistle, predict the champion, finalists, top scorer, top assister, and player of the tournament.',how2Title:'Predict Match Scores',how2Desc:'Submit your exact score prediction before every match. The closer you are, the more points you earn.',how3Title:'Collect Points',how3Desc:'Earn points from exact scores, correct results, streaks, and tournament predictions. Every match matters.',how4Title:'Represent Your Country',how4Desc:'Your points contribute to your chosen country’s overall ranking. Carry your flag with every prediction.',communityLabel:'Community',socialTitle:'Social Experience',joinNow:'Join Now',ctaTitle:'Become part of the global<br><span class="cta-ta">World Cup experience.</span>',ctaSub:'104 matches. Countless predictions. One global arena.',predLabel:'Predictions',predTitle:'Predictions',warningLabel:'Important Notice',warningTitle:'Check your picks before saving',warning1:'Tournament predictions can only be made once. After saving, they cannot be changed.',warning2:'Choose your champion, finalists, top scorer, top assister, and player of the tournament carefully.',warning3:'Match score predictions can also be made only once for each match. Check your score before saving.',warning4:'Do not rush. Early predictions can be misleading.',tournamentPredictions:'Tournament Predictions',tournamentGeneral:'General Tournament Predictions',championQuestion:'Who will be champion?',finalist1:'Finalist 1',finalist2:'Finalist 2',topScorerQuestion:'Who will be top scorer?',topAssistQuestion:'Who will be assist leader?',playerTournamentQuestion:'Who will be player of the tournament?',saveTournament:'Save Tournament Predictions',goMatchPredictions:'Go to Match Predictions',matchPredictions:'Match Predictions',groupMatches:'Group Stage Matches',showAllMatches:'Show All Matches',rankingsLabel:'Rankings',rankingsTitle:'Rankings',individualRanking:'Individual Ranking',countryParticipation:'Country Participation',collectiveRanking:'Country / Collective Points Ranking',showMore:'Show More',showAllRanking:'Show Full Ranking',closeList:'Close List',points:'points',participant:'participants',user:'users',selfTag:'You',rulesLabel:'Rules',rulesTitle:'Rules and Scoring',whatIs:'What Is World Cup Arena?',howJoin:'How Do You Join?',rulesMatch:'Match Predictions',rulesTournament:'Tournament Predictions',pointsSystem:'Scoring System',countryPoints:'Country Points',socialShares:'Social Shares',premiumVisibility:'Premium Visibility',generalRules:'General Rules',importantWarning:'Important Notice',profileLabel:'Profile',profileTitle:'Profile',loginRequired:'Login Required',loginRequiredText:'You must log in to view your profile.',profileCard:'Profile Card',username:'Username',email:'Email',country:'Country',totalPoints:'Total Points',worldRank:'World Rank',countryRank:'Country Rank',referralCode:'Referral Code',premiumText:'Premium users can appear in rankings with their chosen name, add a profile photo, and create a shareable user card.',premiumUpgrade:'Go Premium',customUsername:'Custom username',profilePhoto:'Profile photo',visibleName:'Visible ranking name',shareableCard:'Shareable user card',xTagChance:'Chance to be tagged on X',account:'Account',password:'Password',countrySelect:'Country selection',noAccount:'No account? Sign up',hasAccount:'Already have an account? Log in',navStartIcon:'⚽ Start Predicting',rulesWhatDesc:'World Cup Arena is a prediction and community experience where you collect points through match and tournament predictions, represent your country, and compete in a global ranking throughout the World Cup.',rulesJoinDesc:'Create your profile, choose the country you want to represent, and enter your predictions before matches begin. Your points count toward your personal ranking and your country score.',rulesMatchDesc:'For each match, score predictions must be made before kickoff. Once a prediction is saved, it cannot be changed.',rulesTournamentDesc:'Tournament predictions are made for the champion, finalists, top scorer, assist leader, and player of the tournament. These predictions are saved once.',championCorrect:'Champion correct',finalistCorrect:'Finalist correct',topScorerCorrect:'Top scorer correct',topAssistCorrect:'Assist leader correct',playerTournamentCorrect:'Player of the tournament correct',exactScoreCorrect:'Exact score correct',resultDiffCorrect:'Correct result + correct goal difference',resultOnlyCorrect:'Correct result only',wrongPrediction:'Wrong prediction',rulesCountryDesc:'Every point a user earns also contributes to the collective total of the country selected during registration.',rulesSocialDesc:'The best predictions of the day, fastest-rising users, and featured countries may be shared on our social accounts.',rulesGeneralDesc:'Predictions must be made before the match begins. After kickoff, predictions cannot be changed. Each user may use only one account. Accounts that gain unfair advantage may be removed.',rulesWarningDesc:'This platform is not a betting site. It does not promise winnings based on match results in exchange for money. The goal is to create a global prediction, competition, and community experience throughout the World Cup.',points250:'250 points',points150:'150 points',points100:'100 points',points80:'80 points',points30:'30 points',points10:'10 points',points0:'0 points',emailPlaceholder:'email@example.com',passwordPlaceholder:'Password'},
+  es:{navHome:'Inicio',navPredictions:'Predicciones',navRankings:'Ranking',navRules:'Reglas',navProfile:'Perfil',navLogin:'Iniciar Sesión',navSignup:'Registrarse',navLogout:'Cerrar Sesión',navStart:'Empezar a Predecir',homeLabel:'Mundial 2026 · 104 Partidos',homeTitle:'104 Partidos.<br>48 Países.<br>Millones de Aficionados.<br><span class="htitle-a">Una Arena Mundial.</span>',homeSub:'Predice cada partido, suma puntos, apoya a tu país y compite en el mismo ranking global con aficionados de todo el mundo durante el Mundial 2026.',rankingsSee:'Ver Ranking',statMatches:'Partidos',statCountries:'Países',statDays:'Días',statCompetition:'Competencia',manifestLabel:'Nuestro Manifiesto',manifest1:'El Mundial llega una vez cada cuatro años.',manifest2:'Millones de personas de distintos países ven los mismos partidos, celebran los mismos goles y comparten las mismas emociones.',manifest3:'World Cup Arena reúne a esas personas en una experiencia común.',manifest4:'Esto no es solo un juego de predicciones.',manifest5:'Es una arena global de fútbol donde cada punto influye en tu destino y en el del país que representas.',gameLabel:'Juego',howTitle:'Cómo Funciona',how1Title:'Haz Predicciones del Torneo',how1Desc:'Antes del primer silbato, predice el campeón, los finalistas, el máximo goleador, el líder en asistencias y el jugador del torneo.',how2Title:'Predice Marcadores',how2Desc:'Envía tu marcador exacto antes de cada partido. Cuanto más cerca estés, más puntos ganas.',how3Title:'Suma Puntos',how3Desc:'Gana puntos por marcadores exactos, resultados correctos, rachas y predicciones del torneo. Cada partido cuenta.',how4Title:'Representa a Tu País',how4Desc:'Tus puntos contribuyen al ranking general del país que elegiste. Lleva tu bandera en cada predicción.',communityLabel:'Comunidad',socialTitle:'Experiencia Social',joinNow:'Únete Ahora',ctaTitle:'Sé parte de la experiencia<br><span class="cta-ta">global del Mundial.</span>',ctaSub:'104 partidos. Innumerables predicciones. Una arena global.',predLabel:'Predicciones',predTitle:'Predicciones',warningLabel:'Aviso Importante',warningTitle:'Revisa tus elecciones antes de guardar',warning1:'Las predicciones del torneo solo se pueden hacer una vez. Después de guardarlas, no se pueden cambiar.',warning2:'Elige con cuidado tu campeón, finalistas, máximo goleador, líder de asistencias y jugador del torneo.',warning3:'Las predicciones de marcador también solo se pueden hacer una vez por partido. Revisa tu marcador antes de guardar.',warning4:'No te apresures. Las predicciones tempranas pueden ser engañosas.',tournamentPredictions:'Predicciones del Torneo',tournamentGeneral:'Predicciones Generales del Torneo',championQuestion:'¿Quién será campeón?',finalist1:'Finalista 1',finalist2:'Finalista 2',topScorerQuestion:'¿Quién será el máximo goleador?',topAssistQuestion:'¿Quién será el líder de asistencias?',playerTournamentQuestion:'¿Quién será el jugador del torneo?',saveTournament:'Guardar Predicciones del Torneo',goMatchPredictions:'Ir a Predicciones de Partidos',matchPredictions:'Predicciones de Partidos',groupMatches:'Partidos de Fase de Grupos',showAllMatches:'Mostrar Todos los Partidos',rankingsLabel:'Ranking',rankingsTitle:'Ranking',individualRanking:'Ranking Individual',countryParticipation:'Participación por País',collectiveRanking:'Ranking de Países / Puntos Colectivos',showMore:'Ver Más',showAllRanking:'Mostrar Ranking Completo',closeList:'Cerrar Lista',points:'puntos',participant:'participantes',user:'usuarios',selfTag:'Tú',rulesLabel:'Reglas',rulesTitle:'Reglas y Puntuación',whatIs:'¿Qué es World Cup Arena?',howJoin:'¿Cómo Participas?',rulesMatch:'Predicciones de Partidos',rulesTournament:'Predicciones del Torneo',pointsSystem:'Sistema de Puntos',countryPoints:'Puntos del País',socialShares:'Publicaciones Sociales',premiumVisibility:'Visibilidad Premium',generalRules:'Reglas Generales',importantWarning:'Aviso Importante',profileLabel:'Perfil',profileTitle:'Perfil',loginRequired:'Inicio de Sesión Requerido',loginRequiredText:'Debes iniciar sesión para ver tu perfil.',profileCard:'Tarjeta de Perfil',username:'Usuario',email:'Correo',country:'País',totalPoints:'Puntos Totales',worldRank:'Ranking Mundial',countryRank:'Ranking Nacional',referralCode:'Código de Invitación',premiumText:'Los usuarios Premium pueden aparecer en el ranking con el nombre que elijan, añadir foto de perfil y crear una tarjeta compartible.',premiumUpgrade:'Pasar a Premium',customUsername:'Nombre personalizado',profilePhoto:'Foto de perfil',visibleName:'Nombre visible en ranking',shareableCard:'Tarjeta compartible',xTagChance:'Oportunidad de etiqueta en X',account:'Cuenta',password:'Contraseña',countrySelect:'Selección de país',noAccount:'¿No tienes cuenta? Regístrate',hasAccount:'¿Ya tienes cuenta? Inicia sesión',navStartIcon:'⚽ Empezar a Predecir',rulesWhatDesc:'World Cup Arena es una experiencia de predicción y comunidad donde sumas puntos con predicciones de partidos y torneo, representas a tu país y compites en un ranking global durante el Mundial.',rulesJoinDesc:'Crea tu perfil, elige el país que quieres representar e ingresa tus predicciones antes de que empiecen los partidos. Tus puntos cuentan para tu ranking personal y el puntaje de tu país.',rulesMatchDesc:'Para cada partido, la predicción del marcador debe hacerse antes del inicio. Una vez guardada, no se puede cambiar.',rulesTournamentDesc:'Las predicciones del torneo incluyen campeón, finalistas, máximo goleador, líder de asistencias y jugador del torneo. Estas predicciones se guardan una sola vez.',championCorrect:'Campeón correcto',finalistCorrect:'Finalista correcto',topScorerCorrect:'Máximo goleador correcto',topAssistCorrect:'Líder de asistencias correcto',playerTournamentCorrect:'Jugador del torneo correcto',exactScoreCorrect:'Marcador exacto correcto',resultDiffCorrect:'Resultado correcto + diferencia de goles correcta',resultOnlyCorrect:'Solo resultado correcto',wrongPrediction:'Predicción incorrecta',rulesCountryDesc:'Cada punto que gana un usuario también contribuye al total colectivo del país elegido durante el registro.',rulesSocialDesc:'Las mejores predicciones del día, los usuarios que más suben y los países destacados pueden compartirse en nuestras redes sociales.',rulesGeneralDesc:'Las predicciones deben hacerse antes de que comience el partido. Después del inicio, no se pueden cambiar. Cada usuario puede usar solo una cuenta. Las cuentas con ventaja injusta pueden ser eliminadas.',rulesWarningDesc:'Esta plataforma no es un sitio de apuestas. No promete ganancias por resultados de partidos a cambio de dinero. El objetivo es crear una experiencia global de predicción, competencia y comunidad durante el Mundial.',points250:'250 puntos',points150:'150 puntos',points100:'100 puntos',points80:'80 puntos',points30:'30 puntos',points10:'10 puntos',points0:'0 puntos',emailPlaceholder:'email@ejemplo.com',passwordPlaceholder:'Contraseña'}
+};
+let currentLanguage=localStorage.getItem('selectedLanguage') || 'tr';
+function translate(key){return translations[currentLanguage]?.[key] || translations.tr[key] || key;}
+function applyLanguage(){
+  document.documentElement.lang=currentLanguage;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=translate(el.dataset.i18n);});
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{el.innerHTML=translate(el.dataset.i18nHtml);});
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{el.setAttribute('placeholder',translate(el.dataset.i18nPlaceholder));});
+  document.querySelectorAll('[data-lang]').forEach(btn=>btn.classList.toggle('active',btn.dataset.lang===currentLanguage));
+}
+function setLanguage(lang){
+  if(!translations[lang]) return;
+  currentLanguage=lang;
+  localStorage.setItem('selectedLanguage',lang);
+  applyLanguage();
+  loadRankings();
+}
+const hdr=document.getElementById('hdr'),hbg=document.getElementById('hbg'),mob=document.getElementById('mobnav');
 const showAllMatchesBtn=document.getElementById('showAllMatches');
 
 function showAuthMessage(message){
@@ -526,6 +547,7 @@ async function adminLogin(){
   if(error){showAdminMessage(error.message);return;}
   const signedEmail=normalizeEmail(data.user?.email);
   if(signedEmail!==ADMIN_EMAIL){showAdminDenied(signedEmail);return;}
+  applyLanguage();
   await updateHeaderAuthState();
   await renderAdminPanel();
 }
@@ -676,7 +698,7 @@ function showRankingsMessage(message){
 }
 
 function formatPoints(value){
-  return Number(value || 0).toLocaleString('tr-TR')+' puan';
+  return Number(value || 0).toLocaleString('tr-TR')+' '+translate('points');
 }
 
 function createRankingRow(items){
@@ -745,7 +767,7 @@ function renderIndividualRows(list,profiles,limit){
       row.classList.add('rank-current-user');
       const tag=document.createElement('span');
       tag.className='rank-self-tag';
-      tag.textContent='Sen';
+      tag.textContent=translate('selfTag');
       row.appendChild(tag);
     }
     list.appendChild(row);
@@ -758,7 +780,7 @@ function renderCountryParticipationRows(list,countryStats,limit){
     list.appendChild(createRankingRow([
       {className:'rbadge',text:String(index+1)},
       {className:'rname',text:item.country},
-      {className:'rval rval-g',text:item.count+' kullanıcı'}
+      {className:'rval rval-g',text:item.count+' '+translate('user')}
     ]));
   });
 }
@@ -769,7 +791,7 @@ function renderCollectiveRows(list,countryStats,limit){
     list.appendChild(createRankingRow([
       {className:'rbadge',text:String(index+1)},
       {className:'rname',text:item.country},
-      {className:'rval',text:item.count+' katılımcı'},
+      {className:'rval',text:item.count+' '+translate('participant')},
       {className:'rval rval-g',text:formatPoints(item.total)}
     ]));
   });
@@ -803,7 +825,7 @@ function showMoreCountryParticipation(){
   if(!list || !button) return;
   countryParticipationExpanded=!countryParticipationExpanded;
   renderCountryParticipationRows(list,cachedCountryStats,countryParticipationExpanded?cachedCountryStats.length:10);
-  button.textContent=countryParticipationExpanded?'Listeyi Kapat':'Daha Fazla Gör';
+  button.textContent=countryParticipationExpanded?translate('closeList'):translate('showMore');
 }
 
 function showMoreCollectiveRanking(){
@@ -813,7 +835,7 @@ function showMoreCollectiveRanking(){
   collectiveRankingExpanded=!collectiveRankingExpanded;
   const collectiveStats=[...cachedCountryStats].sort((a,b)=>b.total-a.total || b.count-a.count || a.country.localeCompare(b.country,'tr'));
   renderCollectiveRows(list,collectiveStats,collectiveRankingExpanded?collectiveStats.length:10);
-  button.textContent=collectiveRankingExpanded?'Listeyi Kapat':'Daha Fazla Gör';
+  button.textContent=collectiveRankingExpanded?translate('closeList'):translate('showMore');
 }
 
 async function loadRankings(){
@@ -842,9 +864,9 @@ async function loadRankings(){
   const individualButton=document.getElementById('showMoreIndividual');
   const countryButton=document.getElementById('showMoreCountryParticipation');
   const collectiveButton=document.getElementById('showMoreCollectiveRanking');
-  if(individualButton){individualButton.hidden=false;individualButton.textContent='Daha Fazla Gör';}
-  if(countryButton){countryButton.hidden=false;countryButton.textContent='Daha Fazla Gör';}
-  if(collectiveButton){collectiveButton.hidden=false;collectiveButton.textContent='Daha Fazla Gör';}
+  if(individualButton){individualButton.hidden=false;individualButton.textContent=translate('showMore');}
+  if(countryButton){countryButton.hidden=false;countryButton.textContent=translate('showMore');}
+  if(collectiveButton){collectiveButton.hidden=false;collectiveButton.textContent=translate('showMore');}
 }
 async function signUpUser(){
   const client=getSupabaseClient();
@@ -879,6 +901,7 @@ async function signUpUser(){
 
   showAuthMessage('');
   closeAuthModal();
+  applyLanguage();
   await updateHeaderAuthState();
   window.location.href='profile.html';
 }
@@ -892,6 +915,7 @@ async function loginUser(){
   if(error){showAuthMessage(formatAuthError(error));return;}
   showAuthMessage('');
   closeAuthModal();
+  applyLanguage();
   await updateHeaderAuthState();
   window.location.href='profile.html';
 }
@@ -954,6 +978,7 @@ window.saveMatchResult=saveMatchResult;
 window.adminLogin=adminLogin;
 window.resetTestData=resetTestData;
 window.loadRankings=loadRankings;
+window.setLanguage=setLanguage;
 
 window.addEventListener('scroll',()=>hdr.classList.toggle('sc',window.scrollY>40),{passive:true});
 hbg.addEventListener('click',e=>{e.stopPropagation();const o=mob.classList.toggle('o');hbg.classList.toggle('o',o)});
@@ -987,6 +1012,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
       openAuthModal(requestedAuth);
     }
   }
+  applyLanguage();
   await updateHeaderAuthState();
   await createOrLoadProfile();
   await loadTournamentPredictions();
@@ -994,30 +1020,3 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await loadAdminPanel();
   await loadRankings();
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

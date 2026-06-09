@@ -165,3 +165,10 @@ body.modal-open{overflow:hidden}
 .rank-self-tag{font-family:var(--ff-u);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#060810;background:var(--gold);border-radius:999px;padding:3px 8px;white-space:nowrap}
 @media(max-width:540px){.rank-self-tag{padding:2px 7px}.match-section-title{font-size:17px}}
 
+.lang-switch{display:inline-flex;align-items:center;gap:6px;padding:4px 7px;border:1px solid var(--border);border-radius:999px;background:rgba(13,17,23,.7);flex-shrink:0}
+.lang-switch span{color:var(--t3);font-size:10px;line-height:1}
+.lang-switch button{font-family:var(--ff-u);font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--t2);padding:3px 2px;line-height:1;text-transform:uppercase}
+.lang-switch button.active{color:var(--gold)}
+.mob-nav .lang-switch{margin:12px 20px 4px;justify-content:center;align-self:flex-start}
+@media(max-width:900px){.nav .lang-switch{display:none}}
+@media(max-width:540px){.lang-switch{gap:5px;padding:4px 6px}.lang-switch button{font-size:10px}}
