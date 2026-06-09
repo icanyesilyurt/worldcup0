@@ -628,6 +628,10 @@ async function calculatePointsForMatch(matchId,homeScore,awayScore){
   writeAdminDebug('Kaç tahmin işlendi: '+processedCount);
   writeAdminDebug('Toplam kaç puan dağıtıldı: '+totalDistributed);
 }
+async function loadAdminMatches(){
+  await renderAdminPanel();
+}
+
 async function saveMatchResult(matchId){
   const client=getSupabaseClient();
   if(!client) return;
@@ -641,26 +645,32 @@ async function saveMatchResult(matchId){
   const homeInput=card.querySelector('[data-role="admin-home-score"]');
   const awayInput=card.querySelector('[data-role="admin-away-score"]');
   const message=card.querySelector('[data-role="admin-match-message"]');
-  if(homeInput.value==='' || awayInput.value===''){
+  const homeScore=homeInput?.value;
+  const awayScore=awayInput?.value;
+  if(homeScore==='' || awayScore==='' || homeScore===undefined || awayScore===undefined){
     if(message){message.textContent='Lütfen iki takımın skorunu da gir.';message.hidden=false;}
     return;
   }
 
-  const homeScore=Number(homeInput.value);
-  const awayScore=Number(awayInput.value);
+  const numericHomeScore=Number(homeScore);
+  const numericAwayScore=Number(awayScore);
   writeAdminDebug('Sonuç kaydetme denemesi');
-  writeAdminDebug('Güncellenen matchId: '+matchId);
-  writeAdminDebug('home_score: '+homeScore);
-  writeAdminDebug('away_score: '+awayScore);
+  writeAdminDebug('matchId: '+matchId);
+  writeAdminDebug('homeScore: '+numericHomeScore);
+  writeAdminDebug('awayScore: '+numericAwayScore);
 
-  const {error}=await client
+  const {data,error}=await client
     .from('matches')
     .update({
-      home_score:homeScore,
-      away_score:awayScore,
+      home_score:numericHomeScore,
+      away_score:numericAwayScore,
       status:'finished'
     })
-    .eq('id',matchId);
+    .eq('id',matchId)
+    .select();
+
+  writeAdminDebug('update data sonucu: '+JSON.stringify(data || []));
+  writeAdminDebug('update error mesajı: '+(error?.message || 'yok'));
 
   if(error){
     const errorMessage='Sonuç kaydedilemedi: '+error.message;
@@ -669,13 +679,17 @@ async function saveMatchResult(matchId){
     return;
   }
 
-  writeAdminDebug('Sonuç kaydedildi.');
-  writeAdminDebug('Güncellenen matchId: '+matchId);
-  writeAdminDebug('home_score: '+homeScore);
-  writeAdminDebug('away_score: '+awayScore);
-  await calculatePointsForMatch(matchId,homeScore,awayScore);
-  if(message){message.textContent='Sonuç kaydedildi.';message.hidden=false;}
-  await renderAdminPanel();
+  if(!data || data.length===0){
+    const emptyMessage='Update çalıştı ama satır güncellenmedi. matchId yanlış olabilir.';
+    writeAdminDebug(emptyMessage);
+    if(message){message.textContent=emptyMessage;message.hidden=false;}
+    return;
+  }
+
+  writeAdminDebug('Sonuç gerçekten Supabase’e kaydedildi.');
+  if(message){message.textContent='Sonuç gerçekten Supabase’e kaydedildi.';message.hidden=false;}
+  await loadAdminMatches();
+  await calculatePointsForMatch(matchId,numericHomeScore,numericAwayScore);
 }
 async function signUpUser(){
   const client=getSupabaseClient();
@@ -816,6 +830,8 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await loadMatches();
   await loadAdminPanel();
 });
+
+
 
 
 
