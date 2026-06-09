@@ -600,17 +600,17 @@ async function calculatePointsForMatch(matchId,homeScore,awayScore){
       continue;
     }
 
-    const {data:profile,error:profileError}=await client
+    const {data:profiles,error:profileError}=await client
       .from('profiles')
       .select('total_points')
       .eq('id',prediction.user_id)
-      .single();
+      .limit(1);
     if(profileError){
       writeAdminDebug('Profil puanı okunamadı: '+profileError.message);
       continue;
     }
 
-    const currentPoints=Number(profile?.total_points || 0);
+    const currentPoints=Number(profiles?.[0]?.total_points || 0);
     const {error:updateProfileError}=await client
       .from('profiles')
       .update({total_points:currentPoints+points})
@@ -653,16 +653,14 @@ async function saveMatchResult(matchId){
   writeAdminDebug('home_score: '+homeScore);
   writeAdminDebug('away_score: '+awayScore);
 
-  const {data:updatedMatch,error}=await client
+  const {error}=await client
     .from('matches')
     .update({
       home_score:homeScore,
       away_score:awayScore,
       status:'finished'
     })
-    .eq('id',matchId)
-    .select('id,home_score,away_score,status')
-    .single();
+    .eq('id',matchId);
 
   if(error){
     const errorMessage='Sonuç kaydedilemedi: '+error.message;
@@ -670,18 +668,12 @@ async function saveMatchResult(matchId){
     if(message){message.textContent=errorMessage;message.hidden=false;}
     return;
   }
-  if(!updatedMatch){
-    const errorMessage='Sonuç kaydedilemedi: Güncellenen maç bulunamadı. matchId: '+matchId;
-    writeAdminDebug(errorMessage);
-    if(message){message.textContent=errorMessage;message.hidden=false;}
-    return;
-  }
 
   writeAdminDebug('Sonuç kaydedildi.');
-  writeAdminDebug('Güncellenen matchId: '+updatedMatch.id);
-  writeAdminDebug('home_score: '+updatedMatch.home_score);
-  writeAdminDebug('away_score: '+updatedMatch.away_score);
-  await calculatePointsForMatch(updatedMatch.id,Number(updatedMatch.home_score),Number(updatedMatch.away_score));
+  writeAdminDebug('Güncellenen matchId: '+matchId);
+  writeAdminDebug('home_score: '+homeScore);
+  writeAdminDebug('away_score: '+awayScore);
+  await calculatePointsForMatch(matchId,homeScore,awayScore);
   if(message){message.textContent='Sonuç kaydedildi.';message.hidden=false;}
   await renderAdminPanel();
 }
@@ -824,6 +816,8 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await loadMatches();
   await loadAdminPanel();
 });
+
+
 
 
 
