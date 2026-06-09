@@ -10,11 +10,34 @@
 
 <header class="hdr" id="hdr">
   <div class="c hdr-i">
-    <a href="index.html" class="logo" >
-      <span class="logo-icon">⚽</span>
+    <a href="index.html" class="logo" aria-label="World Cup Arena ana sayfa">
+      <span class="logo-mark" aria-hidden="true">
+        <svg class="logo-svg" viewBox="0 0 64 64" role="img" focusable="false">
+          <defs>
+            <linearGradient id="wcaGold" x1="14" y1="8" x2="50" y2="58" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#fff2a8"/>
+              <stop offset=".45" stop-color="#f0b429"/>
+              <stop offset="1" stop-color="#9b6b16"/>
+            </linearGradient>
+            <linearGradient id="wcaWorld" x1="14" y1="18" x2="48" y2="44" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#53d6ff"/>
+              <stop offset="1" stop-color="#1db954"/>
+            </linearGradient>
+          </defs>
+          <circle cx="32" cy="32" r="29" fill="#08111f" stroke="url(#wcaGold)" stroke-width="2.2"/>
+          <path d="M15 38c5 6 13 9 23 7 8-1 13-5 16-10" fill="none" stroke="url(#wcaWorld)" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+          <path d="M14 29c8-6 18-8 31-5 4 1 7 3 9 5" fill="none" stroke="url(#wcaWorld)" stroke-width="2" stroke-linecap="round" opacity=".65"/>
+          <circle cx="32" cy="31" r="13" fill="#f5f7fb" stroke="#d7dde8" stroke-width="1.2"/>
+          <path d="M32 20l7 5-3 8h-8l-3-8 7-5z" fill="#07101d"/>
+          <path d="M25 25l-6 2m20-2l6 2M28 33l-4 7m12-7l4 7" stroke="#07101d" stroke-width="2" stroke-linecap="round"/>
+          <path d="M24 48h16" stroke="url(#wcaGold)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M27 44h10l-2 4h-6l-2-4z" fill="url(#wcaGold)"/>
+          <path d="M22 15h20l-3 5H25l-3-5z" fill="url(#wcaGold)" opacity=".95"/>
+        </svg>
+      </span>
       <span class="logo-txt">
-        <span class="logo-sub">Dünya Kupası</span>
-        <span class="logo-main">Arena</span>
+        <span class="logo-sub">WORLD CUP</span>
+        <span class="logo-main">ARENA</span>
       </span>
     </a>
     <nav class="nav">
@@ -87,6 +110,7 @@
 <script src="js/app.js"></script>
 </body>
 </html>
+
 
 
 

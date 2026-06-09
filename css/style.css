@@ -18,11 +18,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--ff-u)}
 .hdr{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;transition:.3s;border-bottom:1px solid transparent}
 .hdr.sc{background:rgba(6,8,16,.92);backdrop-filter:blur(12px);padding:11px 0;border-bottom-color:var(--border)}
 .hdr-i{display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:10px}
-.logo-icon{font-size:20px}
-.logo-txt{display:flex;flex-direction:column;line-height:1}
-.logo-sub{font-family:var(--ff-b);font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--t2)}
-.logo-main{font-family:var(--ff-d);font-size:20px;letter-spacing:.06em;color:var(--gold)}
+.logo{display:flex;align-items:center;gap:11px;min-width:0}.logo-mark{width:42px;height:42px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:50%;box-shadow:0 0 24px rgba(240,180,41,.18)}.logo-svg{width:42px;height:42px;display:block}.logo-txt{display:flex;flex-direction:column;line-height:1}.logo-sub{font-family:var(--ff-b);font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#fff}.logo-main{font-family:var(--ff-d);font-size:21px;letter-spacing:.07em;color:var(--gold)}
 .nav{display:flex;align-items:center;gap:24px}
 .nav a{font-family:var(--ff-u);font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--t2);transition:.2s}
 .nav a:hover{color:var(--t1)}
@@ -161,4 +157,5 @@ body.modal-open{overflow:hidden}
 .rankings-grid .rank-panel{min-width:0}
 .rankings-expanded{margin-top:24px}
 @media(max-width:900px){.rankings-grid{grid-template-columns:1fr}}
+
 
