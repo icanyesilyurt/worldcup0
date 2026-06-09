@@ -157,5 +157,11 @@ body.modal-open{overflow:hidden}
 .rankings-grid .rank-panel{min-width:0}
 .rankings-expanded{margin-top:24px}
 @media(max-width:900px){.rankings-grid{grid-template-columns:1fr}}
-
+.tournament-warning{border-color:rgba(240,180,41,.55);background:linear-gradient(160deg,rgba(240,180,41,.12),var(--bg-card))}
+.tournament-warning .hc-d{margin-top:8px}
+.match-section-title{font-size:19px;color:var(--gold);letter-spacing:.08em}
+.rank-current-user{background:rgba(240,180,41,.11);box-shadow:inset 3px 0 0 var(--gold)}
+.rank-current-user:hover{background:rgba(240,180,41,.16)}
+.rank-self-tag{font-family:var(--ff-u);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#060810;background:var(--gold);border-radius:999px;padding:3px 8px;white-space:nowrap}
+@media(max-width:540px){.rank-self-tag{padding:2px 7px}.match-section-title{font-size:17px}}
 

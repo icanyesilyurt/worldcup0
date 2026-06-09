@@ -696,6 +696,7 @@ let cachedCountryStats=[];
 let individualExpandedMode='top100';
 let countryParticipationExpanded=false;
 let collectiveRankingExpanded=false;
+let currentRankingUserId=null;
 
 async function fetchProfilesForRankings(){
   const client=getSupabaseClient();
@@ -733,12 +734,21 @@ function aggregateCountries(profiles){
 function renderIndividualRows(list,profiles,limit){
   list.innerHTML='';
   profiles.slice(0,limit).forEach((profile,index)=>{
-    list.appendChild(createRankingRow([
+    const isCurrentUser=profile.id===currentRankingUserId;
+    const row=createRankingRow([
       {className:'rbadge',text:String(index+1)},
       {className:'rname',text:profile.display_name || 'Oyuncu'},
       {className:'rval',text:profile.country || '-'},
       {className:'rval rval-g',text:formatPoints(profile.total_points)}
-    ]));
+    ]);
+    if(isCurrentUser){
+      row.classList.add('rank-current-user');
+      const tag=document.createElement('span');
+      tag.className='rank-self-tag';
+      tag.textContent='Sen';
+      row.appendChild(tag);
+    }
+    list.appendChild(row);
   });
 }
 
@@ -813,6 +823,8 @@ async function loadRankings(){
   if(!participationList || !individualList || !collectiveList) return;
   showRankingsMessage('');
 
+  const rankingUser=await getCurrentUser();
+  currentRankingUserId=rankingUser?.id || null;
   cachedRankingProfiles=await fetchProfilesForRankings();
   cachedCountryStats=aggregateCountries(cachedRankingProfiles).sort((a,b)=>b.count-a.count || a.country.localeCompare(b.country,'tr'));
   const collectiveStats=[...cachedCountryStats].sort((a,b)=>b.total-a.total || b.count-a.count || a.country.localeCompare(b.country,'tr'));
@@ -982,6 +994,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await loadAdminPanel();
   await loadRankings();
 });
+
 
 
 
