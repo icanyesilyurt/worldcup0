@@ -679,9 +679,9 @@ function formatPoints(value){
   return Number(value || 0).toLocaleString('tr-TR')+' puan';
 }
 
-function createRankingRow(items,extraClass=''){
+function createRankingRow(items){
   const row=document.createElement('li');
-  row.className='rrow'+(extraClass?' '+extraClass:'');
+  row.className='rrow';
   items.forEach(item=>{
     const span=document.createElement('span');
     span.className=item.className;
@@ -690,6 +690,12 @@ function createRankingRow(items,extraClass=''){
   });
   return row;
 }
+
+let cachedRankingProfiles=[];
+let cachedCountryStats=[];
+let individualExpandedMode='top100';
+let countryParticipationExpanded=false;
+let collectiveRankingExpanded=false;
 
 async function fetchProfilesForRankings(){
   const client=getSupabaseClient();
@@ -724,53 +730,109 @@ function aggregateCountries(profiles){
   return [...map.values()];
 }
 
-async function loadRankings(){
-  const participationList=document.getElementById('countryParticipationList');
-  const individualList=document.getElementById('individualRankingList');
-  const collectiveList=document.getElementById('collectiveRankingList');
-  if(!participationList || !individualList || !collectiveList) return;
-  showRankingsMessage('');
-  const profiles=await fetchProfilesForRankings();
-  const countryStats=aggregateCountries(profiles);
-
-  participationList.innerHTML='';
-  countryStats.forEach((item,index)=>{
-    const row=createRankingRow([
-      {className:'rname',text:item.country},
-      {className:index===0?'rval rval-g':'rval',text:item.count+' katılımcı'}
-    ],index>=10?'country-participation-extra':'');
-    if(index>=10) row.hidden=true;
-    participationList.appendChild(row);
-  });
-
-  individualList.innerHTML='';
-  profiles.forEach((profile,index)=>{
-    individualList.appendChild(createRankingRow([
+function renderIndividualRows(list,profiles,limit){
+  list.innerHTML='';
+  profiles.slice(0,limit).forEach((profile,index)=>{
+    list.appendChild(createRankingRow([
       {className:'rbadge',text:String(index+1)},
       {className:'rname',text:profile.display_name || 'Oyuncu'},
       {className:'rval',text:profile.country || '-'},
       {className:'rval rval-g',text:formatPoints(profile.total_points)}
     ]));
   });
+}
 
-  collectiveList.innerHTML='';
-  countryStats.sort((a,b)=>b.total-a.total || b.count-a.count || a.country.localeCompare(b.country,'tr')).forEach((item,index)=>{
-    const row=createRankingRow([
+function renderCountryParticipationRows(list,countryStats,limit){
+  list.innerHTML='';
+  countryStats.slice(0,limit).forEach((item,index)=>{
+    list.appendChild(createRankingRow([
       {className:'rbadge',text:String(index+1)},
       {className:'rname',text:item.country},
-      {className:'rval',text:item.count+' katılımcı'},
-      {className:'rval rval-g',text:formatPoints(item.total)+' (kolektif)'}
-    ],index>=10?'collective-ranking-extra':'');
-    if(index>=10) row.hidden=true;
-    collectiveList.appendChild(row);
+      {className:'rval rval-g',text:item.count+' kullanıcı'}
+    ]));
   });
 }
 
-function toggleHiddenRows(selector,button,openText,closeText){
-  const rows=document.querySelectorAll(selector);
-  const shouldShow=[...rows].some(row=>row.hidden);
-  rows.forEach(row=>row.hidden=!shouldShow);
-  if(button) button.textContent=shouldShow?closeText:openText;
+function renderCollectiveRows(list,countryStats,limit){
+  list.innerHTML='';
+  countryStats.slice(0,limit).forEach((item,index)=>{
+    list.appendChild(createRankingRow([
+      {className:'rbadge',text:String(index+1)},
+      {className:'rname',text:item.country},
+      {className:'rval',text:item.count+' katılımcı'},
+      {className:'rval rval-g',text:formatPoints(item.total)}
+    ]));
+  });
+}
+
+function renderExpandedIndividualRanking(){
+  const expanded=document.getElementById('individualRankingExpanded');
+  const list=document.getElementById('individualRankingExpandedList');
+  const button=document.getElementById('showAllIndividualRanking');
+  if(!expanded || !list || !button) return;
+  expanded.hidden=false;
+  const limit=individualExpandedMode==='all'?cachedRankingProfiles.length:100;
+  renderIndividualRows(list,cachedRankingProfiles,limit);
+  button.hidden=individualExpandedMode==='all' || cachedRankingProfiles.length<=100;
+}
+
+function showMoreIndividualRanking(){
+  individualExpandedMode='top100';
+  renderExpandedIndividualRanking();
+  document.getElementById('individualRankingExpanded')?.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function showAllIndividualRanking(){
+  individualExpandedMode='all';
+  renderExpandedIndividualRanking();
+}
+
+function showMoreCountryParticipation(){
+  const list=document.getElementById('countryParticipationList');
+  const button=document.getElementById('showMoreCountryParticipation');
+  if(!list || !button) return;
+  countryParticipationExpanded=!countryParticipationExpanded;
+  renderCountryParticipationRows(list,cachedCountryStats,countryParticipationExpanded?cachedCountryStats.length:10);
+  button.textContent=countryParticipationExpanded?'Listeyi Kapat':'Daha Fazla Gör';
+}
+
+function showMoreCollectiveRanking(){
+  const list=document.getElementById('collectiveRankingList');
+  const button=document.getElementById('showMoreCollectiveRanking');
+  if(!list || !button) return;
+  collectiveRankingExpanded=!collectiveRankingExpanded;
+  const collectiveStats=[...cachedCountryStats].sort((a,b)=>b.total-a.total || b.count-a.count || a.country.localeCompare(b.country,'tr'));
+  renderCollectiveRows(list,collectiveStats,collectiveRankingExpanded?collectiveStats.length:10);
+  button.textContent=collectiveRankingExpanded?'Listeyi Kapat':'Daha Fazla Gör';
+}
+
+async function loadRankings(){
+  const participationList=document.getElementById('countryParticipationList');
+  const individualList=document.getElementById('individualRankingList');
+  const collectiveList=document.getElementById('collectiveRankingList');
+  if(!participationList || !individualList || !collectiveList) return;
+  showRankingsMessage('');
+
+  cachedRankingProfiles=await fetchProfilesForRankings();
+  cachedCountryStats=aggregateCountries(cachedRankingProfiles).sort((a,b)=>b.count-a.count || b.total-a.total || a.country.localeCompare(b.country,'tr'));
+  const collectiveStats=[...cachedCountryStats].sort((a,b)=>b.total-a.total || b.count-a.count || a.country.localeCompare(b.country,'tr'));
+
+  countryParticipationExpanded=false;
+  collectiveRankingExpanded=false;
+  individualExpandedMode='top100';
+  const expanded=document.getElementById('individualRankingExpanded');
+  if(expanded) expanded.hidden=true;
+
+  renderIndividualRows(individualList,cachedRankingProfiles,10);
+  renderCountryParticipationRows(participationList,cachedCountryStats,10);
+  renderCollectiveRows(collectiveList,collectiveStats,10);
+
+  const individualButton=document.getElementById('showMoreIndividual');
+  const countryButton=document.getElementById('showMoreCountryParticipation');
+  const collectiveButton=document.getElementById('showMoreCollectiveRanking');
+  if(individualButton){individualButton.hidden=false;individualButton.textContent='Daha Fazla Gör';}
+  if(countryButton){countryButton.hidden=false;countryButton.textContent='Daha Fazla Gör';}
+  if(collectiveButton){collectiveButton.hidden=false;collectiveButton.textContent='Daha Fazla Gör';}
 }
 async function signUpUser(){
   const client=getSupabaseClient();
@@ -897,8 +959,10 @@ document.getElementById('signupForm')?.addEventListener('submit',e=>{e.preventDe
 document.getElementById('loginForm')?.addEventListener('submit',e=>{e.preventDefault();loginUser();});
 document.getElementById('adminLoginForm')?.addEventListener('submit',e=>{e.preventDefault();adminLogin();});
 document.getElementById('resetTestDataButton')?.addEventListener('click',resetTestData);
-document.getElementById('toggleCountryParticipation')?.addEventListener('click',e=>toggleHiddenRows('.country-participation-extra',e.currentTarget,'Tüm Listeyi Gör','Listeyi Kapat'));
-document.getElementById('toggleCollectiveRanking')?.addEventListener('click',e=>toggleHiddenRows('.collective-ranking-extra',e.currentTarget,'Tüm Ülkeleri Gör','Listeyi Kapat'));
+document.getElementById('showMoreIndividual')?.addEventListener('click',showMoreIndividualRanking);
+document.getElementById('showAllIndividualRanking')?.addEventListener('click',showAllIndividualRanking);
+document.getElementById('showMoreCountryParticipation')?.addEventListener('click',showMoreCountryParticipation);
+document.getElementById('showMoreCollectiveRanking')?.addEventListener('click',showMoreCollectiveRanking);
 document.getElementById('saveTournamentPredictions')?.addEventListener('click',e=>{e.preventDefault();saveTournamentPredictions();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape') closeAuthModal();});
 
@@ -918,6 +982,8 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await loadAdminPanel();
   await loadRankings();
 });
+
+
 
 
 

@@ -51,23 +51,30 @@
     <div class="divider"></div>
     <div id="rankingsMessage" class="rank-panel" style="padding:18px;margin-top:24px" hidden></div>
 
-    <div style="display:grid;grid-template-columns:1fr;gap:18px;margin-top:34px">
-      <div class="rank-panel">
-        <div class="rp-head"><span class="rp-head-icon">📊</span><span class="rp-head-t">Ülke Katılımı</span></div>
-        <ul class="rlist" id="countryParticipationList"></ul>
-        <div class="rank-cta"><button class="btn btn-o" id="toggleCountryParticipation" type="button">Tüm Listeyi Gör</button></div>
-      </div>
-
+    <div class="rankings-grid">
       <div class="rank-panel feat">
         <div class="rp-head"><span class="rp-head-icon">🏅</span><span class="rp-head-t">Bireysel Sıralama</span></div>
         <ul class="rlist" id="individualRankingList"></ul>
+        <div class="rank-cta"><button class="btn btn-p" id="showMoreIndividual" type="button">Daha Fazla Gör</button></div>
+      </div>
+
+      <div class="rank-panel">
+        <div class="rp-head"><span class="rp-head-icon">📊</span><span class="rp-head-t">Ülke Katılımı</span></div>
+        <ul class="rlist" id="countryParticipationList"></ul>
+        <div class="rank-cta"><button class="btn btn-o" id="showMoreCountryParticipation" type="button">Daha Fazla Gör</button></div>
       </div>
 
       <div class="rank-panel">
         <div class="rp-head"><span class="rp-head-icon">🌍</span><span class="rp-head-t">Ülke / Kolektif Puan Sıralaması</span></div>
         <ul class="rlist" id="collectiveRankingList"></ul>
-        <div class="rank-cta"><button class="btn btn-o" id="toggleCollectiveRanking" type="button">Tüm Ülkeleri Gör</button></div>
+        <div class="rank-cta"><button class="btn btn-o" id="showMoreCollectiveRanking" type="button">Daha Fazla Gör</button></div>
       </div>
+    </div>
+
+    <div id="individualRankingExpanded" class="rank-panel feat rankings-expanded" hidden>
+      <div class="rp-head"><span class="rp-head-icon">🏅</span><span class="rp-head-t">Bireysel Sıralama</span></div>
+      <ul class="rlist" id="individualRankingExpandedList"></ul>
+      <div class="rank-cta"><button class="btn btn-p" id="showAllIndividualRanking" type="button">Tüm Sıralamayı Göster</button></div>
     </div>
   </div>
 </section>
@@ -80,6 +87,7 @@
 <script src="js/app.js"></script>
 </body>
 </html>
+
 
 
 

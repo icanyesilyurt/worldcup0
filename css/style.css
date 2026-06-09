@@ -157,4 +157,8 @@ footer{border-top:1px solid var(--border);padding:22px 0;text-align:center;font-
 .auth-switch{align-self:flex-start;color:var(--gold);font-family:var(--ff-b);font-size:13px;text-align:left}
 body.modal-open{overflow:hidden}
 @media(max-width:540px){.auth-modal{align-items:flex-start;padding:74px 14px 14px}.auth-modal__card{padding:20px;max-height:calc(100svh - 88px)}}
+.rankings-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:34px;align-items:start}
+.rankings-grid .rank-panel{min-width:0}
+.rankings-expanded{margin-top:24px}
+@media(max-width:900px){.rankings-grid{grid-template-columns:1fr}}
 
