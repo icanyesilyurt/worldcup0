@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
@@ -102,6 +102,22 @@
   </div>
 </section>
 </main>
+<div class="premium-profile-modal" id="premiumProfileModal" hidden>
+  <div class="premium-profile-overlay" onclick="closePremiumProfileModal()"></div>
+  <div class="premium-profile-card" role="dialog" aria-modal="true" aria-labelledby="premiumModalName">
+    <button class="auth-modal__close" type="button" onclick="closePremiumProfileModal()" aria-label="Kapat">×</button>
+    <div class="sc-user">
+      <div class="sc-avatar" id="premiumModalAvatar">⭐</div>
+      <div>
+        <div class="sc-name" id="premiumModalName">Player#000000</div>
+        <div class="sc-ctry" id="premiumModalCountry">Türkiye</div>
+      </div>
+    </div>
+    <div class="premium-modal-points" id="premiumModalPoints">0 puan</div>
+    <p class="hc-d" id="premiumModalBio" hidden></p>
+    <div class="premium-modal-links" id="premiumModalLinks"></div>
+  </div>
+</div>
 
 <footer><div class="c">© 2026 World Cup Arena · Tüm Hakları Saklıdır</div></footer>
 

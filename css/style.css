@@ -1,4 +1,4 @@
-﻿*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#060810;--bg-card:#0d1117;--bg-raised:#131a24;--border:rgba(255,255,255,0.07);--border-b:rgba(255,255,255,0.14);--gold:#f0b429;--green:#1db954;--blue:#3b82f6;--red:#e84040;--t1:#f0f2f5;--t2:#8a96a8;--t3:#4a5568;--ff-d:'Bebas Neue',sans-serif;--ff-u:'Barlow Condensed',sans-serif;--ff-b:'Barlow',sans-serif}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--t1);font-family:var(--ff-b);font-size:15px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
@@ -183,3 +183,32 @@ body.modal-open{overflow:hidden}
 .referral-code-box{display:inline-flex;align-items:center;max-width:100%;padding:12px 14px;border:1px solid rgba(240,180,41,.38);border-radius:8px;background:rgba(240,180,41,.08);color:var(--gold);font-family:var(--ff-u);font-size:18px;font-weight:700;letter-spacing:.08em;word-break:break-all}
 .copy-referral-message{margin-top:12px;color:var(--gold)}
 @media(max-width:540px){.community-badge{font-size:38px}.leader-tag,.rank-leader-tag{font-size:10px}.referral-code-box{font-size:16px;width:100%;justify-content:center}}
+
+.profile-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:18px;margin-top:34px;align-items:start}
+.profile-main-card,.premium-card{padding:22px}
+.profile-user-head{margin:10px 0 22px}
+.profile-info-list{display:flex;flex-direction:column;gap:10px}
+.profile-info-list .rrow,.premium-feature-list .rrow{padding:10px 0}
+.profile-referral-inline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid var(--border)}
+.profile-referral-inline .rname{flex:0 0 auto;min-width:110px}
+.premium-card{position:relative;overflow:hidden;background:linear-gradient(160deg,#171d28,var(--bg-card))}
+.premium-card::before{content:'';position:absolute;top:-80px;right:-80px;width:220px;height:220px;background:radial-gradient(circle,rgba(240,180,41,.2),transparent 68%);pointer-events:none}
+.premium-card>*{position:relative;z-index:1}
+.premium-feature-list{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.premium-note{margin-top:12px;color:var(--gold)}
+.premium-edit-form{display:flex;flex-direction:column;gap:12px}
+.premium-edit-form[hidden]{display:none!important}
+.premium-edit-form label{display:flex;flex-direction:column;gap:7px;color:var(--t2);font-size:13px}
+.premium-edit-form input,.premium-edit-form textarea{width:100%;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1);font-family:var(--ff-b);font-size:14px;resize:vertical}
+.premium-name-button{color:var(--t1);font:inherit;text-align:left;padding:0;text-transform:none;letter-spacing:0}
+.premium-name-button:hover{color:var(--gold)}
+.premium-mini-badge{display:inline-flex;margin-left:7px;padding:2px 6px;border-radius:999px;border:1px solid rgba(240,180,41,.45);color:var(--gold);font-family:var(--ff-u);font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle}
+.premium-profile-modal{position:fixed;inset:0;z-index:320;display:flex;align-items:center;justify-content:center;padding:20px}
+.premium-profile-modal[hidden]{display:none}
+.premium-profile-overlay{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(6px)}
+.premium-profile-card{position:relative;z-index:1;width:min(100%,420px);background:linear-gradient(160deg,var(--bg-raised),var(--bg-card));border:1px solid rgba(240,180,41,.42);border-radius:14px;padding:24px;box-shadow:0 28px 80px rgba(0,0,0,.7)}
+.premium-modal-points{font-family:var(--ff-d);font-size:34px;line-height:1;color:var(--gold);margin:16px 0 10px}
+.premium-modal-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.premium-modal-links a{border:1px solid rgba(240,180,41,.38);border-radius:999px;padding:6px 10px;color:var(--gold);font-family:var(--ff-u);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:900px){.profile-layout{grid-template-columns:1fr}.premium-card{order:2}.profile-main-card{order:1}}
+@media(max-width:540px){.profile-referral-inline{align-items:stretch}.profile-referral-inline .rname{width:100%;min-width:0}.profile-referral-inline .btn{width:100%;justify-content:center}.premium-profile-modal{align-items:flex-start;padding:74px 14px 14px}}

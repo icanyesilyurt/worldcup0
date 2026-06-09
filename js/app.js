@@ -782,6 +782,83 @@ function showRankingsMessage(message){
   box.hidden=!message;
 }
 
+
+function updatePremiumProfileView(profile){
+  const offer=document.getElementById('premiumOffer');
+  const form=document.getElementById('premiumEditForm');
+  if(!offer && !form) return;
+  const isPremium=profile?.premium===true;
+  if(offer) offer.hidden=isPremium;
+  if(form) form.hidden=!isPremium;
+  if(!isPremium) return;
+  const setValue=(id,value)=>{const el=document.getElementById(id);if(el) el.value=value || '';};
+  setValue('premiumCustomName',profile.custom_name || '');
+  setValue('premiumBio',profile.bio || '');
+  setValue('premiumXUrl',profile.x_url || '');
+  setValue('premiumInstagramUrl',profile.instagram_url || '');
+  setValue('premiumWebsiteUrl',profile.website_url || '');
+  setValue('premiumAvatarUrl',profile.avatar_url || '');
+}
+
+async function savePremiumProfile(event){
+  event?.preventDefault();
+  const client=getSupabaseClient();
+  const user=await getCurrentUser();
+  const message=document.getElementById('premiumEditMessage');
+  if(!client || !user) return;
+  const payload={
+    custom_name:document.getElementById('premiumCustomName')?.value.trim() || null,
+    bio:document.getElementById('premiumBio')?.value.trim() || null,
+    x_url:document.getElementById('premiumXUrl')?.value.trim() || null,
+    instagram_url:document.getElementById('premiumInstagramUrl')?.value.trim() || null,
+    website_url:document.getElementById('premiumWebsiteUrl')?.value.trim() || null,
+    avatar_url:document.getElementById('premiumAvatarUrl')?.value.trim() || null
+  };
+  const {data,error}=await client.from('profiles').update(payload).eq('id',user.id).select('*');
+  if(error){
+    if(message){message.textContent='Premium profil alanları henüz aktif değil.';message.hidden=false;}
+    return;
+  }
+  const profile=data?.[0];
+  if(profile){fillProfileFields(profile,user);await updateProfileCommunity(profile);}
+  if(message){message.textContent='Premium profil kaydedildi.';message.hidden=false;}
+}
+
+function openPremiumProfileModal(profileId){
+  const modal=document.getElementById('premiumProfileModal');
+  if(!modal) return;
+  const profile=cachedRankingProfiles.find(item=>item.id===profileId);
+  if(!profile || profile.premium!==true) return;
+  const setText=(id,value)=>{const el=document.getElementById(id);if(el) el.textContent=value;};
+  setText('premiumModalName',getProfilePublicName(profile));
+  setText('premiumModalCountry',formatCountry(profile.country));
+  setText('premiumModalPoints',formatPoints(profile.total_points));
+  setProfileAvatar(document.getElementById('premiumModalAvatar'),profile);
+  const bio=document.getElementById('premiumModalBio');
+  if(bio){bio.textContent=profile.bio || '';bio.hidden=!profile.bio;}
+  const links=document.getElementById('premiumModalLinks');
+  if(links){
+    links.innerHTML='';
+    [['X',profile.x_url],['Instagram',profile.instagram_url],['Website',profile.website_url]].forEach(([label,url])=>{
+      if(!url) return;
+      const a=document.createElement('a');
+      a.href=url;
+      a.target='_blank';
+      a.rel='noopener noreferrer';
+      a.textContent=label;
+      links.appendChild(a);
+    });
+  }
+  modal.hidden=false;
+  document.body.classList.add('modal-open');
+}
+
+function closePremiumProfileModal(){
+  const modal=document.getElementById('premiumProfileModal');
+  if(!modal) return;
+  modal.hidden=true;
+  document.body.classList.remove('modal-open');
+}
 function formatPoints(value){
   return Number(value || 0).toLocaleString('tr-TR')+' '+translate('points');
 }
@@ -805,6 +882,17 @@ let countryParticipationExpanded=false;
 let collectiveRankingExpanded=false;
 let currentRankingUserId=null;
 
+async function fetchOptionalPremiumProfileFields(){
+  const client=getSupabaseClient();
+  if(!client) return new Map();
+  const {data,error}=await client
+    .from('profiles')
+    .select('id,custom_name,bio,avatar_url,x_url,instagram_url,website_url')
+    .limit(1000);
+  if(error) return new Map();
+  return new Map((data || []).map(item=>[item.id,item]));
+}
+
 async function fetchProfilesForRankings(){
   const client=getSupabaseClient();
   if(!client) return [];
@@ -814,7 +902,8 @@ async function fetchProfilesForRankings(){
     .order('total_points',{ascending:false})
     .limit(1000);
   if(error) throw error;
-  return data || [];
+  const premiumFields=await fetchOptionalPremiumProfileFields();
+  return (data || []).map(profile=>({...profile,...(premiumFields.get(profile.id) || {})}));
 }
 
 async function updateProfileRanks(profile){
@@ -973,13 +1062,27 @@ function renderIndividualRows(list,profiles,limit){
   profiles.slice(0,limit).forEach((profile,index)=>{
     const isCurrentUser=profile.id===currentRankingUserId;
     const badge=getReferralBadge(profile.referral_count ?? getReferralCountForProfile(profile,profiles));
-    const nameText=formatDisplayName(profile.display_name)+(badge?' '+badge.emoji:'');
+    const nameText=getProfilePublicName(profile)+(badge?' '+badge.emoji:'');
     const row=createRankingRow([
       {className:'rbadge',text:String(index+1)},
       {className:'rname',text:nameText},
       {className:'rval',text:formatCountry(profile.country)},
       {className:'rval rval-g',text:formatPoints(profile.total_points)}
     ]);
+    const nameCell=row.querySelector('.rname');
+    if(nameCell && profile.premium===true){
+      nameCell.textContent='';
+      const button=document.createElement('button');
+      button.type='button';
+      button.className='premium-name-button';
+      button.textContent=nameText;
+      button.addEventListener('click',()=>openPremiumProfileModal(profile.id));
+      nameCell.appendChild(button);
+      const premiumTag=document.createElement('span');
+      premiumTag.className='premium-mini-badge';
+      premiumTag.textContent='Premium';
+      nameCell.appendChild(premiumTag);
+    }
     getLeaderTagsForProfile(profile,profiles).forEach(label=>{
       const tag=document.createElement('span');
       tag.className='rank-leader-tag';
@@ -1225,6 +1328,9 @@ window.resetTestData=resetTestData;
 window.loadRankings=loadRankings;
 window.getReferralBadge=getReferralBadge;
 window.copyReferralCode=copyReferralCode;
+window.savePremiumProfile=savePremiumProfile;
+window.openPremiumProfileModal=openPremiumProfileModal;
+window.closePremiumProfileModal=closePremiumProfileModal;
 window.setLanguage=setLanguage;
 
 window.addEventListener('scroll',()=>hdr.classList.toggle('sc',window.scrollY>40),{passive:true});
@@ -1243,6 +1349,7 @@ document.getElementById('signupForm')?.addEventListener('submit',e=>{e.preventDe
 document.getElementById('loginForm')?.addEventListener('submit',e=>{e.preventDefault();loginUser();});
 document.getElementById('adminLoginForm')?.addEventListener('submit',e=>{e.preventDefault();adminLogin();});
 document.getElementById('resetTestDataButton')?.addEventListener('click',resetTestData);
+document.getElementById('premiumEditForm')?.addEventListener('submit',savePremiumProfile);
 document.getElementById('showMoreIndividual')?.addEventListener('click',showMoreIndividualRanking);
 document.getElementById('showAllIndividualRanking')?.addEventListener('click',showAllIndividualRanking);
 document.getElementById('showMoreCountryParticipation')?.addEventListener('click',showMoreCountryParticipation);
