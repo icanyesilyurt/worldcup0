@@ -148,6 +148,7 @@ footer{border-top:1px solid var(--border);padding:22px 0;text-align:center;font-
 .auth-message{padding:12px 14px;margin:10px 0 14px;border:1px solid rgba(232,64,64,.35);border-radius:8px;background:rgba(232,64,64,.08);color:var(--t1);font-size:13px}
 .auth-tabs{display:flex;gap:10px;margin:14px 0 18px;flex-wrap:wrap}
 .auth-form{display:flex;flex-direction:column;gap:12px}
+.auth-form[hidden]{display:none!important}
 .auth-form label{display:flex;flex-direction:column;gap:7px}
 .auth-form input,.auth-form select{width:100%;padding:13px;border-radius:8px;border:1px solid var(--border);background:var(--bg-raised);color:var(--t1);font-family:var(--ff-b);font-size:14px}
 .auth-switch{align-self:flex-start;color:var(--gold);font-family:var(--ff-b);font-size:13px;text-align:left}
