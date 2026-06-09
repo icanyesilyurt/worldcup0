@@ -58,11 +58,16 @@ function findCountryEntry(value){
   const normalized=normalizeCountryName(value);
   return Object.entries(countryTranslations).find(([key,item])=>normalizeCountryName(key)===normalized || [item.tr,item.en,item.es,...(item.aliases || [])].some(alias=>normalizeCountryName(alias)===normalized));
 }
-function formatCountry(country,lang=currentLanguage){
+function canonicalCountry(country){
   const entry=findCountryEntry(country);
-  if(!entry) return country || '-';
+  return entry ? entry[0] : (country || 'Unknown');
+}
+function formatCountry(country,lang=currentLanguage){
+  if(country===null || country===undefined || String(country).trim()==='') return 'Unknown';
+  const entry=findCountryEntry(country);
+  if(!entry) return country || 'Unknown';
   const item=entry[1];
-  return `${item.flag} ${item[lang] || item.tr}`;
+  return `${item.flag} ${item[lang] || item.en || item.tr || 'Unknown'}`;
 }
 function formatDisplayName(name){return String(name || 'Player').replace(/^Oyuncu#/,'Player#');}
 function updateCountryOptions(){
