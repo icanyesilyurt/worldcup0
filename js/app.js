@@ -366,26 +366,23 @@ async function saveMatchPrediction(matchId,card){
   lockMatchCard(card,homeScore,awayScore);
 }
 const ADMIN_EMAIL='ican.yslyrt@gmail.com';
+const WORLD_CUP_COUNTRIES=['Türkiye','Brezilya','Arjantin','Almanya','Fransa','İspanya','İngiltere','Portekiz','Hollanda','Fas','ABD','Meksika','Kanada','Uruguay','Kolombiya','Japonya','Güney Kore','Senegal','Hırvatistan','Belçika','İsviçre','Norveç','İsveç','Avusturya','İskoçya','Çekya','Bosna Hersek','Sırbistan','Avustralya','İran','Irak','Suudi Arabistan','Katar','Ürdün','Özbekistan','Mısır','Cezayir','Tunus','Gana','Güney Afrika','Fildişi Sahili','Cabo Verde','Kongo DC','Panama','Haiti','Curaçao','Yeni Zelanda','Paraguay'];
 
 function showAdminMessage(message){
   const box=document.getElementById('adminAccessMessage');
   if(!box) return;
-  box.innerHTML=message;
+  box.textContent=message;
   box.hidden=!message;
 }
-
-const adminDebugLines=[];
 
 function writeAdminDebug(message){
   const box=document.getElementById('adminDebug');
   if(!box) return;
-  adminDebugLines.push(message);
-  box.textContent=adminDebugLines.join('\n');
-  box.hidden=false;
+  box.textContent=message;
+  box.hidden=!message;
 }
 
 function clearAdminDebug(){
-  adminDebugLines.length=0;
   const box=document.getElementById('adminDebug');
   if(box){box.textContent='';box.hidden=true;}
 }
@@ -404,6 +401,12 @@ function setAdminView(isAdmin){
 function showAdminDenied(email){
   setAdminView(false);
   showAdminMessage('Bu sayfaya erişim yetkin yok. Giriş yapılan e-posta: '+email);
+}
+
+async function isAdminSession(){
+  const user=await getCurrentUser();
+  if(!user) return false;
+  return normalizeEmail(user.email)===ADMIN_EMAIL;
 }
 
 function createAdminMatchCard(match){
@@ -505,24 +508,11 @@ async function loadAdminPanel(){
   const client=getSupabaseClient();
   if(!client) return;
   const {data,error}=await client.auth.getSession();
-  if(error){
-    writeAdminDebug('Supabase hata mesajı: '+error.message);
-    showAdminMessage(error.message);
-    return;
-  }
+  if(error){showAdminMessage(error.message);return;}
   const user=data.session?.user || null;
-  if(!user){
-    writeAdminDebug('Oturum yok');
-    showAdminMessage('');
-    return;
-  }
+  if(!user){showAdminMessage('');return;}
   const email=normalizeEmail(user.email);
-  writeAdminDebug('Oturum var');
-  writeAdminDebug('Giriş yapılan email: '+email);
-  if(email!==ADMIN_EMAIL){
-    showAdminDenied(email);
-    return;
-  }
+  if(email!==ADMIN_EMAIL){showAdminDenied(email);return;}
   await renderAdminPanel();
 }
 
@@ -530,23 +520,12 @@ async function adminLogin(){
   const client=getSupabaseClient();
   if(!client) return;
   clearAdminDebug();
-  writeAdminDebug('Giriş denemesi yapıldı');
   const email=document.getElementById('adminEmail')?.value.trim();
   const password=document.getElementById('adminPassword')?.value;
   const {data,error}=await client.auth.signInWithPassword({email,password});
-  if(error){
-    writeAdminDebug('Giriş başarısız');
-    writeAdminDebug('Supabase hata mesajı: '+error.message);
-    showAdminMessage(error.message);
-    return;
-  }
-  writeAdminDebug('Giriş başarılı');
+  if(error){showAdminMessage(error.message);return;}
   const signedEmail=normalizeEmail(data.user?.email);
-  writeAdminDebug('Giriş yapılan email: '+signedEmail);
-  if(signedEmail!==ADMIN_EMAIL){
-    showAdminDenied(signedEmail);
-    return;
-  }
+  if(signedEmail!==ADMIN_EMAIL){showAdminDenied(signedEmail);return;}
   await updateHeaderAuthState();
   await renderAdminPanel();
 }
@@ -564,70 +543,51 @@ function calculateMatchPoints(actualHome,actualAway,predictedHome,predictedAway)
 
 async function calculatePointsForMatch(matchId,homeScore,awayScore){
   const client=getSupabaseClient();
-  if(!client) return;
+  if(!client) return {processedCount:0,totalDistributed:0,hasPredictions:false};
   const {data:predictions,error}=await client
     .from('match_predictions')
     .select('id,user_id,predicted_home_score,predicted_away_score,calculated')
-    .eq('match_id',matchId)
-    .eq('calculated',false);
+    .eq('match_id',matchId);
 
-  if(error){
-    writeAdminDebug('Puan hesaplanamadı: '+error.message);
-    return;
-  }
-  if(!predictions || predictions.length===0){
-    writeAdminDebug('Bu maç için henüz tahmin yok.');
-    return;
-  }
+  if(error) return {processedCount:0,totalDistributed:0,hasPredictions:false,error:error.message};
+  if(!predictions || predictions.length===0) return {processedCount:0,totalDistributed:0,hasPredictions:false};
+
+  const pendingPredictions=predictions.filter(prediction=>prediction.calculated!==true);
+  if(pendingPredictions.length===0) return {processedCount:0,totalDistributed:0,hasPredictions:true};
 
   let processedCount=0;
   let totalDistributed=0;
-  for(const prediction of predictions){
-    const points=calculateMatchPoints(
-      homeScore,
-      awayScore,
-      Number(prediction.predicted_home_score),
-      Number(prediction.predicted_away_score)
-    );
+  for(const prediction of pendingPredictions){
+    const points=calculateMatchPoints(homeScore,awayScore,Number(prediction.predicted_home_score),Number(prediction.predicted_away_score));
 
     const {error:updatePredictionError}=await client
       .from('match_predictions')
       .update({points,calculated:true})
       .eq('id',prediction.id)
       .eq('calculated',false);
-    if(updatePredictionError){
-      writeAdminDebug('Tahmin puanı güncellenemedi: '+updatePredictionError.message);
-      continue;
-    }
+    if(updatePredictionError) return {processedCount,totalDistributed,hasPredictions:true,error:updatePredictionError.message};
 
     const {data:profiles,error:profileError}=await client
       .from('profiles')
       .select('total_points')
       .eq('id',prediction.user_id)
       .limit(1);
-    if(profileError){
-      writeAdminDebug('Profil puanı okunamadı: '+profileError.message);
-      continue;
-    }
+    if(profileError) return {processedCount,totalDistributed,hasPredictions:true,error:profileError.message};
 
     const currentPoints=Number(profiles?.[0]?.total_points || 0);
     const {error:updateProfileError}=await client
       .from('profiles')
       .update({total_points:currentPoints+points})
       .eq('id',prediction.user_id);
-    if(updateProfileError){
-      writeAdminDebug('Profil puanı güncellenemedi: '+updateProfileError.message);
-      continue;
-    }
+    if(updateProfileError) return {processedCount,totalDistributed,hasPredictions:true,error:updateProfileError.message};
 
     processedCount++;
     totalDistributed+=points;
   }
 
-  writeAdminDebug('Puan hesaplandı.');
-  writeAdminDebug('Kaç tahmin işlendi: '+processedCount);
-  writeAdminDebug('Toplam kaç puan dağıtıldı: '+totalDistributed);
+  return {processedCount,totalDistributed,hasPredictions:true};
 }
+
 async function loadAdminMatches(){
   await renderAdminPanel();
 }
@@ -641,7 +601,7 @@ async function saveMatchResult(matchId){
   if(email!==ADMIN_EMAIL){showAdminDenied(email);return;}
 
   const card=document.querySelector(`[data-match-id="${matchId}"]`);
-  if(!card){writeAdminDebug('Sonuç kaydedilemedi: maç kartı bulunamadı. matchId: '+matchId);return;}
+  if(!card){writeAdminDebug('Sonuç kaydedilemedi: maç kartı bulunamadı.');return;}
   const homeInput=card.querySelector('[data-role="admin-home-score"]');
   const awayInput=card.querySelector('[data-role="admin-away-score"]');
   const message=card.querySelector('[data-role="admin-match-message"]');
@@ -654,23 +614,11 @@ async function saveMatchResult(matchId){
 
   const numericHomeScore=Number(homeScore);
   const numericAwayScore=Number(awayScore);
-  writeAdminDebug('Sonuç kaydetme denemesi');
-  writeAdminDebug('matchId: '+matchId);
-  writeAdminDebug('homeScore: '+numericHomeScore);
-  writeAdminDebug('awayScore: '+numericAwayScore);
-
   const {data,error}=await client
     .from('matches')
-    .update({
-      home_score:numericHomeScore,
-      away_score:numericAwayScore,
-      status:'finished'
-    })
+    .update({home_score:numericHomeScore,away_score:numericAwayScore,status:'finished'})
     .eq('id',matchId)
     .select();
-
-  writeAdminDebug('update data sonucu: '+JSON.stringify(data || []));
-  writeAdminDebug('update error mesajı: '+(error?.message || 'yok'));
 
   if(error){
     const errorMessage='Sonuç kaydedilemedi: '+error.message;
@@ -680,16 +628,149 @@ async function saveMatchResult(matchId){
   }
 
   if(!data || data.length===0){
-    const emptyMessage='Update çalıştı ama satır güncellenmedi. matchId yanlış olabilir.';
+    const emptyMessage='Sonuç kaydedilemedi: maç bulunamadı.';
     writeAdminDebug(emptyMessage);
     if(message){message.textContent=emptyMessage;message.hidden=false;}
     return;
   }
 
-  writeAdminDebug('Sonuç gerçekten Supabase’e kaydedildi.');
-  if(message){message.textContent='Sonuç gerçekten Supabase’e kaydedildi.';message.hidden=false;}
+  const pointResult=await calculatePointsForMatch(matchId,numericHomeScore,numericAwayScore);
+  if(pointResult.error){
+    const errorMessage='Sonuç kaydedilemedi: '+pointResult.error;
+    writeAdminDebug(errorMessage);
+    if(message){message.textContent=errorMessage;message.hidden=false;}
+    return;
+  }
+
+  const successMessage=pointResult.hasPredictions?'Sonuç kaydedildi ve puanlar güncellendi.':'Sonuç kaydedildi. Bu maç için tahmin yok.';
+  writeAdminDebug(successMessage);
+  if(message){message.textContent=successMessage;message.hidden=false;}
   await loadAdminMatches();
-  await calculatePointsForMatch(matchId,numericHomeScore,numericAwayScore);
+}
+
+async function resetTestData(){
+  const client=getSupabaseClient();
+  if(!client) return;
+  if(!(await isAdminSession())){writeAdminDebug('Bu işlem için admin yetkisi gerekir.');return;}
+  const confirmed=confirm('Bu işlem tüm maç sonuçlarını, tahmin puanlarını ve kullanıcı toplam puanlarını sıfırlayacak. Emin misin?');
+  if(!confirmed) return;
+
+  const {error:matchesError}=await client.from('matches').update({home_score:null,away_score:null,status:'scheduled'}).not('id','is',null);
+  if(matchesError){writeAdminDebug('Test verileri sıfırlanamadı: '+matchesError.message);return;}
+
+  const {error:predictionsError}=await client.from('match_predictions').update({points:0,calculated:false}).not('user_id','is',null);
+  if(predictionsError){writeAdminDebug('Test verileri sıfırlanamadı: '+predictionsError.message);return;}
+
+  const {error:profilesError}=await client.from('profiles').update({total_points:0}).not('id','is',null);
+  if(profilesError){writeAdminDebug('Test verileri sıfırlanamadı: '+profilesError.message);return;}
+
+  writeAdminDebug('Test verileri sıfırlandı.');
+  await loadAdminMatches();
+}
+
+function showRankingsMessage(message){
+  const box=document.getElementById('rankingsMessage');
+  if(!box) return;
+  box.textContent=message;
+  box.hidden=!message;
+}
+
+function formatPoints(value){
+  return Number(value || 0).toLocaleString('tr-TR')+' puan';
+}
+
+function createRankingRow(items,extraClass=''){
+  const row=document.createElement('li');
+  row.className='rrow'+(extraClass?' '+extraClass:'');
+  items.forEach(item=>{
+    const span=document.createElement('span');
+    span.className=item.className;
+    span.textContent=item.text;
+    row.appendChild(span);
+  });
+  return row;
+}
+
+async function fetchProfilesForRankings(){
+  const client=getSupabaseClient();
+  if(!client) return [];
+  const {data,error}=await client.from('profiles').select('id,email,display_name,country,total_points').order('total_points',{ascending:false}).limit(1000);
+  if(error){showRankingsMessage(error.message);return [];}
+  return data || [];
+}
+
+async function updateProfileRanks(profile){
+  const worldRankEl=document.getElementById('profileWorldRank');
+  const countryRankEl=document.getElementById('profileCountryRank');
+  if(!worldRankEl && !countryRankEl) return;
+  const profiles=await fetchProfilesForRankings();
+  const sorted=[...profiles].sort((a,b)=>Number(b.total_points || 0)-Number(a.total_points || 0));
+  const worldIndex=sorted.findIndex(item=>item.id===profile.id);
+  if(worldRankEl) worldRankEl.textContent=worldIndex>=0?'#'+(worldIndex+1):'-';
+  const countrySorted=sorted.filter(item=>(item.country || '')===(profile.country || ''));
+  const countryIndex=countrySorted.findIndex(item=>item.id===profile.id);
+  if(countryRankEl) countryRankEl.textContent=countryIndex>=0?'#'+(countryIndex+1):'-';
+}
+
+function aggregateCountries(profiles){
+  const map=new Map(WORLD_CUP_COUNTRIES.map(country=>[country,{country,count:0,total:0}]));
+  profiles.forEach(profile=>{
+    const country=profile.country || 'Belirtilmedi';
+    if(!map.has(country)) map.set(country,{country,count:0,total:0});
+    const item=map.get(country);
+    item.count++;
+    item.total+=Number(profile.total_points || 0);
+  });
+  return [...map.values()];
+}
+
+async function loadRankings(){
+  const participationList=document.getElementById('countryParticipationList');
+  const individualList=document.getElementById('individualRankingList');
+  const collectiveList=document.getElementById('collectiveRankingList');
+  if(!participationList || !individualList || !collectiveList) return;
+  showRankingsMessage('');
+  const profiles=await fetchProfilesForRankings();
+  const countryStats=aggregateCountries(profiles);
+
+  participationList.innerHTML='';
+  countryStats.forEach((item,index)=>{
+    const row=createRankingRow([
+      {className:'rname',text:item.country},
+      {className:index===0?'rval rval-g':'rval',text:item.count+' katılımcı'}
+    ],index>=10?'country-participation-extra':'');
+    if(index>=10) row.hidden=true;
+    participationList.appendChild(row);
+  });
+
+  individualList.innerHTML='';
+  profiles.forEach((profile,index)=>{
+    individualList.appendChild(createRankingRow([
+      {className:'rbadge',text:String(index+1)},
+      {className:'rname',text:profile.display_name || 'Oyuncu'},
+      {className:'rval',text:profile.country || '-'},
+      {className:'rval rval-g',text:formatPoints(profile.total_points)}
+    ]));
+  });
+
+  collectiveList.innerHTML='';
+  countryStats.sort((a,b)=>b.total-a.total || b.count-a.count || a.country.localeCompare(b.country,'tr')).forEach((item,index)=>{
+    const row=createRankingRow([
+      {className:'rbadge',text:String(index+1)},
+      {className:'rname',text:item.country},
+      {className:'rval',text:item.count+' katılımcı'},
+      {className:'rval rval-g',text:formatPoints(item.total)+' (kolektif)'}
+    ],index>=10?'collective-ranking-extra':'');
+    if(index>=10) row.hidden=true;
+    collectiveList.appendChild(row);
+  });
+}
+
+function toggleHiddenRows(selector,button,openText,closeText){
+  const rows=document.querySelectorAll(selector);
+  const shouldShow=[...rows].some(row=>row.hidden);
+  rows.forEach(row=>row.hidden=!shouldShow);
+  if(button) button.textContent=shouldShow?closeText:openText;
 }
 async function signUpUser(){
   const client=getSupabaseClient();
@@ -771,6 +852,7 @@ async function createOrLoadProfile(){
   if(loggedOut) loggedOut.hidden=true;
   if(loggedIn) loggedIn.hidden=false;
   fillProfileFields(profile,user);
+  await updateProfileRanks(profile);
 }
 
 async function updateHeaderAuthState(){
@@ -796,6 +878,8 @@ window.saveMatchPrediction=saveMatchPrediction;
 window.loadAdminPanel=loadAdminPanel;
 window.saveMatchResult=saveMatchResult;
 window.adminLogin=adminLogin;
+window.resetTestData=resetTestData;
+window.loadRankings=loadRankings;
 
 window.addEventListener('scroll',()=>hdr.classList.toggle('sc',window.scrollY>40),{passive:true});
 hbg.addEventListener('click',e=>{e.stopPropagation();const o=mob.classList.toggle('o');hbg.classList.toggle('o',o)});
@@ -812,6 +896,9 @@ if(showAllMatchesBtn){
 document.getElementById('signupForm')?.addEventListener('submit',e=>{e.preventDefault();signUpUser();});
 document.getElementById('loginForm')?.addEventListener('submit',e=>{e.preventDefault();loginUser();});
 document.getElementById('adminLoginForm')?.addEventListener('submit',e=>{e.preventDefault();adminLogin();});
+document.getElementById('resetTestDataButton')?.addEventListener('click',resetTestData);
+document.getElementById('toggleCountryParticipation')?.addEventListener('click',e=>toggleHiddenRows('.country-participation-extra',e.currentTarget,'Tüm Listeyi Gör','Listeyi Kapat'));
+document.getElementById('toggleCollectiveRanking')?.addEventListener('click',e=>toggleHiddenRows('.collective-ranking-extra',e.currentTarget,'Tüm Ülkeleri Gör','Listeyi Kapat'));
 document.getElementById('saveTournamentPredictions')?.addEventListener('click',e=>{e.preventDefault();saveTournamentPredictions();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape') closeAuthModal();});
 
@@ -829,7 +916,12 @@ window.addEventListener('DOMContentLoaded',async()=>{
   await loadTournamentPredictions();
   await loadMatches();
   await loadAdminPanel();
+  await loadRankings();
 });
+
+
+
+
 
 
 
