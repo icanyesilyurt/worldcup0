@@ -70,6 +70,28 @@ function formatCountry(country,lang=currentLanguage){
   return `${item.flag} ${item[lang] || item.en || item.tr || 'Unknown'}`;
 }
 function formatDisplayName(name){return String(name || 'Player').replace(/^Oyuncu#/,'Player#');}
+function isPremiumProfile(profile){
+  const value=profile?.premium;
+  return value===true || value===1 || value==='1' || String(value).toLowerCase()==='true';
+}
+function getProfilePublicName(profile){
+  if(!profile) return 'Player';
+  const name=isPremiumProfile(profile) && profile.custom_name ? profile.custom_name : profile.display_name;
+  return formatDisplayName(name || 'Player');
+}
+function setProfileAvatar(el,profile){
+  if(!el) return;
+  const avatarUrl=String(profile?.avatar_url || '').trim();
+  if(avatarUrl){
+    el.textContent='';
+    el.style.backgroundImage=`url("${avatarUrl.replace(/"/g,'%22')}")`;
+    el.style.backgroundSize='cover';
+    el.style.backgroundPosition='center';
+    return;
+  }
+  el.style.backgroundImage='';
+  el.textContent='⚽';
+}
 function updateCountryOptions(){
   ['champion','finalist_1','finalist_2','signupCountry'].forEach(id=>{
     const select=document.getElementById(id);
@@ -214,13 +236,15 @@ async function loadProfileForUser(user){
 }
 
 function fillProfileFields(profile,user){
-  document.getElementById('profileDisplayName') && (document.getElementById('profileDisplayName').textContent=formatDisplayName(profile.display_name));
-  document.getElementById('profileName') && (document.getElementById('profileName').textContent=formatDisplayName(profile.display_name));
+  document.getElementById('profileDisplayName') && (document.getElementById('profileDisplayName').textContent=getProfilePublicName(profile));
+  document.getElementById('profileName') && (document.getElementById('profileName').textContent=getProfilePublicName(profile));
   document.getElementById('profileEmail') && (document.getElementById('profileEmail').textContent=user.email || profile.email || '-');
   document.getElementById('profileCountry') && (document.getElementById('profileCountry').textContent=formatCountry(profile.country));
   document.getElementById('profileCountryTop') && (document.getElementById('profileCountryTop').textContent=formatCountry(profile.country));
   document.getElementById('profilePoints') && (document.getElementById('profilePoints').textContent=profile.total_points ?? 0);
   document.getElementById('profileReferral') && (document.getElementById('profileReferral').textContent=profile.referral_code || '-');
+  setProfileAvatar(document.getElementById('profileAvatar'),profile);
+  updatePremiumProfileView(profile);
 }
 
 function showTournamentPredictionMessage(message){
@@ -787,7 +811,7 @@ function updatePremiumProfileView(profile){
   const offer=document.getElementById('premiumOffer');
   const form=document.getElementById('premiumEditForm');
   if(!offer && !form) return;
-  const isPremium=profile?.premium===true;
+  const isPremium=isPremiumProfile(profile);
   if(offer) offer.hidden=isPremium;
   if(form) form.hidden=!isPremium;
   if(!isPremium) return;
@@ -816,7 +840,7 @@ async function savePremiumProfile(event){
   };
   const {data,error}=await client.from('profiles').update(payload).eq('id',user.id).select('*');
   if(error){
-    if(message){message.textContent='Premium profil alanları henüz aktif değil.';message.hidden=false;}
+    if(message){message.textContent='Premium profil güncellenemedi: '+(error.message || 'Bilinmeyen hata');message.hidden=false;}
     return;
   }
   const profile=data?.[0];
@@ -828,7 +852,7 @@ function openPremiumProfileModal(profileId){
   const modal=document.getElementById('premiumProfileModal');
   if(!modal) return;
   const profile=cachedRankingProfiles.find(item=>item.id===profileId);
-  if(!profile || profile.premium!==true) return;
+  if(!profile || !isPremiumProfile(profile)) return;
   const setText=(id,value)=>{const el=document.getElementById(id);if(el) el.textContent=value;};
   setText('premiumModalName',getProfilePublicName(profile));
   setText('premiumModalCountry',formatCountry(profile.country));
@@ -1070,7 +1094,7 @@ function renderIndividualRows(list,profiles,limit){
       {className:'rval rval-g',text:formatPoints(profile.total_points)}
     ]);
     const nameCell=row.querySelector('.rname');
-    if(nameCell && profile.premium===true){
+    if(nameCell && isPremiumProfile(profile)){
       nameCell.textContent='';
       const button=document.createElement('button');
       button.type='button';
