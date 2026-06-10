@@ -212,3 +212,15 @@ body.modal-open{overflow:hidden}
 .premium-modal-links a{border:1px solid rgba(240,180,41,.38);border-radius:999px;padding:6px 10px;color:var(--gold);font-family:var(--ff-u);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
 @media(max-width:900px){.profile-layout{grid-template-columns:1fr}.premium-card{order:2}.profile-main-card{order:1}}
 @media(max-width:540px){.profile-referral-inline{align-items:stretch}.profile-referral-inline .rname{width:100%;min-width:0}.profile-referral-inline .btn{width:100%;justify-content:center}.premium-profile-modal{align-items:flex-start;padding:74px 14px 14px}}
+
+.header-lang-switch{margin-left:auto;margin-right:14px}
+.nav .lang-switch:not(.header-lang-switch){display:none}
+.header-lang-switch button,.lang-switch-mobile button{min-width:36px;min-height:36px;padding:0 8px;border-radius:999px;font-size:12px;display:inline-flex;align-items:center;justify-content:center}
+.header-lang-switch button.active,.lang-switch-mobile button.active{background:rgba(240,180,41,.16);color:var(--gold)}
+.header-lang-switch span,.lang-switch-mobile span{display:none}
+.profile-invite-help{margin-top:4px;color:var(--t2)}
+.invite-badge-list{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.invite-badge-list .rrow{padding:8px 0}
+.invite-extra{margin-top:14px;color:var(--gold)}
+@media(max-width:900px){.header-lang-switch{display:inline-flex;margin-left:auto;margin-right:10px}.mob-nav .lang-switch-mobile{align-self:stretch;margin:12px 20px 6px;display:flex;justify-content:space-between;padding:6px}.mob-nav .lang-switch-mobile button{flex:1;min-height:42px;font-size:13px}}
+@media(max-width:420px){.logo-txt{display:none}.header-lang-switch{margin-right:8px}.header-lang-switch button{min-width:34px;min-height:36px;font-size:11px}}

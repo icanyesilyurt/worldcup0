@@ -40,6 +40,7 @@
         <span class="logo-main">ARENA</span>
       </span>
     </a>
+    <div class="lang-switch header-lang-switch" aria-label="Dil seçimi"><button type="button" data-lang="tr" onclick="setLanguage('tr')">TR</button><span>|</span><button type="button" data-lang="en" onclick="setLanguage('en')">EN</button><span>|</span><button type="button" data-lang="es" onclick="setLanguage('es')">ES</button></div>
     <nav class="nav">
       <a href="index.html" data-i18n="navHome">Ana Sayfa</a>
       <a href="predictions.html" data-i18n="navPredictions">Tahminler</a>
@@ -99,7 +100,7 @@
             <span id="profileReferral" hidden>-</span>
             <button class="btn btn-p" type="button" onclick="copyReferralCode()" data-i18n="copyCode">Kopyala</button>
           </div>
-          <p class="hc-d copy-referral-message" id="copyReferralMessage" hidden></p>
+          <p class="hc-d profile-invite-help" data-i18n="profileInviteHelp">Davet kodunu paylaş. Kodunla gelen kullanıcılar topluluk ünvanlarına yaklaşmanı sağlar. Davetler tahmin puanını etkilemez.</p><p class="hc-d copy-referral-message" id="copyReferralMessage" hidden></p>
         </div>
         <button class="btn btn-o" onclick="logoutUser()" style="margin-top:20px" data-i18n="navLogout">Çıkış Yap</button>
       </div>
@@ -117,7 +118,7 @@
             <div class="rrow"><span class="rname">Sıralamada tıklanabilir profil kartı</span><span class="rval rval-g">✓</span></div>
           </div>
           <a class="btn btn-p" href="#" onclick="return false" style="margin-top:20px">Premium’a Geç</a>
-          <p class="hc-d premium-note">Ödeme bağlantısı yakında aktif olacak.</p>
+          <p class="hc-d premium-note" data-i18n="premiumFairNote">Premium görünürlük sağlar, tahmin puanı avantajı vermez.</p><p class="hc-d premium-note">Ödeme bağlantısı yakında aktif olacak.</p>
         </div>
         <form id="premiumEditForm" class="premium-edit-form" hidden>
           <p class="slabel">Premium</p>
